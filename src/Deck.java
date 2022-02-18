@@ -6,11 +6,11 @@ public class Deck{
 
     public Deck() {
 
-    for (Card.Suit suit : Card.Suit.values()) {
-        for (Card.Rank rank : Card.Rank.values()) {
-             deck.add(new Card(rank,suit));
+        for (Card.Suit suit : Card.Suit.values()) {
+            for (Card.Rank rank : Card.Rank.values()) {
+                deck.add(new Card(rank,suit));
+            }
         }
-    }
     }
 
     public ArrayList<Card> newDeck() {
