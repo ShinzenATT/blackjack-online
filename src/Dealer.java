@@ -1,5 +1,7 @@
 import java.util.Objects;
 
+import card.hand.deck.Hand;
+
 public class Dealer {
 
     public String command;
