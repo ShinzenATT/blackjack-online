@@ -1,36 +1,34 @@
-import java.util.Objects;
-
+import card.hand.deck.Deck;
 import card.hand.deck.Hand;
+import card.hand.deck.Player;
 
-public class Dealer {
+public class Dealer extends Player {
+    public enum commands { HIT, DOUBLE_DOWN, SPLIT, SURRENDER, STAND };
+    private final Deck deck;
 
-    public String command;
+    public Dealer() {
+        super("Dealer", 9999);
+        deck = new Deck();
+    }
 
     /**
      * Handles where the cards go and when/how to change them.
      * @param command is the requested command by the specified hand.
      * @param hand is the specified hand that is target to the command.
      */
-    public Dealer(String command, Hand hand){
-        deal();
+    public void act(commands command, Hand hand){
 
-        if (Objects.equals(command, "Hit")){
-            hit();
-        } else if(Objects.equals(command, "Double Down")){
-            doubleDown();
-        } else if(Objects.equals(command, "Split")){
-            split();
-        } else if(Objects.equals(command, "Surrender")){
-            surrender();
-        } else if(Objects.equals(command, "Stand")){
-            System.out.println("Stand");
-        } else{
-
+        switch (command){
+            case HIT -> hit(hand);
+            case SPLIT -> split();
+            case DOUBLE_DOWN -> doubleDown();
+            case SURRENDER -> surrender();
+            case STAND -> System.out.println("stand");
         }
     }
 
-    public static void hit(){
-
+    public void hit(Hand hand){
+        hand.addCard(deck.next());
     }
     public static void split(){
 
@@ -41,7 +39,9 @@ public class Dealer {
     public static void surrender(){
 
     }
-    public static void deal(){
-
+    public Hand deal(Hand hand){
+        hand.addCard(deck.next());
+        hand.addCard(deck.next());
+        return hand;
     }
 }

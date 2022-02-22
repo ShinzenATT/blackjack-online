@@ -1,3 +1,10 @@
+package card.hand.deck;
+
+import card.hand.deck.Hand;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 
     private String username;
@@ -13,6 +20,11 @@ public class Player {
     }
 
     public int getChips(){
+        return chips;
+    }
+
+    public int transactChips(int delta){
+        chips += delta;
         return chips;
     }
 }

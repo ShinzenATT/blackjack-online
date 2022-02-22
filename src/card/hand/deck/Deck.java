@@ -1,10 +1,10 @@
 package card.hand.deck;
 import java.util.*;
 
-public class Deck{
+public class Deck implements Iterator<Card>{
 
     private List<Card> deck = new ArrayList<Card>();
-    private int numCardsDeck;
+    //private int numCardsDeck;
 
     /**
      * Deck constructor to define number of decks to be used and whether
@@ -18,7 +18,7 @@ public class Deck{
         for (Card.Suit suit : Card.Suit.values()) {
             for (Card.Rank rank : Card.Rank.values()) {
                 deck.add(new Card(rank,suit));
-                numCardsDeck++;
+                //numCardsDeck++;
             }
         }
         }
@@ -34,19 +34,25 @@ public class Deck{
         this(1,true);
     }
 
-    public Card getCard(){
+    @Override
+    public Card next(){
         Card drawnCard = this.deck.get(0);
         this.deck.remove(0);
-        numCardsDeck--;
+        //numCardsDeck--;
         return drawnCard;
     }
 
     public int getNumCards(){
-        return numCardsDeck;
+        return deck.size();
     }
 
     // för testning behövs nog inte sen
     public List<Card> getDeck(){
         return deck;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return deck.size() > 0;
     }
 }
