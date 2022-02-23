@@ -1,6 +1,4 @@
-import card.hand.deck.Deck;
-import card.hand.deck.Hand;
-import card.hand.deck.Player;
+package main.java.Model;
 
 public class Dealer extends Player {
     public enum commands { HIT, DOUBLE_DOWN, SPLIT, SURRENDER, STAND };

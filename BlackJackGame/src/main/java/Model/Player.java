@@ -1,6 +1,4 @@
-package card.hand.deck;
-
-import card.hand.deck.Hand;
+package main.java.Model;
 
 import java.util.ArrayList;
 import java.util.List;

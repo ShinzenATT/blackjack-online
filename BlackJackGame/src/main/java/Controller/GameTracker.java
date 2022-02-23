@@ -1,6 +1,6 @@
-import card.hand.deck.Hand;
-import card.hand.deck.Player;
+package main.java.Controller;
 
+import main.java.Model.*;
 import java.util.*;
 
 public class GameTracker implements Iterator<Hand> {

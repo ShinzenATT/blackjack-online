@@ -1,4 +1,4 @@
-package card.hand.deck;
+package main.java.Model;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 

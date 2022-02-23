@@ -1,17 +1,15 @@
-import card.hand.deck.Deck;
+package main.java;
+
+import main.java.Controller.ControllerTest;
+import main.java.Model.ModelTest;
+import main.java.View.*;
 
 public class Main {
 
 public static void main(String[] args) {
 
-    // testning
-    Deck test = new Deck(1, true);
-    System.out.println("Orginal: " + test.getDeck());
-    System.out.println("Num of cards:" + test.getNumCards());
-    System.out.println();
-    System.out.println("Drawn card: " + test.next());
-    System.out.println();
-    System.out.println("Edited: " + test.getDeck());
-    System.out.println("Num of cards:" + test.getNumCards());
+  ModelTest bjModel = new ModelTest();
+  GameWindow gameWindow = new GameWindow(bjModel);
+  ControllerTest bjControl = new ControllerTest(bjModel, gameWindow);
   }
 }
