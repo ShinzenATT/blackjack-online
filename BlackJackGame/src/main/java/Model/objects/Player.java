@@ -1,11 +1,11 @@
-package main.java.Model;
+package main.java.Model.objects;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
 
-    private String username;
+    private final String username;
     private int chips;
 
     public Player(String username, int chips){

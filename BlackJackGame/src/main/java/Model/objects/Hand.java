@@ -1,4 +1,4 @@
-package main.java.Model;
+package main.java.Model.objects;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -7,6 +7,7 @@ public class Hand {
     private final List<Card> hand;
     private final Player association;
     private int bet = 0;
+    private boolean active = false;
 
     public Hand(Player player) {
         association = player;
@@ -61,5 +62,16 @@ public class Hand {
     }
 
     public int getBet(){ return bet; }
+
+    public void toggleActive(){
+        active = !active;
+    }
+
+    public boolean getActive() { return active; }
+
+    public Player getPlayer() { return association; }
+
+    @Override
+    public String toString(){ return hand.toString(); }
 
 }

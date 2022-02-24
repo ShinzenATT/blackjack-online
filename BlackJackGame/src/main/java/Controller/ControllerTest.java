@@ -1,29 +1,46 @@
 package main.java.Controller;
 
-import java.awt.event.*;
-
-import main.java.Model.ModelTest;
+import main.java.Model.GameTracker;
+import main.java.Model.objects.Hand;
 import main.java.View.GameWindow;
 
 public class ControllerTest {
 
     private final GameWindow bjView;
-    private final ModelTest bjModel;
+    private final GameTracker bjModel;
+    private Hand currentTurn = null;
 
-    public ControllerTest(ModelTest bjmodel, GameWindow bjview) {
+    public ControllerTest(GameTracker bjmodel, GameWindow bjview) {
         this.bjModel = bjmodel;
         this.bjView = bjview;
 
+        currentTurn = bjmodel.next();
+        bjview.getDrawnCardLabel().setText(currentTurn.toString());
+        bjview.setPlayerName(currentTurn.getPlayer().getUsername());
+        bjview.setHandPoints(currentTurn.getPoints());
+        bjview.setPlayerChips(currentTurn.getBet());
+
     //Controls for hit button
-    class HitButtonListener implements ActionListener {
+    bjView.addHitButtonListener(e -> {
+        currentTurn.addCard(bjmodel.nextCard());
+        bjview.getDrawnCardLabel().setText(currentTurn.toString());
+        bjview.setHandPoints(currentTurn.getPoints());
+    });
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            bjview.getDrawnCardLabel().setText(bjmodel.playerHitCard().toString());
+    // Controls for stand button
+    bjview.addStandButtonListener(e -> {
+        if(bjmodel.hasNext()) {
+            currentTurn = bjmodel.next();
+            bjview.getDrawnCardLabel().setText(currentTurn.toString());
+            bjview.setPlayerName(currentTurn.getPlayer().getUsername());
+            bjview.setHandPoints(currentTurn.getPoints());
+            bjview.setPlayerChips(currentTurn.getBet());
+        } else {
+            bjview.getDrawnCardLabel().setText("End of Round");
+            bjview.setPlayerName("");
+            bjview.setHandPoints(0);
+            bjview.setPlayerChips(0);
         }
-    
-    }
-
-    bjView.addHitButtonListener(new HitButtonListener());  
+    });
     }
 }
