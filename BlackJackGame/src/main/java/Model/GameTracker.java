@@ -1,6 +1,6 @@
-package main.java.Model;
+package Model;
 
-import main.java.Model.objects.*;
+import Model.objects.*;
 
 import java.util.*;
 

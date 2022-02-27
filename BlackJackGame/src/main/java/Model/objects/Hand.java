@@ -1,4 +1,4 @@
-package main.java.Model.objects;
+package Model.objects;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 

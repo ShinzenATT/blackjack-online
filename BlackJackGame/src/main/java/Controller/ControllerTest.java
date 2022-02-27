@@ -1,8 +1,8 @@
-package main.java.Controller;
+package Controller;
 
-import main.java.Model.GameTracker;
-import main.java.Model.objects.Hand;
-import main.java.View.GameWindow;
+import Model.GameTracker;
+import Model.objects.Hand;
+import View.GameWindow;
 
 public class ControllerTest {
 
