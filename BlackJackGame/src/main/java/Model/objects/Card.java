@@ -1,4 +1,4 @@
-package main.java.Model.objects;
+package Model.objects;
 
 public class Card {
 

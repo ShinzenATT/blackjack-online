@@ -1,7 +1,4 @@
-package main.java.Model.objects;
-
-import java.util.ArrayList;
-import java.util.List;
+package Model.objects;
 
 public class Player {
 

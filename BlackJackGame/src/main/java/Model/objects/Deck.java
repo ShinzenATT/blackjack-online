@@ -1,4 +1,4 @@
-package main.java.Model.objects;
+package Model.objects;
 import java.util.*;
 
 public class Deck implements Iterator<Card>{

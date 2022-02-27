@@ -1,9 +1,7 @@
-package main.java;
-
-import main.java.Controller.ControllerTest;
-import main.java.Model.GameTracker;
-import main.java.Model.objects.Player;
-import main.java.View.*;
+import Controller.ControllerTest;
+import Model.GameTracker;
+import Model.objects.Player;
+import View.*;
 
 public class Main {
 
