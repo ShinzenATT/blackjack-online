@@ -1,4 +1,4 @@
-package card.hand.deck;
+package main.java.Model.objects;
 
 public class Card {
 

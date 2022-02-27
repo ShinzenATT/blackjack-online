@@ -1,4 +1,4 @@
-package card.hand.deck;
+package main.java.Model.objects;
 import java.util.*;
 
 public class Deck implements Iterator<Card>{
