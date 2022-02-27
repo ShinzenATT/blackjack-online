@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="obj-projekt" />
+        <module name="BlackJack-Server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="BlackJack-Server" target="16" />
       <module name="obj-projekt" target="16" />
     </bytecodeTargetLevel>
   </component>
