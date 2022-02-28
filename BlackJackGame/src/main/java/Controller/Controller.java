@@ -1,18 +1,27 @@
 package Controller;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import Model.GameTracker;
+import Model.ImageDisplayModel;
+import Model.objects.Card;
 import Model.objects.Hand;
+import Model.objects.Player;
 import View.GameWindow;
 
-public class ControllerTest {
+public class Controller {
 
-    private final GameWindow bjView;
-    private final GameTracker bjModel;
+    private final GameWindow bjview;
+    private final GameTracker bjmodel;
     private Hand currentTurn = null;
+    private Hand dealerHand = null;
 
-    public ControllerTest(GameTracker bjmodel, GameWindow bjview) {
-        this.bjModel = bjmodel;
-        this.bjView = bjview;
+    public Controller(GameTracker bjmodel, GameWindow bjview) {
+        this.bjmodel = bjmodel;
+        this.bjview = bjview;
+
+        dealerHand = bjmodel.getDealerHand();
 
         currentTurn = bjmodel.next();
         bjview.getDrawnCardLabel().setText(currentTurn.toString());
@@ -20,11 +29,17 @@ public class ControllerTest {
         bjview.setHandPoints(currentTurn.getPoints());
         bjview.setPlayerChips(currentTurn.getBet());
 
+        bjview.setupUserCard(getHandImageStrings(currentTurn));
+
+        bjview.setupDealerCard(getHandImageStrings(dealerHand));
+
     //Controls for hit button
-    bjView.addHitButtonListener(e -> {
-        currentTurn.addCard(bjmodel.nextCard());
+    bjview.addHitButtonListener(e -> {
+        Card drawn = bjmodel.nextCard();
+        currentTurn.addCard(drawn);
         bjview.getDrawnCardLabel().setText(currentTurn.toString());
         bjview.setHandPoints(currentTurn.getPoints());
+        bjview.addUserCard(drawn.toString());
     });
 
     // Controls for stand button
@@ -42,5 +57,14 @@ public class ControllerTest {
             bjview.setPlayerChips(0);
         }
     });
+    }
+    
+    private ArrayList<String> getHandImageStrings(Hand h){
+        ArrayList<String> imageList = new ArrayList<>();
+        for(Card c : h.getHand()){
+            imageList.add(c.toString());
+            System.out.println(c.toString());
+        }
+        return imageList;
     }
 }

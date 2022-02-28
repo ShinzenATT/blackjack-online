@@ -55,4 +55,18 @@ public class GameTracker implements Iterator<Hand> {
         return Collections.unmodifiableList(turnOrder);
     }
 
+    // this is prob not good, but to get started
+    public Hand getDealerHand(){
+        return turnOrder.get(turnOrder.size()-1);
+    }
+
+    // hit logic for dealer?
+    /*
+    public boolean canHit() {
+        boolean canHit = false;
+        if(hand.score() < 17 && !hand.busted() && !hand.is21()){
+            canHit = true;
+        }
+        return canHit;
+        */
 }
