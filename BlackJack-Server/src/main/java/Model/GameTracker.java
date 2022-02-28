@@ -58,4 +58,6 @@ public class GameTracker implements Iterator<Hand> {
         return Collections.unmodifiableList(turnOrder);
     }
 
+    public int getTurnTracker(){ return turnTracker; }
+
 }

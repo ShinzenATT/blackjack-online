@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.GameConnection;
+import Model.RoomTracker;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -40,6 +41,7 @@ public class SocketManager {
         public void run() {
             System.out.println("Starting graceful shutdown...");
             super.run();
+            RoomTracker.close();
             try {
                 socket.close();
                 System.out.println("Socket closed");
