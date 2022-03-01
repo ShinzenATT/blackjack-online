@@ -12,6 +12,7 @@ import static org.junit.Assert.assertNotEquals;
  * Test class made to look through the deck class for errors
  */
 
+
 public class DeckTest {
 
 
@@ -27,7 +28,7 @@ public class DeckTest {
 
     @Test
     //Test made to look through that a deck only creates one type of each card
-    public void noDouplicates(){
+    public void noDuplicates(){
         Deck deck = new Deck(1, false);
         List deckList = deck.getDeck();
         assertEquals(0, deckList.stream().filter(c -> Collections.frequency(deckList, c) > 1).toList().size());
