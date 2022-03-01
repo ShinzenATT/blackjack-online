@@ -16,7 +16,6 @@ public class Controller {
 
     private final GameWindow bjview;
     private final GameTracker bjmodel;
-    private final SoundEffectModel soundmodel = null;
     private Hand currentTurn = null;
     private Hand dealerHand = null;
 
@@ -44,7 +43,7 @@ public class Controller {
         bjview.getDrawnCardLabel().setText(currentTurn.toString());
         bjview.setPlayerHandPoints(currentTurn.getPoints());
         bjview.addUserCard(drawn.toString());
-        soundmodel.playSound("dealCard");
+        SoundEffectModel.playSound("dealCard.wav");
     });
 
     // Controls for stand button
