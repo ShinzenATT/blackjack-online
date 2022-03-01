@@ -6,7 +6,7 @@ import javax.sound.sampled.Clip;
 
 public class SoundEffectModel {
     
-    public static synchronized void playSound(final String url) {
+    public synchronized void playSound(final String url) {
         new Thread(new Runnable() {
         // The wrapper thread is unnecessary, unless it blocks on the
         // Clip finishing;

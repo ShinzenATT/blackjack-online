@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import Model.GameTracker;
 import Model.ImageDisplayModel;
+import Model.SoundEffectModel;
 import Model.objects.Card;
 import Model.objects.Dealer;
 import Model.objects.Hand;
@@ -15,6 +16,7 @@ public class Controller {
 
     private final GameWindow bjview;
     private final GameTracker bjmodel;
+    private final SoundEffectModel soundmodel = null;
     private Hand currentTurn = null;
     private Hand dealerHand = null;
 
@@ -42,6 +44,7 @@ public class Controller {
         bjview.getDrawnCardLabel().setText(currentTurn.toString());
         bjview.setPlayerHandPoints(currentTurn.getPoints());
         bjview.addUserCard(drawn.toString());
+        soundmodel.playSound("dealCard");
     });
 
     // Controls for stand button
