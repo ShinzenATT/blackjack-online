@@ -4,17 +4,20 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Test class made to look through the deck class for errors
+ */
 
 public class DeckTest {
 
 
+
     @Test
-    //Suffled
+    //Testing that the deck is shuffled in different ways
     public void shuffledDeck(){
         //Lätt shuffle testing
         Deck firstShuffled = new Deck(1, true);
@@ -23,14 +26,14 @@ public class DeckTest {
     }
 
     @Test
-    //no duplicates
+    //Test made to look through that a deck only creates one type of each card
     public void noDouplicates(){
         Deck deck = new Deck(1, false);
         List deckList = deck.getDeck();
         assertEquals(0, deckList.stream().filter(c -> Collections.frequency(deckList, c) > 1).toList().size());
     }
     @Test
-    //drawing card reduces size of remaining deck
+    //Test to check the deck size before compared to after removing a card from the deck
     public void sizeOfDeck(){
         Deck deck = new Deck(1, false);
         int size = deck.getNumCards();
