@@ -2,7 +2,10 @@ package Model;
 
 import Model.objects.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class GameTracker implements Iterator<Hand> {
     private final List<Hand> turnOrder;
@@ -55,18 +58,10 @@ public class GameTracker implements Iterator<Hand> {
         return Collections.unmodifiableList(turnOrder);
     }
 
-    // this is prob not good, but to get started
-    public Hand getDealerHand(){
-        return turnOrder.get(turnOrder.size()-1);
+    public int getTurnTracker(){ return turnTracker; }
+
+    public void insertNext(Hand hand){
+        turnOrder.add(turnTracker + 1, hand);
     }
 
-    // hit logic for dealer?
-    /*
-    public boolean canHit() {
-        boolean canHit = false;
-        if(hand.score() < 17 && !hand.busted() && !hand.is21()){
-            canHit = true;
-        }
-        return canHit;
-        */
 }

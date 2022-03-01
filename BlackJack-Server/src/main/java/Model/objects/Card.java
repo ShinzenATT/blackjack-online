@@ -24,7 +24,7 @@ public class Card {
     }
 
     public String toString() {
-        return rank + "_of_" + suit; 
+        return rank + " OF " + suit; 
     }
 
 }

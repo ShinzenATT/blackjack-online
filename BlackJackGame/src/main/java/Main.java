@@ -1,4 +1,4 @@
-import Controller.ControllerTest;
+import Controller.Controller;
 import Model.GameTracker;
 import Model.objects.Player;
 import View.*;
@@ -13,6 +13,6 @@ public static void main(String[] args) {
           new Player("Player 3", 1000)
   );
   GameWindow gameWindow = new GameWindow();
-  ControllerTest bjControl = new ControllerTest(bjModel, gameWindow);
+  Controller bjControl = new Controller(bjModel, gameWindow);
   }
 }
