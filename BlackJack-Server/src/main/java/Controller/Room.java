@@ -47,7 +47,7 @@ public class Room extends Observable implements Closeable {
         if(gt == null){
             gc.sendError("Not started", "Please start the game by sending the 'start' command");
             return;
-        }else if (currentTurn.getPlayer() != gc.getPlayer()) {
+        }else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
         } else if (currentTurn.getBet() > 0) {
@@ -63,7 +63,7 @@ public class Room extends Observable implements Closeable {
         if(gt == null){
             gc.sendError("Not started", "Please start the game by sending the 'start' command");
             return;
-        }else if (currentTurn.getPlayer() != gc.getPlayer()) {
+        }else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
         }
@@ -80,7 +80,7 @@ public class Room extends Observable implements Closeable {
         if(gt == null){
             gc.sendError("Not started", "Please start the game by sending the 'start' command");
             return;
-        } else if (currentTurn.getPlayer() != gc.getPlayer()) {
+        } else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
         }
@@ -96,7 +96,7 @@ public class Room extends Observable implements Closeable {
         if(gt == null){
             gc.sendError("Not started", "Please start the game by sending the 'start' command");
             return;
-        } else if (currentTurn.getPlayer() != gc.getPlayer()) {
+        } else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
         }
@@ -110,7 +110,7 @@ public class Room extends Observable implements Closeable {
         if(gt == null){
             gc.sendError("Not started", "Please start the game by sending the 'start' command");
             return;
-        } else if (currentTurn.getPlayer() != gc.getPlayer()) {
+        } else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
         } else if(currentTurn.getHand().size() != 2 || currentTurn.getHand().get(0).getRank() != currentTurn.getHand().get(1).getRank()){
@@ -162,6 +162,15 @@ public class Room extends Observable implements Closeable {
     }
 
     public boolean playerExists(String playerName){
-        return players.stream().anyMatch(gc -> gc.getPlayer().getUsername().equals(playerName));
+        if(players.stream().anyMatch(gc -> gc.getPlayer().getUsername().equals(playerName))){
+            boolean isConnected = false;
+            for(GameConnection gc : players.stream().filter(gc -> gc.getPlayer().getUsername().equals(playerName)).toList()){
+                if(!gc.isClosed()){
+                    isConnected = true;
+                }
+            }
+            return isConnected;
+        }
+        return false;
     }
 }
