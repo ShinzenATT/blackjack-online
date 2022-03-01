@@ -33,6 +33,7 @@ public class DeckTest {
         List deckList = deck.getDeck();
         assertEquals(0, deckList.stream().filter(c -> Collections.frequency(deckList, c) > 1).toList().size());
     }
+
     @Test
     //Test to check the deck size before compared to after removing a card from the deck
     public void sizeOfDeck(){
