@@ -11,8 +11,8 @@ import java.util.List;
 public class GameModel {
     public final String status;
     public final int current_turn;
-    public final List<Hand> turn_order;
     public final String room_code;
+    public final List<Hand> turn_order;
 
     public GameModel(GameTracker gt, String roomCode) {
         current_turn = gt.getTurnTracker() - 1;

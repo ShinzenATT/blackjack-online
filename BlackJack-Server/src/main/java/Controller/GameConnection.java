@@ -18,8 +18,8 @@ public class GameConnection implements Runnable, Observer, Closeable {
     private final BufferedReader input;
     private final PrintWriter output;
     private final Gson gson;
-    private final Player player;
-    private final RoomTracker.Room room;
+    private Player player;
+    private Room room;
 
     public GameConnection(Socket s) throws IOException {
         conn = s;
@@ -28,50 +28,49 @@ public class GameConnection implements Runnable, Observer, Closeable {
         gson = new Gson();
 
         ConnectionSetup cs;
-        try{
-            cs = gson.fromJson(ReadFile(), ConnectionSetup.class);
-            if(cs.player_name == null){
-                throw new IllegalArgumentException("Player name was missing");
-            }
-        }catch (JsonSyntaxException e){
-            output.println(gson.toJson(new ErrorRes("Invalid syntax", e.getMessage())));
-            conn.close();
-            player = null;
-            room = null;
-            return;
-        } catch (IllegalArgumentException e){
-            output.println(gson.toJson(new ErrorRes("Missing field", e.getMessage())));
-            conn.close();
-            player = null;
-            room = null;
-            return;
-        }
-
-        player = new Player(cs.player_name, 1000);
-        if(cs.room_code != null){
-            room = RoomTracker.joinRoom(cs.room_code, this);
-            if(room == null){
+        do {
+            try {
+                cs = gson.fromJson(ReadFile(), ConnectionSetup.class);
+                if (cs.player_name == null) {
+                    throw new IllegalArgumentException("Player name was missing");
+                }
+            } catch (JsonSyntaxException e) {
+                output.println(gson.toJson(new ErrorRes("Invalid syntax", e.getMessage())));
+                cs = null;
+            } catch (IllegalArgumentException e) {
+                output.println(gson.toJson(new ErrorRes("Missing field", e.getMessage())));
                 conn.close();
+                cs = null;
             }
-            System.out.println(this.toString() + " joined room " + room);
-        } else {
-            room = RoomTracker.createRoom(this);
-            System.out.println( this.toString() + " created room " + room);
-        }
+
+            if(cs != null) {
+                player = new Player(cs.player_name, 1000);
+                if (cs.room_code != null) {
+                    try {
+                        room = RoomTracker.joinRoom(cs.room_code, this);
+                    } catch (IllegalArgumentException e){
+                        cs = null;
+                    }
+                    System.out.println(this.toString() + " joined room " + room);
+                } else {
+                    room = RoomTracker.createRoom(this);
+                    System.out.println(this.toString() + " created room " + room);
+                }
+            }
+        }while (cs == null);
     }
 
     @Override
     public void run() {
         try (conn) {
-            System.out.println("Opened connection at " + this.toString() + " in thread " + Thread.currentThread().getName());
-            while (conn.isConnected()){
+            System.out.println("Opened connection " + this + " at  thread " + Thread.currentThread().getName());
+            while (!conn.isClosed()){
                 try {
                     handleCmd(gson.fromJson(ReadFile(), RecievingCmd.class));
                 } catch (JsonSyntaxException e){
                     output.println(gson.toJson(new ErrorRes("Illegal JSON syntax", e.getMessage() )));
                 }
             }
-            System.out.println("Closed connection at " + Thread.currentThread().getName());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -85,6 +84,11 @@ public class GameConnection implements Runnable, Observer, Closeable {
         int nests = 0;
         do {
             line = input.readLine();
+
+            if(line == null){
+                break;
+            }
+
             str.append(line).append('\n');
             if(line.contains("{")){
                 nests++;
@@ -110,18 +114,29 @@ public class GameConnection implements Runnable, Observer, Closeable {
     }
 
     private void handleCmd(RecievingCmd cmd){
+        if(cmd == null){
+            try {
+                close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            return;
+        }
+
         switch (cmd.command){
-            case "start" -> room.startGame();
-            case "hit" -> System.out.println(this + " hit");
-            case "stand" -> System.out.println(this + " stand");
-            case "split" -> System.out.println(this + " bet");
-            case "bet" -> System.out.println(this + " bet " + cmd.value);
-            case "double down" -> System.out.println(this + " double down");
-            default -> output.println(gson.toJson(new ErrorRes("unknown cmd", "The command " + cmd.command + " is not a available command")));
+            case "start" -> room.startGame(this);
+            case "hit" -> room.hit(this);
+            case "stand" -> room.stand(this);
+            case "split" -> room.split(this);
+            case "bet" -> room.bet(cmd.value, this);
+            case "double down" -> room.doubleDown(this);
+            default -> output.println(gson.toJson(new ErrorRes("unknown cmd", "The command " + cmd.command + " is not a available")));
         }
     }
 
     public void sendError(String type, String msg){
             output.println(gson.toJson(new ErrorRes(type, msg)));
     }
+
+    public boolean isClosed() { return conn.isClosed(); }
 }

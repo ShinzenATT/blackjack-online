@@ -1,12 +1,8 @@
 package Model;
 
 import Controller.GameConnection;
-import Model.objects.Hand;
-import Model.objects.Player;
-import com.google.gson.Gson;
-import json_data.GameModel;
+import Controller.Room;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.*;
 
@@ -30,9 +26,13 @@ public class RoomTracker {
     public static Room joinRoom(String roomCode, GameConnection gc){
         Room r = games.get(roomCode);
         if(r == null){
-            System.out.println("There's no room with code " + roomCode);
-            throw new IllegalArgumentException("Room does not exist");
+            gc.sendError("Room not exist", "The room was not found, did you enter the right room code?");
+            throw new IllegalArgumentException();
+        } else if(r.playerExists(gc.getPlayer().getUsername())){
+            gc.sendError("username taken", "the username is already taken in that room, please use a different name");
+            throw new IllegalArgumentException();
         }
+
         r.addObserver(gc);
         return r;
     }
@@ -48,66 +48,4 @@ public class RoomTracker {
         });
     }
 
-    public static class Room extends Observable implements Closeable {
-        private GameTracker gt = null;
-        private final Gson gson = new Gson();
-        private final List<GameConnection> players = new ArrayList<>();
-        private final String roomCode;
-        private Hand currentTurn = null;
-
-        public Room(String roomCode){
-            super();
-            this.roomCode = roomCode;
-        }
-
-        public void startGame(){
-            List<Player> a = new ArrayList<>();
-
-            for (GameConnection c: players) {
-                a.add(c.getPlayer());
-            }
-
-            gt = new GameTracker(a.toArray(new Player[a.size()]));
-
-            currentTurn  = gt.next();
-
-            setChanged();
-            notifyObservers();
-        }
-
-        public void bet(int chips, GameConnection gc){
-            if(currentTurn.getPlayer() != gc.getPlayer()){
-                gc.sendError("Not your turn", "Please wait until it is your turn");
-                return;
-            }
-            currentTurn.betChips(chips);
-        }
-
-        @Override
-        public void notifyObservers() {
-            setChanged();
-            if(gt != null) {
-                super.notifyObservers(gson.toJson(new GameModel(gt, roomCode)));
-            } else {
-                super.notifyObservers(gson.toJson(new GameModel(players, roomCode)));
-            }
-        }
-
-        public synchronized void addObserver(GameConnection gc) {
-            super.addObserver(gc);
-            players.add(gc);
-            notifyObservers();
-        }
-
-        @Override
-        public void close() throws IOException {
-            for (GameConnection c: players){
-                c.close();
-            }
-
-            System.out.println("Closed room " + this);
-        }
-
-        public String getRoomCode() { return roomCode; }
-    }
 }

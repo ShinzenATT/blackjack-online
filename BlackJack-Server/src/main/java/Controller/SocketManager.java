@@ -23,7 +23,6 @@ public class SocketManager {
                             return null;
                         }).whenCompleteAsync((v, t) -> System.out.println("Closed connection " + gc));
             } catch (IOException e){
-                System.out.println("There was a problem with the connection");
                 e.printStackTrace();
             }
         }

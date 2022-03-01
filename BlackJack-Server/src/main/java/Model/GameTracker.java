@@ -60,4 +60,8 @@ public class GameTracker implements Iterator<Hand> {
 
     public int getTurnTracker(){ return turnTracker; }
 
+    public void insertNext(Hand hand){
+        turnOrder.add(turnTracker + 1, hand);
+    }
+
 }

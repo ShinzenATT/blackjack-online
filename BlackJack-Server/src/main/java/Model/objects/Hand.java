@@ -73,6 +73,12 @@ public class Hand {
 
     public Player getPlayer() { return association; }
 
+    public Card getAndRemoveLastCard(){
+        Card c = hand.get(hand.size() - 1);
+        hand.remove(hand.size() - 1);
+        return c;
+    }
+
     @Override
     public String toString(){ return hand.toString(); }
 
