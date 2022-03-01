@@ -86,6 +86,9 @@ public class Room extends Observable implements Closeable {
         }
 
         currentTurn = gt.next();
+        if(!gt.hasNext()){
+            runDealerAI();
+        }
         notifyObservers();
     }
 
@@ -121,6 +124,12 @@ public class Room extends Observable implements Closeable {
         gt.insertNext(h);
 
         notifyObservers();
+    }
+
+    public synchronized void runDealerAI(){
+        while (currentTurn.getPoints() < 17){
+            currentTurn.addCard(gt.nextCard());
+        }
     }
 
     @Override
