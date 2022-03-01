@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class GameTrackerTest {
 
@@ -25,12 +25,12 @@ public class GameTrackerTest {
     }
 
     @Test
-    //Testing for a next turn
-    public void turnTest(){
+    //Testing for a turn order
+    public void nextTurnTest(){
         Player player1 = new Player("Player1", 100);
         Player player2 = new Player("Player2", 100);
         GameTracker testGame = new GameTracker(player1, player2);
-        assertThat(testGame.getTurnOrder(), instanceOf(List.class));
+        assertTrue(testGame.getTurnOrder().size() > 1);
     }
 
 
@@ -43,9 +43,24 @@ public class GameTrackerTest {
         assertThat(testGame.nextCard(), instanceOf(Hand.class));
     }
 
+    @Test
     //Testing for dealers hand
+    public void dealerTest(){
+        Player player1 = new Player("Player1", 100);
+        Player player2 = new Player("Player2", 100);
+        GameTracker testGame = new GameTracker(player1, player2);
+        assertEquals("Dealer", testGame.getDealerHand().getPlayer().getUsername());
+    }
 
-
+    @Test
     //Testing for getting the correct turn order
-
+    public void turnOrderTest(){
+        Player player1 = new Player("Player1", 100);
+        Player player2 = new Player("Player2", 100);
+        GameTracker testGame = new GameTracker(player1, player2);
+        List<Hand> hands = testGame.getTurnOrder();
+        assertEquals("Player1", hands.get(0).getPlayer().getUsername());
+        assertEquals("Player2", hands.get(1).getPlayer().getUsername());
+        assertEquals("Dealer", hands.get(2).getPlayer().getUsername());
+    }
 }
