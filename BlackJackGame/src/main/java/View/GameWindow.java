@@ -35,13 +35,17 @@ public class GameWindow extends JFrame {
     private final JLabel playerHandValue;
     private final JLabel dealerHandValue;
     private final JLabel blackJackLogo;
+    private final JButton joinBackButton;
+    private final JButton rulesBackButton;
 
     private final JPanel dealerCardsPanel;
 
     private final JPanel playerCardsPanel;
     private final JPanel dealerNamePanel;
     private final JPanel playerNamePanel;
+    private final JPanel rulesPanel;
 
+    private final JTextArea rulesText;
     private final JLabel playerCardImageLabel;
     
 	private ArrayList<JLabel> dealerLabels;
@@ -55,12 +59,16 @@ public class GameWindow extends JFrame {
     private final JPanel menuButtonsPanel;
     private final JPanel menuMusicPanel;
     private final JPanel joinServerPanel;
+    private final JPanel joinServerMenuPanel;
 
     private final JPanel menuPanel;
     private final JTextField joinRoom;
     private final JTextField playerField;
     private final JButton createRoom;
     private final JButton joinRoomButton;
+    private final JPanel backPanel;
+    private final JPanel rulesBackPanel;
+    private final JPanel rulesInfoPanel;
 
     private final JPanel root;
     
@@ -89,6 +97,14 @@ public class GameWindow extends JFrame {
         joinServerPanel = new JPanel();
         menuPanel = new JPanel();
         blackJackLogo = new JLabel();
+        joinBackButton = new JButton();
+        backPanel = new JPanel();
+        joinServerMenuPanel = new JPanel();
+        rulesPanel = new JPanel();
+        rulesText = new JTextArea();
+        rulesBackPanel = new JPanel();
+        rulesBackButton = new JButton();
+        rulesInfoPanel = new JPanel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -110,26 +126,25 @@ public class GameWindow extends JFrame {
         playerNamePanel.setSize(new java.awt.Dimension(700,100));
         playerNamePanel.setBackground(new java.awt.Color(24, 40, 24));
         
-
-
-
-        //JFrame setup
+        //main frame setup
         JFrame mainFrame = new JFrame("BlackJack");
         mainFrame.setSize(1200, 800);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(false);
 
-        //JPanel setup
+        //main panel setup
         mainPanel.setBackground(new java.awt.Color(24, 139, 24));
         mainPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         mainPanel.setSize(new java.awt.Dimension(700, 500));
         mainPanel.setLayout(new BorderLayout());
 
+        //menu panel setup
         menuPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         menuPanel.setSize(new java.awt.Dimension(700, 500));
         menuPanel.setBackground(new java.awt.Color(24, 139, 24));
         menuPanel.setLayout(new BorderLayout());
 
+        // panel for buttons in menu
         menuButtonsPanel.setLayout(new BoxLayout(menuButtonsPanel, BoxLayout.Y_AXIS));
         menuButtonsPanel.setBackground(new java.awt.Color(24, 139, 24));
 
@@ -220,8 +235,26 @@ public class GameWindow extends JFrame {
         menuMusicPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         menuMusicPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        rulesInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        rulesInfoPanel.setBackground(new java.awt.Color(24, 139, 24));
+
+        backPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        backPanel.setBackground(new java.awt.Color(24, 139, 24));
+
+        rulesBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        rulesBackPanel.setBackground(new java.awt.Color(24, 139, 24));
+
+        joinServerMenuPanel.setLayout(new BoxLayout(joinServerMenuPanel, BoxLayout.Y_AXIS));
+        joinServerMenuPanel.setSize(new java.awt.Dimension(200, 50));
+        joinServerMenuPanel.setBackground(new java.awt.Color(24, 139, 24));
+
+        rulesPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        rulesPanel.setSize(new java.awt.Dimension(700, 500));
+        rulesPanel.setBackground(new java.awt.Color(24, 139, 24));
+        rulesPanel.setLayout(new BorderLayout());
+
         musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
-        musicButton.setBounds(10, 400, 66, 66);
+        //musicButton.setBounds(10, 400, 66, 66);
         //musicButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         musicButton.setOpaque(false);
         musicButton.setContentAreaFilled(false);
@@ -229,15 +262,37 @@ public class GameWindow extends JFrame {
         musicButton.setFocusPainted(false);
         menuMusicPanel.add(musicButton);
 
-        joinServerPanel.setLayout(new GridLayout(3, 1, 0, 20));
+        joinBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
+        joinBackButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
+        //joinBackButton.setBounds(10, 400, 66, 66);
+        //musicButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        joinBackButton.setOpaque(false);
+        joinBackButton.setContentAreaFilled(false);
+        joinBackButton.setBorderPainted(false);
+        joinBackButton.setFocusPainted(false);
+        backPanel.add(joinBackButton);
+        //backPanelRules.add(joinBackButton);
+
+        rulesBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
+        rulesBackButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
+        rulesBackButton.setOpaque(false);
+        rulesBackButton.setContentAreaFilled(false);
+        rulesBackButton.setBorderPainted(false);
+        rulesBackButton.setFocusPainted(false);
+        rulesBackPanel.add(rulesBackButton);
+
+        joinServerPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        joinServerPanel.setSize(new java.awt.Dimension(700, 500));
         joinServerPanel.setBackground(new java.awt.Color(24, 139, 24));
-        joinServerPanel.setBorder(new EmptyBorder(300, 100, 300, 100));
+        joinServerPanel.setLayout(new BorderLayout());
 
         playerField = new JTextField("player name here");
-        joinServerPanel.add(playerField);
+        //playerField.setMaximumSize( joinServerMenuPanel.getPreferredSize() );
+        playerField.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         joinRoom = new JTextField("Enter room code to join room");
-        joinServerPanel.add(joinRoom);
+        //joinRoom.setMaximumSize( joinServerMenuPanel.getPreferredSize() );
+        joinRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         joinRoomButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
         joinRoomButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
@@ -276,8 +331,42 @@ public class GameWindow extends JFrame {
         menuButtonsPanel.add(closeButton);
 
         createRoom = new JButton("Create room");
-        joinServerPanel.add(createRoom);
+        createRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JTextArea rulesText = new JTextArea(
+            "Basic BlackJack rules: \n" +
+            "\u2022 The goal of blackjack is to beat the dealer's hand without going over 21. \n" +
+            "\u2022 Face cards are worth 10. Aces are worth 1 or 11, whichever makes a better hand. \n" +
+            "\u2022 Each player starts with two cards, one of the dealer's cards is hidden until the end. \n" +
+            "\u2022 To 'Hit' is to ask for another card. To 'Stand' is to hold your total and end your turn. \n" +
+            "\u2022 If you go over 21 you bust, and the dealer wins regardless of the dealer's hand. \n" +
+            "\u2022 If you are dealt 21 from the start (Ace & 10), you got a blackjack. \n" +
+            "\u2022 Blackjack usually means you win 1.5 the amount of your bet. Depends on the casino. \n" +
+            "\u2022 Dealer will hit until his/her cards total 17 or higher. \n" +
+            "\u2022 Doubling is like a hit, only the bet is doubled and you only get one more card. \n" +
+            "\u2022 Split can be done when you have two of the same card, the pair is split into two hands. \n" +
+            "\u2022 Splitting also doubles the bet, because each new hand is worth the original bet. \n" +
+            "\u2022 You can only double/split on the first move, or first move of a hand created by a split. \n" +
+            "\u2022 You cannot play on two aces after they are split. \n" +
+            "\u2022 You can double on a hand resulting from a split, tripling or quadrupling you bet. \n", 
+                5, 
+                46);
+        rulesText.setFont(new Font("Serif", Font.PLAIN, 18));
+        rulesText.setForeground(Color.WHITE);
+        rulesText.setLineWrap(true);
+        rulesText.setWrapStyleWord(true);
+        rulesText.setOpaque(false);
+        rulesText.setEditable(false);
+
+        joinServerMenuPanel.add(joinRoom);
+        joinServerMenuPanel.add(playerField);
+        joinServerMenuPanel.add(createRoom);
+        joinServerPanel.add(joinServerMenuPanel, BorderLayout.CENTER);
+
+        rulesInfoPanel.add(rulesText);
+        rulesPanel.add(rulesInfoPanel, BorderLayout.CENTER);
+        rulesPanel.add(rulesBackPanel, BorderLayout.NORTH);
+        joinServerPanel.add(backPanel, BorderLayout.NORTH);
         menuPanel.add(menuMusicPanel, BorderLayout.SOUTH);
         menuPanel.add(menuButtonsPanel, BorderLayout.CENTER);
 
@@ -285,6 +374,7 @@ public class GameWindow extends JFrame {
         root.add(menuPanel, "menu");
         root.add(mainPanel, "game");
         root.add(joinServerPanel, "joinroom");
+        root.add(rulesPanel, "rules");
         mainFrame.getContentPane().add(root);
         mainFrame.setVisible(true);
     }
@@ -386,6 +476,16 @@ public class GameWindow extends JFrame {
         cl.show(root, "joinroom");
     }
 
+    public void switchToMenu(){
+        CardLayout cl = (CardLayout) root.getLayout();
+        cl.show(root, "menu");
+    }
+
+    public void switchToRules(){
+        CardLayout cl = (CardLayout) root.getLayout();
+        cl.show(root, "rules");
+    }
+
     public void addHitButtonListener(ActionListener hl) {
         hitButton.addActionListener(hl);
     }
@@ -415,6 +515,13 @@ public class GameWindow extends JFrame {
     public void addCloseButtonListener(ActionListener cl){ closeButton.addActionListener(cl); }
 
     public void addJoinRoomButtonListener(ActionListener cl){ joinRoomButton.addActionListener(cl); }
+
+    public void addJoinBackButtonListener(ActionListener bl){ joinBackButton.addActionListener(bl); }
+
+    public void addRulesButtonListener(ActionListener bl){ rulesButton.addActionListener(bl); }
+
+    public void addRulesBackButtonListener(ActionListener bl){ rulesBackButton.addActionListener(bl); }
+
 
     public String getBetText(){ return betField.getText(); }
 

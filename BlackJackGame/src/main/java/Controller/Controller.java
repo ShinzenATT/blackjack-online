@@ -135,6 +135,29 @@ public class Controller {
     bjview.addCloseButtonListener(e -> {
         System.exit(0);
     });
+
+    // Controls for back button in join room panel
+    bjview.addJoinBackButtonListener(e -> {
+        bjview.switchToMenu();
+    });
+
+    // Controls rules button in menu
+    bjview.addRulesButtonListener(e -> {
+        bjview.switchToRules();
+    });
+
+    // Controls for back button in join room panel
+    bjview.addRulesBackButtonListener(e -> {
+        bjview.switchToMenu();
+    });
+
+
+
+
+
+
+
+
     }
     
     private ArrayList<String> getHandImageStrings(Hand h){
