@@ -34,6 +34,7 @@ public class GameWindow extends JFrame {
     private final JLabel playerNameLabel;
     private final JLabel playerHandValue;
     private final JLabel dealerHandValue;
+    private final JLabel blackJackLogo;
 
     private final JPanel dealerCardsPanel;
 
@@ -48,17 +49,18 @@ public class GameWindow extends JFrame {
 
     //private final JButton gameOnButton;
     private final JButton closeButton;
-    private final JButton joinServerButton;
     private final JButton rulesButton;
     private final JButton createServerButton;
     private final JButton musicButton;
     private final JPanel menuButtonsPanel;
     private final JPanel menuMusicPanel;
+    private final JPanel joinServerPanel;
 
     private final JPanel menuPanel;
     private final JTextField joinRoom;
     private final JTextField playerField;
     private final JButton createRoom;
+    private final JButton joinRoomButton;
 
     private final JPanel root;
     
@@ -78,12 +80,15 @@ public class GameWindow extends JFrame {
         chipText = new JLabel();
         handPoints = new JLabel();
         closeButton = new JButton();
-        joinServerButton = new JButton();
+        joinRoomButton = new JButton();
         createServerButton = new JButton();
         rulesButton = new JButton();
         musicButton = new JButton();
         menuButtonsPanel = new JPanel();
         menuMusicPanel = new JPanel();
+        joinServerPanel = new JPanel();
+        menuPanel = new JPanel();
+        blackJackLogo = new JLabel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -119,6 +124,14 @@ public class GameWindow extends JFrame {
         mainPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         mainPanel.setSize(new java.awt.Dimension(700, 500));
         mainPanel.setLayout(new BorderLayout());
+
+        menuPanel.setPreferredSize(new java.awt.Dimension(700, 500));
+        menuPanel.setSize(new java.awt.Dimension(700, 500));
+        menuPanel.setBackground(new java.awt.Color(24, 139, 24));
+        menuPanel.setLayout(new BorderLayout());
+
+        menuButtonsPanel.setLayout(new BoxLayout(menuButtonsPanel, BoxLayout.Y_AXIS));
+        menuButtonsPanel.setBackground(new java.awt.Color(24, 139, 24));
 
         //Hit button setup
         hitButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("hitButton")));
@@ -195,7 +208,18 @@ public class GameWindow extends JFrame {
         mainPanel.add(dealerCardsPanel, BorderLayout.NORTH);
         mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
 
+        // Close button setup
+        closeButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("exitButton")));
+        closeButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("exitButtonRollover")));
+        closeButton.setOpaque(false);
+        closeButton.setContentAreaFilled(false);
+        closeButton.setBorderPainted(false);
+        closeButton.setFocusPainted(false);
+        closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         menuMusicPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        menuMusicPanel.setBackground(new java.awt.Color(24, 139, 24));
+
         musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
         musicButton.setBounds(10, 400, 66, 66);
         //musicButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -205,23 +229,62 @@ public class GameWindow extends JFrame {
         musicButton.setFocusPainted(false);
         menuMusicPanel.add(musicButton);
 
-        menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(3, 1, 0, 20));
-        menuPanel.setBackground(new java.awt.Color(24, 139, 24));
-        menuPanel.setBorder(new EmptyBorder(300, 100, 300, 100));
+        joinServerPanel.setLayout(new GridLayout(3, 1, 0, 20));
+        joinServerPanel.setBackground(new java.awt.Color(24, 139, 24));
+        joinServerPanel.setBorder(new EmptyBorder(300, 100, 300, 100));
 
         playerField = new JTextField("player name here");
-        menuPanel.add(playerField);
+        joinServerPanel.add(playerField);
 
         joinRoom = new JTextField("Enter room code to join room");
-        menuPanel.add(joinRoom);
+        joinServerPanel.add(joinRoom);
+
+        joinRoomButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
+        joinRoomButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
+        joinRoomButton.setOpaque(false);
+        joinRoomButton.setContentAreaFilled(false);
+        joinRoomButton.setBorderPainted(false);
+        joinRoomButton.setFocusPainted(false);
+        joinRoomButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Create server button setup
+        createServerButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("createServerButton")));
+        createServerButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("createServerButtonRollover")));
+        createServerButton.setOpaque(false);
+        createServerButton.setContentAreaFilled(false);
+        createServerButton.setBorderPainted(false);
+        createServerButton.setFocusPainted(false);
+        createServerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Rules button setup
+        rulesButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("rulesButton")));
+        rulesButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("rulesButtonRollover")));
+        rulesButton.setOpaque(false);
+        rulesButton.setContentAreaFilled(false);
+        rulesButton.setBorderPainted(false);
+        rulesButton.setFocusPainted(false);
+        rulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        blackJackLogo.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("blackJackLogo")));
+        blackJackLogo.setOpaque(false);
+        blackJackLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        menuButtonsPanel.add(blackJackLogo);
+        menuButtonsPanel.add(joinRoomButton);
+        menuButtonsPanel.add(createServerButton);
+        menuButtonsPanel.add(rulesButton);
+        menuButtonsPanel.add(closeButton);
 
         createRoom = new JButton("Create room");
-        menuPanel.add(createRoom);
+        joinServerPanel.add(createRoom);
+
+        menuPanel.add(menuMusicPanel, BorderLayout.SOUTH);
+        menuPanel.add(menuButtonsPanel, BorderLayout.CENTER);
 
         root = new JPanel(new CardLayout());
         root.add(menuPanel, "menu");
         root.add(mainPanel, "game");
+        root.add(joinServerPanel, "joinroom");
         mainFrame.getContentPane().add(root);
         mainFrame.setVisible(true);
     }
@@ -318,6 +381,11 @@ public class GameWindow extends JFrame {
         cl.show(root, "game");
     }
 
+    public void switchToJoinRoom(){
+        CardLayout cl = (CardLayout) root.getLayout();
+        cl.show(root, "joinroom");
+    }
+
     public void addHitButtonListener(ActionListener hl) {
         hitButton.addActionListener(hl);
     }
@@ -345,6 +413,8 @@ public class GameWindow extends JFrame {
     public void addMusicButtonListener(ActionListener ml){ musicButton.addActionListener(ml); }
 
     public void addCloseButtonListener(ActionListener cl){ closeButton.addActionListener(cl); }
+
+    public void addJoinRoomButtonListener(ActionListener cl){ joinRoomButton.addActionListener(cl); }
 
     public String getBetText(){ return betField.getText(); }
 

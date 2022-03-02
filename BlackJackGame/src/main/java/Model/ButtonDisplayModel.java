@@ -37,6 +37,7 @@ public class ButtonDisplayModel {
             imgs.put("exitButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/exitRollover.png")));
             imgs.put("singlePlayerButton", ImageIO.read(new File("BlackJackGame/src/main/resources/singlePlayer.png")));
             imgs.put("singlePlayerButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/singlePlayerRollover.png")));
+            imgs.put("blackJackLogo", ImageIO.read(new File("BlackJackGame/src/main/resources/blackJackLogo.png")));
         } catch (IOException e) {
             System.out.println(
                 "Can't find all the images for the buttons."

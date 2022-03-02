@@ -126,6 +126,11 @@ public class Controller {
         
     });
 
+    // Controls for join room button in main menu
+    bjview.addJoinRoomButtonListener(e -> {
+        bjview.switchToJoinRoom();
+    });
+
     // Controls for close game button in main menu
     bjview.addCloseButtonListener(e -> {
         System.exit(0);
