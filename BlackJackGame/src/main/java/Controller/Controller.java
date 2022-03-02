@@ -25,6 +25,7 @@ public class Controller {
     private final GameWindow bjview;
     private final GameTracker bjmodel;
     //private Hand currentTurn = null;
+    private boolean musicOn = true;
     private Hand dealerHand = null;
     private String serverUrl = "localhost";
     private int serverPort = 8080;
@@ -48,6 +49,11 @@ public class Controller {
                 e.printStackTrace();
             }
         });
+
+        // setup menu background music
+        SoundEffectModel bgplayer = new SoundEffectModel();
+        bgplayer.playBackgroundSound("background.wav");
+        musicOn = true;
 
         //dealerHand = bjmodel.getDealerHand();
 
@@ -104,6 +110,25 @@ public class Controller {
                 bjview.setupDealerCard(getHandImageStrings(dealerHand), false);
                 bjview.setDealerHandPoints(bjmodel.getCurrentTurn().getPoints());
             }*/
+    });
+
+    // Controls for music managing button in main menu
+    bjview.addMusicButtonListener(e -> {
+        if(musicOn){
+            bgplayer.stopBackgroundSound();
+            musicOn = false;
+            bjview.toggleMusicOnButton(false);
+        } else {
+            bgplayer.playBackgroundSound("background.wav");
+            musicOn = true;
+            bjview.toggleMusicOnButton(true);
+        }
+        
+    });
+
+    // Controls for close game button in main menu
+    bjview.addCloseButtonListener(e -> {
+        System.exit(0);
     });
     }
     

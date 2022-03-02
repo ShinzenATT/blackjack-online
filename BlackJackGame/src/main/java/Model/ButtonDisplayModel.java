@@ -25,6 +25,18 @@ public class ButtonDisplayModel {
             imgs.put("standButton", ImageIO.read(new File("BlackJackGame/src/main/resources/standButton.png")));
             imgs.put("standButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/standButtonRollover.png")));
             imgs.put("splitButton", ImageIO.read(new File("BlackJackGame/src/main/resources/splitButton.png")));
+            imgs.put("musicOnButton", ImageIO.read(new File("BlackJackGame/src/main/resources/musicOn.png")));
+            imgs.put("musicOffButton", ImageIO.read(new File("BlackJackGame/src/main/resources/musicOff.png")));
+            imgs.put("joinServerButton", ImageIO.read(new File("BlackJackGame/src/main/resources/joinServer.png")));
+            imgs.put("joinServerButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/joinServerRollover.png")));
+            imgs.put("createServerButton", ImageIO.read(new File("BlackJackGame/src/main/resources/createServer.png")));
+            imgs.put("createServerButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/createServerRollover.png")));
+            imgs.put("rulesButton", ImageIO.read(new File("BlackJackGame/src/main/resources/rules.png")));
+            imgs.put("rulesButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/rulesRollover.png")));
+            imgs.put("exitButton", ImageIO.read(new File("BlackJackGame/src/main/resources/exit.png")));
+            imgs.put("exitButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/exitRollover.png")));
+            imgs.put("singlePlayerButton", ImageIO.read(new File("BlackJackGame/src/main/resources/singlePlayer.png")));
+            imgs.put("singlePlayerButtonRollover", ImageIO.read(new File("BlackJackGame/src/main/resources/singlePlayerRollover.png")));
         } catch (IOException e) {
             System.out.println(
                 "Can't find all the images for the buttons."

@@ -46,6 +46,15 @@ public class GameWindow extends JFrame {
 	private ArrayList<JLabel> dealerLabels;
 	private ArrayList<JLabel> userLabels;
 
+    //private final JButton gameOnButton;
+    private final JButton closeButton;
+    private final JButton joinServerButton;
+    private final JButton rulesButton;
+    private final JButton createServerButton;
+    private final JButton musicButton;
+    private final JPanel menuButtonsPanel;
+    private final JPanel menuMusicPanel;
+
     private final JPanel menuPanel;
     private final JTextField joinRoom;
     private final JTextField playerField;
@@ -68,6 +77,13 @@ public class GameWindow extends JFrame {
         playerName = new JLabel();
         chipText = new JLabel();
         handPoints = new JLabel();
+        closeButton = new JButton();
+        joinServerButton = new JButton();
+        createServerButton = new JButton();
+        rulesButton = new JButton();
+        musicButton = new JButton();
+        menuButtonsPanel = new JPanel();
+        menuMusicPanel = new JPanel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -178,6 +194,16 @@ public class GameWindow extends JFrame {
         playerCardsPanel.add(playerNamePanel);
         mainPanel.add(dealerCardsPanel, BorderLayout.NORTH);
         mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
+
+        menuMusicPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
+        musicButton.setBounds(10, 400, 66, 66);
+        //musicButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        musicButton.setOpaque(false);
+        musicButton.setContentAreaFilled(false);
+        musicButton.setBorderPainted(false);
+        musicButton.setFocusPainted(false);
+        menuMusicPanel.add(musicButton);
 
         menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(3, 1, 0, 20));
@@ -296,6 +322,14 @@ public class GameWindow extends JFrame {
         hitButton.addActionListener(hl);
     }
 
+    public void toggleMusicOnButton(boolean on){
+        if(on){
+            musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
+        } else{
+            musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOffButton")));
+        }
+    }
+
     public void addStandButtonListener(ActionListener al){ stayButton.addActionListener(al); }
 
     public void addPlayerFieldListener(ActionListener al){ playerField.addActionListener(al); }
@@ -307,6 +341,10 @@ public class GameWindow extends JFrame {
     public void addStartButtonListener(ActionListener al){ startButton.addActionListener(al); }
 
     public void addBetFieldListener(ActionListener al){ betField.addActionListener(al); }
+
+    public void addMusicButtonListener(ActionListener ml){ musicButton.addActionListener(ml); }
+
+    public void addCloseButtonListener(ActionListener cl){ closeButton.addActionListener(cl); }
 
     public String getBetText(){ return betField.getText(); }
 

@@ -1,17 +1,20 @@
 package Model.objects;
 import java.util.*;
 
+/**
+ * Class to create a deck object from standard playing cards.
+ * @author Joel
+ */
 public class Deck implements Iterator<Card>{
 
     private List<Card> deck = new ArrayList<Card>();
-    //private int numCardsDeck;
 
     /**
      * Deck constructor to define number of decks to be used and whether
      * it should be shuffled or not.
      * 
-     * @param numDecks number of decks to be combined
-     * @param shuffle decides if the deck should be shuffled or not
+     * @param numDecks Number of decks to be combined
+     * @param shuffle Decides if the deck should be shuffled or not
      */
     public Deck(int numDecks, boolean shuffle) {
         for(int i = 0; i < numDecks; i++){
@@ -34,6 +37,10 @@ public class Deck implements Iterator<Card>{
         this(1,true);
     }
 
+    /**
+     * Returns a card from a deck.
+     * @return The next card in a deck.
+     */
     @Override
     public Card next(){
         Card drawnCard = this.deck.get(0);
@@ -42,15 +49,26 @@ public class Deck implements Iterator<Card>{
         return drawnCard;
     }
 
+    /**
+     * Returns the size of a deck.
+     * @return The numer of cards in a deck.
+     */
     public int getNumCards(){
         return deck.size();
     }
 
-    // för testning behövs nog inte sen
+    /**
+     * Returns a list of cards, the deck.
+     * @return The deck.
+     */
     public List<Card> getDeck(){
         return deck;
     }
-
+    
+    /**
+     * Checks if a deck has more cards in it.
+     * @return Bool whether the deck has more cards in it or not. 
+     */
     @Override
     public boolean hasNext() {
         return deck.size() > 0;
