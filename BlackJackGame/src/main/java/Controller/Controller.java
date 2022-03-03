@@ -15,7 +15,6 @@ import Model.json_data.ErrorRes;
 import Model.json_data.GameModel;
 import Model.json_data.RecievingCmd;
 import Model.objects.Card;
-import Model.objects.Dealer;
 import Model.objects.Hand;
 import View.GameWindow;
 import com.google.gson.Gson;
@@ -59,19 +58,19 @@ public class Controller {
 
         //currentTurn = bjmodel.next();
 
-        bjview.addRoomFieldListener(e -> {
+        bjview.addJoinRoomBtnListener(e -> {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), bjview.getRoomCode()));
             output.println(s);
             System.out.println(s);
             bjview.switchPanel();
         });
 
-        bjview.addCreateRoomListener(e -> {
+        /*bjview.addJoinRoomBtnListener(e -> {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), null));
             output.println(s);
             System.out.println(s);
             bjview.switchPanel();
-        });
+        });*/
 
         bjview.addStartButtonListener(e -> output.println(gson.toJson(new RecievingCmd("start", 0))));
 
@@ -161,6 +160,24 @@ public class Controller {
 
     bjview.addRoomBackButtonListener(e -> {
         if(bjview.confirmExit()){
+            try {
+                conn.close();
+                conn = new Socket(serverUrl, serverPort);
+                input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                output = new PrintWriter(conn.getOutputStream());
+
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        listenForUpdate();
+                    } catch (IOException err) {
+                        err.printStackTrace();
+                    }
+                });
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.exit(1);
+            }
             bjview.switchToMenu();
         }
         
