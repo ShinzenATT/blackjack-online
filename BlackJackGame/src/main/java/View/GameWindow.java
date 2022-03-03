@@ -4,13 +4,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import Model.ButtonDisplayModel;
 import Model.ImageDisplayModel;
-
 import java.awt.*;
 import java.awt.event.*;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,21 +34,14 @@ public class GameWindow extends JFrame {
     private final JLabel blackJackLogo;
     private final JButton joinBackButton;
     private final JButton rulesBackButton;
-
+    private final JButton roomBackButton;
     private final JPanel dealerCardsPanel;
-
     private final JPanel playerCardsPanel;
     private final JPanel dealerNamePanel;
     private final JPanel playerNamePanel;
     private final JPanel rulesPanel;
-
     private final JTextArea rulesText;
     private final JLabel playerCardImageLabel;
-    
-	private ArrayList<JLabel> dealerLabels;
-	private ArrayList<JLabel> userLabels;
-
-    //private final JButton gameOnButton;
     private final JButton closeButton;
     private final JButton rulesButton;
     private final JButton createServerButton;
@@ -60,7 +50,6 @@ public class GameWindow extends JFrame {
     private final JPanel menuMusicPanel;
     private final JPanel joinServerPanel;
     private final JPanel joinServerMenuPanel;
-
     private final JPanel menuPanel;
     private final JTextField joinRoom;
     private final JTextField playerField;
@@ -68,12 +57,16 @@ public class GameWindow extends JFrame {
     private final JButton joinRoomButton;
     private final JPanel backPanel;
     private final JPanel rulesBackPanel;
+    private final JPanel roomBackPanel;
     private final JPanel rulesInfoPanel;
-
     private final JPanel root;
+    private final JPanel roomTopPanel;
     
+	private ArrayList<JLabel> dealerLabels;
+	private ArrayList<JLabel> userLabels;
     ImageDisplayModel allImages = new ImageDisplayModel();
     ButtonDisplayModel allButtonImages = new ButtonDisplayModel();
+
 
     public GameWindow() {
 
@@ -105,6 +98,9 @@ public class GameWindow extends JFrame {
         rulesBackPanel = new JPanel();
         rulesBackButton = new JButton();
         rulesInfoPanel = new JPanel();
+        roomBackButton = new JButton();
+        roomBackPanel = new JPanel();
+        roomTopPanel = new JPanel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -114,12 +110,16 @@ public class GameWindow extends JFrame {
         dealerCardsPanel.setSize(new java.awt.Dimension(700,200));
         dealerCardsPanel.setBackground(new java.awt.Color(24, 40, 24));
 
+        roomTopPanel.setSize(new java.awt.Dimension(700,200));
+        roomTopPanel.setBackground(new java.awt.Color(24, 40, 24));
+        roomTopPanel.setLayout(new BorderLayout());
+
         playerCardsPanel = new JPanel();
         playerCardsPanel.setSize(new java.awt.Dimension(700,200));
         playerCardsPanel.setBackground(new java.awt.Color(24, 40, 24));
 
         dealerNamePanel = new JPanel();
-        dealerNamePanel.setSize(new java.awt.Dimension(700,100));
+        //dealerNamePanel.setSize(new java.awt.Dimension(700,100));
         dealerNamePanel.setBackground(new java.awt.Color(24, 40, 24));
 
         playerNamePanel = new JPanel();
@@ -175,10 +175,12 @@ public class GameWindow extends JFrame {
         doubleDownButton.setBorderPainted(false);
         mainPanel.add(doubleDownButton);
 
+        //Start button setup
         startButton = new JButton("Start game");
         startButton.setBounds(610, 300, 150, 49);
         mainPanel.add(startButton);
 
+        //Bet field setup
         betField = new JTextField("bet chips here");
         betField.setBounds(770, 300, 100, 49);
         mainPanel.add(betField);
@@ -220,8 +222,6 @@ public class GameWindow extends JFrame {
 
         dealerCardsPanel.add(dealerNamePanel);
         playerCardsPanel.add(playerNamePanel);
-        mainPanel.add(dealerCardsPanel, BorderLayout.NORTH);
-        mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
 
         // Close button setup
         closeButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("exitButton")));
@@ -232,9 +232,11 @@ public class GameWindow extends JFrame {
         closeButton.setFocusPainted(false);
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Panel that holds music button in menu bottom right
         menuMusicPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         menuMusicPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        // Panel that holds info textfield in rules panel
         rulesInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         rulesInfoPanel.setBackground(new java.awt.Color(24, 139, 24));
 
@@ -243,6 +245,10 @@ public class GameWindow extends JFrame {
 
         rulesBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         rulesBackPanel.setBackground(new java.awt.Color(24, 139, 24));
+
+        // Panel that holds the return button from a room, top left corner
+        roomBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        roomBackPanel.setBackground(new java.awt.Color(24, 40, 24));
 
         joinServerMenuPanel.setLayout(new BoxLayout(joinServerMenuPanel, BoxLayout.Y_AXIS));
         joinServerMenuPanel.setSize(new java.awt.Dimension(200, 50));
@@ -273,6 +279,7 @@ public class GameWindow extends JFrame {
         backPanel.add(joinBackButton);
         //backPanelRules.add(joinBackButton);
 
+        // Return button in rules panels top left corner
         rulesBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
         rulesBackButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
         rulesBackButton.setOpaque(false);
@@ -280,6 +287,16 @@ public class GameWindow extends JFrame {
         rulesBackButton.setBorderPainted(false);
         rulesBackButton.setFocusPainted(false);
         rulesBackPanel.add(rulesBackButton);
+
+        // Return button in active game panels top left corner
+        roomBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
+        roomBackButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
+        roomBackButton.setOpaque(false);
+        roomBackButton.setContentAreaFilled(false);
+        roomBackButton.setBorderPainted(false);
+        roomBackButton.setFocusPainted(false);
+        roomBackButton.setBounds(10, 10, 75, 75);
+        roomBackPanel.add(roomBackButton);
 
         joinServerPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         joinServerPanel.setSize(new java.awt.Dimension(700, 500));
@@ -363,12 +380,17 @@ public class GameWindow extends JFrame {
         joinServerMenuPanel.add(createRoom);
         joinServerPanel.add(joinServerMenuPanel, BorderLayout.CENTER);
 
+        roomTopPanel.add(dealerCardsPanel, BorderLayout.CENTER);
+        roomTopPanel.add(roomBackPanel, BorderLayout.WEST);
+
         rulesInfoPanel.add(rulesText);
         rulesPanel.add(rulesInfoPanel, BorderLayout.CENTER);
         rulesPanel.add(rulesBackPanel, BorderLayout.NORTH);
         joinServerPanel.add(backPanel, BorderLayout.NORTH);
         menuPanel.add(menuMusicPanel, BorderLayout.SOUTH);
         menuPanel.add(menuButtonsPanel, BorderLayout.CENTER);
+        mainPanel.add(roomTopPanel, BorderLayout.NORTH);
+        mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
 
         root = new JPanel(new CardLayout());
         root.add(menuPanel, "menu");
@@ -522,11 +544,23 @@ public class GameWindow extends JFrame {
 
     public void addRulesBackButtonListener(ActionListener bl){ rulesBackButton.addActionListener(bl); }
 
+    public void addDoubleDownButtonListener(ActionListener dl){ doubleDownButton.addActionListener(dl); }
+
+    public void addRoomBackButtonListener(ActionListener rl){ roomBackButton.addActionListener(rl); }
 
     public String getBetText(){ return betField.getText(); }
 
     public String getPlayerFieldText(){ return playerField.getText(); }
 
     public String getRoomCode(){ return joinRoom.getText(); }
+
+    public boolean confirmExit(){
+        int a = JOptionPane.showConfirmDialog(mainPanel, "Do you really want to exit the current game?");
+        if(a == JOptionPane.YES_OPTION){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 

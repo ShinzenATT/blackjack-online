@@ -84,6 +84,7 @@ public class Controller {
             }
 
             output.println(gson.toJson(new RecievingCmd("bet", bet)));
+            SoundEffectModel.playSound("bet.wav");
         });
 
         //Controls for hit button
@@ -97,6 +98,7 @@ public class Controller {
     // Controls for stand button
     bjview.addStandButtonListener(e -> {
             output.println(gson.toJson(new RecievingCmd("stand", 0)));
+            SoundEffectModel.playSound("stand.wav");
             //currentTurn = bjmodel.next();
             /*bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
             bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
@@ -110,6 +112,12 @@ public class Controller {
                 bjview.setupDealerCard(getHandImageStrings(dealerHand), false);
                 bjview.setDealerHandPoints(bjmodel.getCurrentTurn().getPoints());
             }*/
+    });
+
+    // Controls for double down button
+    bjview.addDoubleDownButtonListener(e -> {
+        output.println(gson.toJson(new RecievingCmd("double down", 0)));
+        SoundEffectModel.playSound("dealCard.wav");
     });
 
     // Controls for music managing button in main menu
@@ -149,6 +157,14 @@ public class Controller {
     // Controls for back button in join room panel
     bjview.addRulesBackButtonListener(e -> {
         bjview.switchToMenu();
+    });
+
+    bjview.addRoomBackButtonListener(e -> {
+        if(bjview.confirmExit()){
+            bjview.switchToMenu();
+        }
+        
+        
     });
 
 
