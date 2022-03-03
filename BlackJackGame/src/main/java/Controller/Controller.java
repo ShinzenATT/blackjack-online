@@ -120,6 +120,12 @@ public class Controller {
         SoundEffectModel.playSound("dealCard.wav");
     });
 
+    // Controls for split button
+    bjview.addSplitButtonListener(e -> {
+        //output.println(gson.toJson(new RecievingCmd("double down", 0)));
+        SoundEffectModel.playSound("dealCard.wav");
+    });
+
     // Controls for music managing button in main menu
     bjview.addMusicButtonListener(e -> {
         if(musicOn){
@@ -190,7 +196,9 @@ public class Controller {
             System.out.println(res);
             if(res.contains("errorType")){
                 System.out.println(gson.fromJson(res, ErrorRes.class).toString());
+                bjview.updateErrorMessage(gson.fromJson(res, ErrorRes.class).getError());
             } else {
+                bjview.updateErrorMessage("");
                 bjmodel.updateData(gson.fromJson(res, GameModel.class));
                 System.out.println(bjmodel);
 

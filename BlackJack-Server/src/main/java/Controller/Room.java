@@ -51,7 +51,7 @@ public class Room extends Observable implements Closeable {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
         } else if (currentTurn.getBet() > 0) {
-            gc.sendError("Bet already placed", "The bet has already been place, consider using double down instead");
+            gc.sendError("Bet already placed", "The bet has already been placed, consider using double down instead");
             return;
         }
         currentTurn.betChips(chips);
