@@ -61,6 +61,8 @@ public class GameWindow extends JFrame {
     private final JPanel rulesInfoPanel;
     private final JPanel root;
     private final JPanel roomTopPanel;
+    private final JLabel playerFieldBackground;
+    private final JLabel roomFieldBackground;
     
 	private ArrayList<JLabel> dealerLabels;
 	private ArrayList<JLabel> userLabels;
@@ -101,6 +103,8 @@ public class GameWindow extends JFrame {
         roomBackButton = new JButton();
         roomBackPanel = new JPanel();
         roomTopPanel = new JPanel();
+        playerFieldBackground = new JLabel();
+        roomFieldBackground = new JLabel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -251,7 +255,7 @@ public class GameWindow extends JFrame {
         roomBackPanel.setBackground(new java.awt.Color(24, 40, 24));
 
         joinServerMenuPanel.setLayout(new BoxLayout(joinServerMenuPanel, BoxLayout.Y_AXIS));
-        joinServerMenuPanel.setSize(new java.awt.Dimension(200, 50));
+        //joinServerMenuPanel.setSize(new java.awt.Dimension(200, 50));
         joinServerMenuPanel.setBackground(new java.awt.Color(24, 139, 24));
 
         rulesPanel.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -303,13 +307,31 @@ public class GameWindow extends JFrame {
         joinServerPanel.setBackground(new java.awt.Color(24, 139, 24));
         joinServerPanel.setLayout(new BorderLayout());
 
-        playerField = new JTextField("player name here");
-        //playerField.setMaximumSize( joinServerMenuPanel.getPreferredSize() );
-        playerField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Textfield area for player to enter name
+        // is added to a jlabel that acts as nicer background
+        playerField = new JTextField("Player name");
+        playerField.setOpaque(false);
+        playerField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        playerField.setFont(new Font("Arial", Font.BOLD, 25));
+        playerField.setForeground(Color.WHITE);
+        playerField.setHorizontalAlignment(JTextField.CENTER);
+        playerFieldBackground.setLayout(new BorderLayout());
+        playerFieldBackground.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("emptyButton")));
+        playerFieldBackground.add(playerField);
+        playerFieldBackground.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        joinRoom = new JTextField("Enter room code to join room");
-        //joinRoom.setMaximumSize( joinServerMenuPanel.getPreferredSize() );
-        joinRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Textfield area for player to enter room code
+        // is added to a jlabel that acts as nicer background
+        joinRoom = new JTextField("Room code");
+        joinRoom.setOpaque(false);
+        joinRoom.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        joinRoom.setFont(new Font("Arial", Font.BOLD, 25));
+        joinRoom.setForeground(Color.WHITE);
+        joinRoom.setHorizontalAlignment(JTextField.CENTER);
+        roomFieldBackground.setLayout(new BorderLayout());
+        roomFieldBackground.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("emptyButton")));
+        roomFieldBackground.add(joinRoom);
+        roomFieldBackground.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         joinRoomButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
         joinRoomButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
@@ -347,7 +369,13 @@ public class GameWindow extends JFrame {
         menuButtonsPanel.add(rulesButton);
         menuButtonsPanel.add(closeButton);
 
-        createRoom = new JButton("Create room");
+        createRoom = new JButton();
+        createRoom.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
+        createRoom.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
+        createRoom.setOpaque(false);
+        createRoom.setContentAreaFilled(false);
+        createRoom.setBorderPainted(false);
+        createRoom.setFocusPainted(false);
         createRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JTextArea rulesText = new JTextArea(
@@ -375,8 +403,11 @@ public class GameWindow extends JFrame {
         rulesText.setOpaque(false);
         rulesText.setEditable(false);
 
-        joinServerMenuPanel.add(joinRoom);
-        joinServerMenuPanel.add(playerField);
+        joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 150))); // adds spacing before first item
+        joinServerMenuPanel.add(roomFieldBackground);
+        joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        joinServerMenuPanel.add(playerFieldBackground);
+        joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 15)));
         joinServerMenuPanel.add(createRoom);
         joinServerPanel.add(joinServerMenuPanel, BorderLayout.CENTER);
 
