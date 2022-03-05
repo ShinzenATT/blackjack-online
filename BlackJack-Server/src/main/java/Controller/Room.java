@@ -102,6 +102,9 @@ public class Room extends Observable implements Closeable {
         } else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
+        } else if (!currentTurn.canBet(currentTurn.getBet())){
+            gc.sendError("Not enought chips to double down", "Not enought chips to double down");
+            return;
         }
 
         currentTurn.betChips(currentTurn.getBet());
