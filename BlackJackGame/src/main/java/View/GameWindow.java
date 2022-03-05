@@ -4,9 +4,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import Model.ButtonDisplayModel;
 import Model.ImageDisplayModel;
+import Model.objects.Card;
+import Model.objects.Hand;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameWindow extends JFrame {
 
@@ -70,6 +74,7 @@ public class GameWindow extends JFrame {
     private final JTextField playerField2;
     private final JPanel createRoomBackPanel;
     private final JButton createRoomBackBtn;
+    private final JPanel cardGrid;
 
 	private ArrayList<JLabel> dealerLabels;
 	private ArrayList<JLabel> userLabels;
@@ -125,24 +130,24 @@ public class GameWindow extends JFrame {
 
         dealerCardsPanel = new JPanel();
         dealerCardsPanel.setSize(new java.awt.Dimension(700,200));
-        dealerCardsPanel.setBackground(new java.awt.Color(24, 139, 24));
+        dealerCardsPanel.setBackground(new java.awt.Color(24, 90, 24));
 
         roomTopPanel.setSize(new java.awt.Dimension(700,200));
-        roomTopPanel.setBackground(new java.awt.Color(24, 139, 24));
+        roomTopPanel.setBackground(new java.awt.Color(24, 90, 24));
         roomTopPanel.setLayout(new BorderLayout());
 
         playerCardsPanel = new JPanel();
         playerCardsPanel.setSize(new java.awt.Dimension(700,200));
-        playerCardsPanel.setBackground(new java.awt.Color(24, 139, 24));
+        playerCardsPanel.setBackground(new java.awt.Color(24, 90, 24));
 
         dealerNamePanel = new JPanel();
         //dealerNamePanel.setSize(new java.awt.Dimension(700,100));
-        dealerNamePanel.setBackground(new java.awt.Color(24, 139, 24));
+        dealerNamePanel.setBackground(new java.awt.Color(24, 90, 24));
         dealerNamePanel.setLayout(new BorderLayout());
 
         playerNamePanel = new JPanel();
         //playerNamePanel.setSize(new java.awt.Dimension(700,100));
-        playerNamePanel.setBackground(new java.awt.Color(24, 139, 24));
+        playerNamePanel.setBackground(new java.awt.Color(24, 90, 24));
         playerNamePanel.setLayout(new BorderLayout());
         
         //main frame setup
@@ -167,97 +172,111 @@ public class GameWindow extends JFrame {
         menuButtonsPanel.setLayout(new BoxLayout(menuButtonsPanel, BoxLayout.Y_AXIS));
         menuButtonsPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        JPanel interactionPanel = new JPanel();
+        interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
+        interactionPanel.setBackground(new java.awt.Color(24, 139, 24));
+        mainPanel.add(interactionPanel, BorderLayout.WEST);
+
         //Hit button setup
         hitButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("hitButton")));
         hitButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("hitButtonRollover")));
-        hitButton.setBounds(100, 325, 190, 50);
+        //hitButton.setBounds(10, 100, 190, 50);
         hitButton.setOpaque(false);
         hitButton.setContentAreaFilled(false);
         hitButton.setBorderPainted(false);
-        mainPanel.add(hitButton);
+        interactionPanel.add(hitButton);
 
         //Stand button setup
         stayButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("standButton")));
         stayButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("standButtonRollover")));
-        stayButton.setBounds(300, 325, 190, 50);
+        //stayButton.setBounds(10, 160, 190, 50);
         stayButton.setOpaque(false);
         stayButton.setContentAreaFilled(false);
         stayButton.setBorderPainted(false);
-        mainPanel.add(stayButton);
+        interactionPanel.add(stayButton);
 
         //DoubleDown button setup
         doubleDownButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("doubleDownButton")));
         doubleDownButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("doubleDownButtonRollover")));
-        doubleDownButton.setBounds(500, 325, 190, 50);
+        //doubleDownButton.setBounds(10, 220, 190, 50);
         doubleDownButton.setOpaque(false);
         doubleDownButton.setContentAreaFilled(false);
         doubleDownButton.setBorderPainted(false);
-        mainPanel.add(doubleDownButton);
+        interactionPanel.add(doubleDownButton);
 
         //Start button setup
         splitButton = new JButton();
         splitButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("splitButton")));
         splitButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("splitButtonRollover")));
-        splitButton.setBounds(900, 325, 190, 50);
+        //splitButton.setBounds(10, 280, 190, 50);
         splitButton.setOpaque(false);
         splitButton.setContentAreaFilled(false);
         splitButton.setBorderPainted(false);
-        mainPanel.add(splitButton);
+        interactionPanel.add(splitButton);
 
-        //Error message for game screen
-        errorMessageLabel.setText("");
-        errorMessageLabel.setBounds(450, 450, 800, 50);
-        errorMessageLabel.setFont(new Font("", Font.BOLD, 12));
-        errorMessageLabel.setForeground(Color.WHITE);
-        mainPanel.add(errorMessageLabel);
-
-        //Start button setup
-        startButton = new JButton();
-        startButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("startButton")));
-        startButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("startButtonRollover")));
-        startButton.setBounds(500, 390, 190, 50);
-        startButton.setOpaque(false);
-        startButton.setContentAreaFilled(false);
-        startButton.setBorderPainted(false);
-        mainPanel.add(startButton);
-
-        // Bet field setup
-        betField = new JTextField("Bet chips");
+        //Bet field setup
+        betField = new JTextField("Write bet amount");
         betField.setOpaque(false);
         betField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        betField.setFont(new Font("", Font.BOLD, 20));
+        betField.setFont(new Font("", Font.BOLD, 15));
         betField.setForeground(Color.WHITE);
         betField.setHorizontalAlignment(JTextField.CENTER);
         betFieldBackground.setLayout(new BorderLayout());
         betFieldBackground.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("betEmpty")));
         betFieldBackground.add(betField);
-        betFieldBackground.setBounds(700, 325, 190, 50);
-        mainPanel.add(betFieldBackground, BorderLayout.CENTER);
+        //betFieldBackground.setBounds(10, 340, 190, 50);
+        betFieldBackground.setBorder(new EmptyBorder(0, 15, 0, 0));
+        interactionPanel.add(betFieldBackground);
 
-        playerName.setBounds(30, 500, 200, 50);
-        playerName.setFont(new Font("", Font.BOLD, 12));
-        playerName.setForeground(Color.WHITE);
-        mainPanel.add(playerName);
+        //Start button setup
+        startButton = new JButton();
+        startButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("startButton")));
+        startButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("startButtonRollover")));
+        //startButton.setBounds(10, 400, 190, 50);
+        startButton.setOpaque(false);
+        startButton.setContentAreaFilled(false);
+        startButton.setBorderPainted(false);
+        interactionPanel.add(startButton);
 
-        chipText.setBounds(30, 515, 200, 50);
-        chipText.setFont(new Font("", Font.BOLD, 12));
-        chipText.setForeground(Color.WHITE);
-        mainPanel.add(chipText);
+        //drawnLabel = new JLabel("Hello");
+        //mainPanel.add(drawnLabel);
+        //drawnLabel.setBounds(50, 200, 800, 50);
 
-        playerBet.setBounds(30, 530, 200, 50);
-        playerBet.setFont(new Font("", Font.BOLD, 12));
-        playerBet.setForeground(Color.WHITE);
-        mainPanel.add(playerBet);
-
-        roomCode.setBounds(30, 545, 200, 50);
+        //roomCode.setBounds(30, 470, 800, 50);
         roomCode.setFont(new Font("", Font.BOLD, 12));
         roomCode.setForeground(Color.WHITE);
-        mainPanel.add(roomCode);
+        roomCode.setBorder(new EmptyBorder(0, 30, 0, 0));
+        interactionPanel.add(roomCode);
+
+        //playerName.setBounds(30, 500, 200, 50);
+        playerName.setFont(new Font("", Font.BOLD, 12));
+        playerName.setForeground(Color.WHITE);
+        playerName.setBorder(new EmptyBorder(0, 30, 0, 0));
+        interactionPanel.add(playerName);
+
+        //chipText.setBounds(30, 530, 200, 50);
+        chipText.setFont(new Font("", Font.BOLD, 12));
+        chipText.setForeground(Color.WHITE);
+        chipText.setBorder(new EmptyBorder(0, 30, 0, 0));
+        interactionPanel.add(chipText);
+
+        //playerBet.setBounds(30, 515, 800, 50);
+        playerBet.setFont(new Font("", Font.BOLD, 12));
+        playerBet.setForeground(Color.WHITE);
+        playerBet.setBorder(new EmptyBorder(0, 30, 0, 0));
+        interactionPanel.add(playerBet);
+
+        //Error message for game screen
+        errorMessageLabel.setText("");
+        errorMessageLabel.setBounds(450, 450, 800, 50);
+        errorMessageLabel.setFont(new Font("", Font.BOLD, 12));
+        errorMessageLabel.setForeground(Color.RED);
+        interactionPanel.add(errorMessageLabel);
 
         holder.setBounds(30, 545, 200, 50);
         holder.setFont(new Font("This is a holder", Font.BOLD, 12));
         holder.setForeground(new java.awt.Color(24, 139, 24));
-        mainPanel.add(holder);
+        interactionPanel.add(holder);
 
         dealerNameLabel = new JLabel("Dealers Hand", SwingConstants.CENTER);
         dealerNameLabel.setFont(new java.awt.Font("", 1, 18));
@@ -284,6 +303,11 @@ public class GameWindow extends JFrame {
         dealerCardsPanel.add(dealerNamePanel);
         playerCardsPanel.add(playerNamePanel);
 
+        cardGrid = new JPanel(new GridLayout());
+        cardGrid.add(new JLabel("test"));
+        cardGrid.setBackground(new java.awt.Color(24, 139, 24));
+        mainPanel.add(cardGrid, BorderLayout.CENTER);
+
         // Close button setup
         closeButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("exitButton")));
         closeButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("exitButtonRollover")));
@@ -309,7 +333,7 @@ public class GameWindow extends JFrame {
 
         // Panel that holds the return button from a room, top left corner
         roomBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        roomBackPanel.setBackground(new java.awt.Color(24, 139, 24));
+        roomBackPanel.setBackground(new java.awt.Color(24, 90, 24));
 
         joinServerMenuPanel.setLayout(new BoxLayout(joinServerMenuPanel, BoxLayout.Y_AXIS));
         joinServerMenuPanel.setBackground(new java.awt.Color(24, 139, 24));
@@ -616,6 +640,42 @@ public class GameWindow extends JFrame {
     public void updateDealerLabelsPanel(){
         for (JLabel label: dealerLabels){
             dealerCardsPanel.add(label);
+        }
+    }
+
+    public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings){
+        if(players.size() != handStrings.size()){
+            throw new IllegalArgumentException();
+        }
+        cardGrid.removeAll();
+
+        for(int i = 0; i < players.size(); i++){
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.setBackground(new java.awt.Color(24, 139, 24));
+
+            JPanel cpanel = new JPanel(new FlowLayout());
+            cpanel.setBackground(new java.awt.Color(24, 139, 24));
+            panel.add(cpanel, BorderLayout.CENTER);
+
+            //int offset  = 0;
+
+            for (String c: handStrings.get(i)){
+                JLabel l = new JLabel();
+                ImageIcon ic = new ImageIcon(allImages.getScaledImageInstanceFromName(c, 20, 29));
+                l.setIcon(ic);
+                //l.setBounds(offset, 0, 20, 29);
+                //offset += 2;
+                cpanel.add(l);
+                System.out.println(players.get(i) + ' ' + c);
+            }
+
+            JLabel pname = new JLabel(players.get(i));
+            pname.setForeground(Color.WHITE);
+            pname.setFont(new Font("", Font.BOLD, 20));
+            //pname.setBounds(0, 30, offset + 20, 20);
+            panel.add(pname, BorderLayout.NORTH);
+
+            cardGrid.add(panel);
         }
     }
 

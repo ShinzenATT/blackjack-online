@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import Model.GameTracker;
@@ -234,8 +235,17 @@ public class Controller {
                 bjview.setPlayerChips(bjmodel.getCurrentTurn().getPlayer().getChips());
 
                 bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()));
-
                 bjview.setupDealerCard(getHandImageStrings(dealerHand), bjmodel.hasNext()); // true, hide first card
+
+                List<String> players = new ArrayList<>();
+                List<List<String>> handStrings = new ArrayList<>();
+
+                for (Hand h: bjmodel.getTurnOrder()){
+                    players.add(h.getPlayer().getUsername());
+                    handStrings.add(getHandImageStrings(h));
+                }
+
+                bjview.setupTurnOrderGrid(players, handStrings);
             }
         }
     }
