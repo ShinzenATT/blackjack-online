@@ -122,7 +122,7 @@ public class Controller {
 
     // Controls for split button
     bjview.addSplitButtonListener(e -> {
-        //output.println(gson.toJson(new RecievingCmd("double down", 0)));
+        output.println(gson.toJson(new RecievingCmd("split", 0)));
         SoundEffectModel.playSound("dealCard.wav");
     });
 
@@ -202,12 +202,16 @@ public class Controller {
                 bjmodel.updateData(gson.fromJson(res, GameModel.class));
                 System.out.println(bjmodel);
 
+                bjview.setRoomCode(bjmodel.getRoomCode());
+
                 dealerHand = bjmodel.getDealerHand();
-                bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
-                bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
+                //bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
+                
                 bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
                 bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
-                bjview.setPlayerChips(bjmodel.getCurrentTurn().getBet());
+                bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
+                bjview.setPlayerBet(bjmodel.getCurrentTurn().getBet());
+                bjview.setPlayerChips(bjmodel.getCurrentTurn().getPlayer().getChips());
 
                 bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()));
 

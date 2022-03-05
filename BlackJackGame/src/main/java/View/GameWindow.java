@@ -23,8 +23,10 @@ public class GameWindow extends JFrame {
     private final JButton doubleDownButton;
     private final JButton startButton;
     private final JTextField betField;
-    private final JLabel drawnLabel;
+    //private final JLabel drawnLabel;
     private final JLabel playerName;
+    private final JLabel fill;
+    private final JLabel playerBet;
     private final JLabel chipText;
     private final JLabel handPoints;
     private final JLabel dealerNameLabel;
@@ -66,6 +68,7 @@ public class GameWindow extends JFrame {
     private final JButton splitButton;
     private final JLabel betFieldBackground;
     private final JLabel errorMessageLabel;
+    private final JLabel roomCode;
     
 	private ArrayList<JLabel> dealerLabels;
 	private ArrayList<JLabel> userLabels;
@@ -83,6 +86,8 @@ public class GameWindow extends JFrame {
         stayButton = new JButton();
         doubleDownButton = new JButton();
         playerName = new JLabel();
+        fill = new JLabel();
+        playerBet = new JLabel();
         chipText = new JLabel();
         handPoints = new JLabel();
         closeButton = new JButton();
@@ -110,6 +115,7 @@ public class GameWindow extends JFrame {
         roomFieldBackground = new JLabel();
         betFieldBackground = new JLabel();
         errorMessageLabel = new JLabel();
+        roomCode = new JLabel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -231,18 +237,32 @@ public class GameWindow extends JFrame {
         //betFieldBackground.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(betFieldBackground, BorderLayout.CENTER);
 
-        drawnLabel = new JLabel("Hello");
-        mainPanel.add(drawnLabel);
-        drawnLabel.setBounds(50, 200, 800, 50);
+        //drawnLabel = new JLabel("Hello");
+        //mainPanel.add(drawnLabel);
+        //drawnLabel.setBounds(50, 200, 800, 50);
 
-        playerName.setBounds(50, 250, 800, 50);
+        playerName.setBounds(30, 500, 200, 50);
+        playerName.setFont(new Font("", Font.BOLD, 12));
+        playerName.setForeground(Color.WHITE);
         mainPanel.add(playerName);
 
-        handPoints.setBounds(50, 140, 800, 50);
-        mainPanel.add(handPoints);
-
-        chipText.setBounds(50, 300, 800, 50);
+        chipText.setBounds(30, 530, 200, 50);
+        chipText.setFont(new Font("", Font.BOLD, 12));
+        chipText.setForeground(Color.WHITE);
         mainPanel.add(chipText);
+
+        playerBet.setBounds(30, 515, 800, 50);
+        playerBet.setFont(new Font("", Font.BOLD, 12));
+        playerBet.setForeground(Color.WHITE);
+        mainPanel.add(playerBet);
+
+        roomCode.setBounds(30, 545, 800, 50);
+        roomCode.setFont(new Font("", Font.BOLD, 12));
+        roomCode.setForeground(Color.WHITE);
+        mainPanel.add(roomCode);
+
+        //handPoints.setBounds(50, 140, 800, 50);
+        //mainPanel.add(handPoints);
 
         dealerNameLabel = new JLabel("Dealers Hand", SwingConstants.CENTER);
         dealerNameLabel.setFont(new java.awt.Font("", 1, 18));
@@ -474,19 +494,22 @@ public class GameWindow extends JFrame {
         mainFrame.setVisible(true);
     }
 
+    /*
     public JLabel getDrawnCardLabel() {
         return drawnLabel;
     }
+    */
 
-    public void setPlayerName(String name){ playerName.setText(name); }
+    public void setPlayerName(String name){ playerName.setText("Current turn: " + name); }
+    public void setPlayerBet(int bet){ playerBet.setText("Current bet: " + bet); }
+    public void setPlayerChips(int chips) { chipText.setText("Current chips: " + chips); }
+    public void setRoomCode(String code) { roomCode.setText("Room code: " + code); }
 
     //public void setHandPoints(int points){ handPoints.setText(Integer.toString(points)); }
 
     public void setDealerHandPoints(int points){ dealerHandValue.setText("Hand Value: " + Integer.toString(points)); }
 
     public void setPlayerHandPoints(int points){ playerHandValue.setText("Hand Value: " + Integer.toString(points)); }
-
-    public void setPlayerChips(int chips) { chipText.setText(Integer.toString(chips)); }
 
     public void setupUserCard(ArrayList<String> cardNames) {
         playerCardsPanel.removeAll();
@@ -520,7 +543,7 @@ public class GameWindow extends JFrame {
 
     // kan nog kombineras med setupUserCard, det ända som skiljer är dealerLabels..
     public void setupDealerCard(ArrayList<String> cardNames, Boolean faceDownFirst) {
-        System.out.println("dealer labels:" + dealerLabels);
+        //System.out.println("dealer labels:" + dealerLabels);
         dealerCardsPanel.removeAll();
         dealerCardsPanel.add(dealerNamePanel);
         dealerLabels.removeAll(dealerLabels);

@@ -26,6 +26,10 @@ public class GameTracker {
         return turnTracker < turnOrder.size() && !Objects.equals(status, "finished");
     }
 
+    public String getRoomCode(){
+        return roomCode;
+    }
+
     // this would probably be stand
     public Hand getCurrentTurn() {
         if(hasNext()) {
