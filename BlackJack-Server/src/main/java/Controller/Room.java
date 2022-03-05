@@ -34,12 +34,16 @@ public class Room extends Observable implements Closeable {
         List<Player> a = new ArrayList<>();
 
         for (GameConnection c : players) {
-            a.add(c.getPlayer());
+            if(!c.isClosed()){
+                a.add(c.getPlayer());
+            }
         }
 
         gt = new GameTracker(a.toArray(new Player[a.size()]));
+        System.out.println(gt);
 
         currentTurn = gt.next();
+        System.out.println(currentTurn);
         notifyObservers();
     }
 
