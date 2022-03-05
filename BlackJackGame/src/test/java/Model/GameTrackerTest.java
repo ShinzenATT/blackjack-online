@@ -33,7 +33,7 @@ public class GameTrackerTest {
 
 
     @Test
-    //Testing for next card
+    //Testing for next card (fixa så att den kollar Card och inte had)
     public void cardTest(){
         Player player1 = new Player("Player1", 100);
         Player player2 = new Player("Player2", 100);
@@ -42,7 +42,7 @@ public class GameTrackerTest {
     }
 
     @Test
-    //Testing for dealers hand
+    //Testing for dealers hand (fixa en public final metod som frågar om dealer namnet)
     public void dealerTest(){
         Player player1 = new Player("Player1", 100);
         Player player2 = new Player("Player2", 100);
