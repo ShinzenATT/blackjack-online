@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.RoomTracker;
-import Model.objects.Player;
+import model.RoomTracker;
+import model.objects.Player;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import json_data.ConnectionSetup;

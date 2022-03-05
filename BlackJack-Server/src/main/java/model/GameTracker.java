@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import Model.objects.*;
+import model.objects.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

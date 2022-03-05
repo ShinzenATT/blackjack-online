@@ -1,9 +1,9 @@
 package Controller;
 
-import Model.GameTracker;
-import Model.objects.Card;
-import Model.objects.Hand;
-import Model.objects.Player;
+import model.GameTracker;
+import model.objects.Card;
+import model.objects.Hand;
+import model.objects.Player;
 import com.google.gson.Gson;
 import json_data.GameModel;
 
