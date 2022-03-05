@@ -31,6 +31,9 @@ public class GameConnection implements Runnable, Observer, Closeable {
         do {
             try {
                 cs = gson.fromJson(ReadFile(), ConnectionSetup.class);
+                if(cs == null){
+                    return;
+                }
                 if (cs.player_name == null) {
                     throw new IllegalArgumentException("Player name was missing");
                 }
@@ -96,6 +99,8 @@ public class GameConnection implements Runnable, Observer, Closeable {
                 nests--;
             }
         }while (nests > 0);
+
+        //System.out.println(str);
 
         return str.toString();
     }

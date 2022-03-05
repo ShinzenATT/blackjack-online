@@ -1,54 +1,42 @@
 package Model;
 
+import Model.json_data.GameModel;
 import Model.objects.*;
 
 import java.util.*;
 
-public class GameTracker implements Iterator<Hand> {
-    private final List<Hand> turnOrder;
+public class GameTracker {
+    private List<Hand> turnOrder;
     private int turnTracker = 0;
-    private Deck deck;
+    private String roomCode = "";
+    private String status = "";
 
-    public GameTracker(Player... players){
+    public GameTracker(){
         turnOrder = new ArrayList<>();
-        for (Player p: players){
-            turnOrder.add(new Hand(p));
-        }
-
-        Collections.shuffle(turnOrder);
-
-        // Dealer is always last
-        turnOrder.add(new Hand(new Dealer()));
-
-        turnOrder.get(0).toggleActive();
-
-        deck = new Deck();
-
-        for (Hand h: turnOrder) {
-            h.addCard(deck.next());
-            h.addCard(deck.next());
-        }
-
     }
 
-    @Override
+    public synchronized void updateData(GameModel gm){
+        status = gm.status;
+        turnTracker = gm.current_turn;
+        turnOrder = gm.turn_order;
+        roomCode = gm.room_code;
+    }
+
     public boolean hasNext() {
-        return turnTracker < turnOrder.size();
+        return turnTracker < turnOrder.size() && !Objects.equals(status, "finished");
+    }
+
+    public String getRoomCode(){
+        return roomCode;
     }
 
     // this would probably be stand
-    @Override
-    public Hand next() {
-        if(turnTracker > 0) {
-            turnOrder.get(turnTracker - 1).toggleActive();
+    public Hand getCurrentTurn() {
+        if(hasNext()) {
+            return turnOrder.get(turnTracker);
+        } else {
+            return turnOrder.get(turnTracker-1);
         }
-        turnOrder.get(turnTracker).toggleActive();
-        return turnOrder.get(turnTracker++);
-
-    }
-
-    public Card nextCard(){
-        return deck.next();
     }
 
     public List<Hand> getTurnOrder(){
@@ -69,4 +57,14 @@ public class GameTracker implements Iterator<Hand> {
         }
         return canHit;
         */
+
+    @Override
+    public String toString() {
+        return "GameTracker{" +
+                "turnOrder=" + turnOrder +
+                ", turnTracker=" + turnTracker +
+                ", roomCode='" + roomCode + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

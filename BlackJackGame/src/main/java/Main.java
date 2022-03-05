@@ -3,16 +3,19 @@ import Model.GameTracker;
 import Model.objects.Player;
 import View.*;
 
+import java.io.IOException;
+
 public class Main {
 
 public static void main(String[] args) {
 
-  GameTracker bjModel = new GameTracker(
-          new Player("Player 1", 1000),
-          new Player("Player 2", 1000),
-          new Player("Player 3", 1000)
-  );
-  GameWindow gameWindow = new GameWindow();
-  Controller bjControl = new Controller(bjModel, gameWindow);
+  try {
+    GameTracker bjModel = new GameTracker();
+    GameWindow gameWindow = new GameWindow();
+    Controller bjControl = new Controller(bjModel, gameWindow);
+  } catch (IOException e){
+    e.printStackTrace();
+    System.out.println("consider configuring a different server url");
+  }
   }
 }
