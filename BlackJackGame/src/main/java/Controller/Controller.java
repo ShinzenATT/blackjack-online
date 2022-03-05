@@ -28,10 +28,11 @@ public class Controller {
     private Hand dealerHand = null;
     private String serverUrl = "localhost";
     private int serverPort = 8080;
-    Socket conn;
-    BufferedReader input;
-    PrintWriter output;
-    Gson gson = new Gson();
+    private Socket conn;
+    private BufferedReader input;
+    private PrintWriter output;
+    private final Gson gson = new Gson();
+    private CompletableFuture<Void> serverListener;
 
     public Controller(GameTracker bjmodel, GameWindow bjview) throws IOException {
         this.bjmodel = bjmodel;
@@ -41,7 +42,7 @@ public class Controller {
         input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         output = new PrintWriter(conn.getOutputStream(), true);
 
-        CompletableFuture.runAsync(() -> {
+        serverListener = CompletableFuture.runAsync(() -> {
             try {
                 listenForUpdate();
             } catch (IOException e) {
@@ -168,12 +169,13 @@ public class Controller {
     bjview.addRoomBackButtonListener(e -> {
         if(bjview.confirmExit()){
             try {
+                serverListener.cancel(true);
                 conn.close();
                 conn = new Socket(serverUrl, serverPort);
                 input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                output = new PrintWriter(conn.getOutputStream());
+                output = new PrintWriter(conn.getOutputStream(), true);
 
-                CompletableFuture.runAsync(() -> {
+                serverListener = CompletableFuture.runAsync(() -> {
                     try {
                         listenForUpdate();
                     } catch (IOException err) {

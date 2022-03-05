@@ -718,12 +718,9 @@ public class GameWindow extends JFrame {
     public String getRoomCode(){ return joinRoom.getText(); }
 
     public boolean confirmExit(){
-        int a = JOptionPane.showConfirmDialog(mainPanel, "Do you really want to exit the current game?");
-        if(a == JOptionPane.YES_OPTION){
-            return true;
-        } else {
-            return false;
-        }
+        int a = JOptionPane.showConfirmDialog(mainPanel, "Do you really want to exit the current game?",
+                "Quit the game?", JOptionPane.YES_NO_OPTION);
+        return a == JOptionPane.YES_OPTION;
     }
 }
 
