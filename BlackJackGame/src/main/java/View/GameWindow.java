@@ -1,16 +1,12 @@
 package View;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
+
 import Model.ButtonDisplayModel;
 import Model.ImageDisplayModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameWindow extends JFrame {
@@ -55,7 +51,7 @@ public class GameWindow extends JFrame {
     private final JPanel menuPanel;
     private final JTextField joinRoom;
     private final JTextField playerField;
-    private final JButton createRoom;
+    private final JButton joinRoomBtn;
     private final JButton joinRoomButton;
     private final JPanel backPanel;
     private final JPanel rulesBackPanel;
@@ -69,7 +65,13 @@ public class GameWindow extends JFrame {
     private final JLabel betFieldBackground;
     private final JLabel errorMessageLabel;
     private final JLabel roomCode;
-    
+    private final JPanel createRoomPanel;
+    private final JButton createRoomBtn;
+    private final JLabel playerFieldBackground2;
+    private final JTextField playerField2;
+    private final JPanel createRoomBackPanel;
+    private final JButton createRoomBackBtn;
+
 	private ArrayList<JLabel> dealerLabels;
 	private ArrayList<JLabel> userLabels;
     ImageDisplayModel allImages = new ImageDisplayModel();
@@ -222,7 +224,7 @@ public class GameWindow extends JFrame {
         //Bet field setup
         //betField = new JTextField("bet chips here");
         //betField.setBounds(770, 300, 100, 49);
-        
+
 
         betField = new JTextField("Bet chips");
         betField.setOpaque(false);
@@ -371,7 +373,7 @@ public class GameWindow extends JFrame {
 
         // Textfield area for player to enter name
         // is added to a jlabel that acts as nicer background
-        playerField = new JTextField("Player name");
+        playerField = new JTextField("player name here");
         playerField.setOpaque(false);
         playerField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         playerField.setFont(new Font("Arial", Font.BOLD, 25));
@@ -384,7 +386,7 @@ public class GameWindow extends JFrame {
 
         // Textfield area for player to enter room code
         // is added to a jlabel that acts as nicer background
-        joinRoom = new JTextField("Room code");
+        joinRoom = new JTextField("room code here");
         joinRoom.setOpaque(false);
         joinRoom.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         joinRoom.setFont(new Font("Arial", Font.BOLD, 25));
@@ -431,14 +433,14 @@ public class GameWindow extends JFrame {
         menuButtonsPanel.add(rulesButton);
         menuButtonsPanel.add(closeButton);
 
-        createRoom = new JButton();
-        createRoom.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
-        createRoom.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
-        createRoom.setOpaque(false);
-        createRoom.setContentAreaFilled(false);
-        createRoom.setBorderPainted(false);
-        createRoom.setFocusPainted(false);
-        createRoom.setAlignmentX(Component.CENTER_ALIGNMENT);
+        joinRoomBtn = new JButton();
+        joinRoomBtn.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
+        joinRoomBtn.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
+        joinRoomBtn.setOpaque(false);
+        joinRoomBtn.setContentAreaFilled(false);
+        joinRoomBtn.setBorderPainted(false);
+        joinRoomBtn.setFocusPainted(false);
+        joinRoomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JTextArea rulesText = new JTextArea(
             "Basic BlackJack rules: \n" +
@@ -470,7 +472,7 @@ public class GameWindow extends JFrame {
         joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         joinServerMenuPanel.add(playerFieldBackground);
         joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-        joinServerMenuPanel.add(createRoom);
+        joinServerMenuPanel.add(joinRoomBtn);
         joinServerPanel.add(joinServerMenuPanel, BorderLayout.CENTER);
 
         roomTopPanel.add(dealerCardsPanel, BorderLayout.CENTER);
@@ -485,11 +487,57 @@ public class GameWindow extends JFrame {
         mainPanel.add(roomTopPanel, BorderLayout.NORTH);
         mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
 
+        createRoomPanel = new JPanel();
+        createRoomPanel.setLayout(new BoxLayout(createRoomPanel, BoxLayout.Y_AXIS));
+        createRoomPanel.setBorder(new EmptyBorder(0, 0, 250, 0));
+        createRoomPanel.setBackground(new java.awt.Color(24, 139, 24));
+        //createRoomPanel.add(backPanel);
+
+        createRoomBackPanel = new JPanel();
+        createRoomBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        createRoomBackPanel.setBackground(new java.awt.Color(24, 139, 24));
+        createRoomPanel.add(createRoomBackPanel);
+
+        createRoomBackBtn = new JButton();
+        createRoomBackBtn.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
+        createRoomBackBtn.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
+        createRoomBackBtn.setOpaque(false);
+        createRoomBackBtn.setContentAreaFilled(false);
+        createRoomBackBtn.setBorderPainted(false);
+        createRoomBackBtn.setFocusPainted(false);
+        createRoomBackPanel.add(createRoomBackBtn);
+
+        // Textfield area for player to enter name
+        // is added to a jlabel that acts as nicer background
+        playerField2 = new JTextField("player name here");
+        playerField2.setOpaque(false);
+        playerField2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        playerField2.setFont(new Font("Arial", Font.BOLD, 25));
+        playerField2.setForeground(Color.WHITE);
+        playerField2.setHorizontalAlignment(JTextField.CENTER);
+        playerFieldBackground2 = new JLabel();
+        playerFieldBackground2.setLayout(new BorderLayout());
+        playerFieldBackground2.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("emptyButton")));
+        playerFieldBackground2.add(playerField2);
+        playerFieldBackground2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        createRoomPanel.add(playerFieldBackground2);
+
+        createRoomBtn = new JButton();
+        createRoomBtn.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("createServerButton")));
+        createRoomBtn.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("createServerButtonRollover")));
+        createRoomBtn.setOpaque(false);
+        createRoomBtn.setContentAreaFilled(false);
+        createRoomBtn.setBorderPainted(false);
+        createRoomBtn.setFocusPainted(false);
+        createRoomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        createRoomPanel.add(createRoomBtn);
+
         root = new JPanel(new CardLayout());
         root.add(menuPanel, "menu");
         root.add(mainPanel, "game");
         root.add(joinServerPanel, "joinroom");
         root.add(rulesPanel, "rules");
+        root.add(createRoomPanel, "createroom");
         mainFrame.getContentPane().add(root);
         mainFrame.setVisible(true);
     }
@@ -604,6 +652,11 @@ public class GameWindow extends JFrame {
         cl.show(root, "rules");
     }
 
+    public void switchToCreateRoom(){
+        CardLayout cl = (CardLayout) root.getLayout();
+        cl.show(root, "createroom");
+    }
+
     public void addHitButtonListener(ActionListener hl) {
         hitButton.addActionListener(hl);
     }
@@ -626,7 +679,7 @@ public class GameWindow extends JFrame {
 
     public void addRoomFieldListener(ActionListener al){ joinRoom.addActionListener(al); }
 
-    public void addCreateRoomListener(ActionListener al){ createRoom.addActionListener(al); }
+    public void addJoinRoomBtnListener(ActionListener al){ joinRoomBtn.addActionListener(al); }
 
     public void addStartButtonListener(ActionListener al){ startButton.addActionListener(al); }
 
@@ -650,9 +703,17 @@ public class GameWindow extends JFrame {
 
     public void addSplitButtonListener(ActionListener rl){ splitButton.addActionListener(rl); }
 
+    public void addCreateRoomMenuBtnListener(ActionListener al){ createServerButton.addActionListener(al); }
+
+    public void addCreateRoomBtnListener(ActionListener al) { createRoomBtn.addActionListener(al); }
+
+    public void addCreateRoomBackBtnListener(ActionListener al) { createRoomBackBtn.addActionListener(al); }
+
     public String getBetText(){ return betField.getText(); }
 
     public String getPlayerFieldText(){ return playerField.getText(); }
+
+    public String getPlayer2ndFieldText() { return playerField2.getText(); }
 
     public String getRoomCode(){ return joinRoom.getText(); }
 

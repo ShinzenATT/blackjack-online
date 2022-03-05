@@ -140,29 +140,30 @@ public class Controller {
     });
 
     // Controls for join room button in main menu
-    bjview.addJoinRoomButtonListener(e -> {
-        bjview.switchToJoinRoom();
-    });
+    bjview.addJoinRoomButtonListener(e -> bjview.switchToJoinRoom());
 
     // Controls for close game button in main menu
-    bjview.addCloseButtonListener(e -> {
-        System.exit(0);
-    });
+    bjview.addCloseButtonListener(e -> System.exit(0));
 
     // Controls for back button in join room panel
-    bjview.addJoinBackButtonListener(e -> {
-        bjview.switchToMenu();
-    });
+    bjview.addJoinBackButtonListener(e -> bjview.switchToMenu());
 
     // Controls rules button in menu
-    bjview.addRulesButtonListener(e -> {
-        bjview.switchToRules();
-    });
+    bjview.addRulesButtonListener(e -> bjview.switchToRules());
 
     // Controls for back button in join room panel
-    bjview.addRulesBackButtonListener(e -> {
-        bjview.switchToMenu();
+    bjview.addRulesBackButtonListener(e -> bjview.switchToMenu());
+
+    bjview.addCreateRoomMenuBtnListener(e -> bjview.switchToCreateRoom());
+
+    bjview.addCreateRoomBtnListener(e -> {
+        output.println(gson.toJson(new ConnectionSetup(bjview.getPlayer2ndFieldText(), null)));
+        bjview.switchPanel();
     });
+
+    bjview.addCreateRoomBackBtnListener(e -> bjview.switchToMenu());
+
+
 
     bjview.addRoomBackButtonListener(e -> {
         if(bjview.confirmExit()){
