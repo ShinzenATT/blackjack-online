@@ -2,7 +2,6 @@ package View;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import Model.ButtonDisplayModel;
 import Model.ImageDisplayModel;
 import java.awt.*;
@@ -19,7 +18,7 @@ public class GameWindow extends JFrame {
     private final JButton doubleDownButton;
     private final JButton startButton;
     private final JTextField betField;
-    //private final JLabel drawnLabel;
+    private final JLabel holder;
     private final JLabel playerName;
     private final JLabel fill;
     private final JLabel playerBet;
@@ -118,6 +117,7 @@ public class GameWindow extends JFrame {
         betFieldBackground = new JLabel();
         errorMessageLabel = new JLabel();
         roomCode = new JLabel();
+        holder = new JLabel();
 
         playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
@@ -221,11 +221,7 @@ public class GameWindow extends JFrame {
         startButton.setBorderPainted(false);
         mainPanel.add(startButton);
 
-        //Bet field setup
-        //betField = new JTextField("bet chips here");
-        //betField.setBounds(770, 300, 100, 49);
-
-
+        // Bet field setup
         betField = new JTextField("Bet chips");
         betField.setOpaque(false);
         betField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -236,35 +232,32 @@ public class GameWindow extends JFrame {
         betFieldBackground.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("betEmpty")));
         betFieldBackground.add(betField);
         betFieldBackground.setBounds(700, 325, 190, 50);
-        //betFieldBackground.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(betFieldBackground, BorderLayout.CENTER);
-
-        //drawnLabel = new JLabel("Hello");
-        //mainPanel.add(drawnLabel);
-        //drawnLabel.setBounds(50, 200, 800, 50);
 
         playerName.setBounds(30, 500, 200, 50);
         playerName.setFont(new Font("", Font.BOLD, 12));
         playerName.setForeground(Color.WHITE);
         mainPanel.add(playerName);
 
-        chipText.setBounds(30, 530, 200, 50);
+        chipText.setBounds(30, 515, 200, 50);
         chipText.setFont(new Font("", Font.BOLD, 12));
         chipText.setForeground(Color.WHITE);
         mainPanel.add(chipText);
 
-        playerBet.setBounds(30, 515, 800, 50);
+        playerBet.setBounds(30, 530, 200, 50);
         playerBet.setFont(new Font("", Font.BOLD, 12));
         playerBet.setForeground(Color.WHITE);
         mainPanel.add(playerBet);
 
-        roomCode.setBounds(30, 545, 800, 50);
+        roomCode.setBounds(30, 545, 200, 50);
         roomCode.setFont(new Font("", Font.BOLD, 12));
         roomCode.setForeground(Color.WHITE);
         mainPanel.add(roomCode);
 
-        //handPoints.setBounds(50, 140, 800, 50);
-        //mainPanel.add(handPoints);
+        holder.setBounds(30, 545, 200, 50);
+        holder.setFont(new Font("This is a holder", Font.BOLD, 12));
+        holder.setForeground(new java.awt.Color(24, 139, 24));
+        mainPanel.add(holder);
 
         dealerNameLabel = new JLabel("Dealers Hand", SwingConstants.CENTER);
         dealerNameLabel.setFont(new java.awt.Font("", 1, 18));
@@ -319,7 +312,6 @@ public class GameWindow extends JFrame {
         roomBackPanel.setBackground(new java.awt.Color(24, 139, 24));
 
         joinServerMenuPanel.setLayout(new BoxLayout(joinServerMenuPanel, BoxLayout.Y_AXIS));
-        //joinServerMenuPanel.setSize(new java.awt.Dimension(200, 50));
         joinServerMenuPanel.setBackground(new java.awt.Color(24, 139, 24));
 
         rulesPanel.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -328,8 +320,6 @@ public class GameWindow extends JFrame {
         rulesPanel.setLayout(new BorderLayout());
 
         musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
-        //musicButton.setBounds(10, 400, 66, 66);
-        //musicButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         musicButton.setOpaque(false);
         musicButton.setContentAreaFilled(false);
         musicButton.setBorderPainted(false);
@@ -338,14 +328,11 @@ public class GameWindow extends JFrame {
 
         joinBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
         joinBackButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
-        //joinBackButton.setBounds(10, 400, 66, 66);
-        //musicButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         joinBackButton.setOpaque(false);
         joinBackButton.setContentAreaFilled(false);
         joinBackButton.setBorderPainted(false);
         joinBackButton.setFocusPainted(false);
         backPanel.add(joinBackButton);
-        //backPanelRules.add(joinBackButton);
 
         // Return button in rules panels top left corner
         rulesBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
