@@ -119,6 +119,12 @@ public class Controller {
         SoundEffectModel.playSound("dealCard.wav");
     });
 
+    // Controls for split button
+    bjview.addSplitButtonListener(e -> {
+        output.println(gson.toJson(new RecievingCmd("split", 0)));
+        SoundEffectModel.playSound("dealCard.wav");
+    });
+
     // Controls for music managing button in main menu
     bjview.addMusicButtonListener(e -> {
         if(musicOn){
@@ -207,16 +213,22 @@ public class Controller {
             System.out.println(res);
             if(res.contains("errorType")){
                 System.out.println(gson.fromJson(res, ErrorRes.class).toString());
+                bjview.updateErrorMessage(gson.fromJson(res, ErrorRes.class).getError());
             } else {
+                bjview.updateErrorMessage("");
                 bjmodel.updateData(gson.fromJson(res, GameModel.class));
                 System.out.println(bjmodel);
 
+                bjview.setRoomCode(bjmodel.getRoomCode());
+
                 dealerHand = bjmodel.getDealerHand();
-                bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
-                bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
+                //bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
+                
                 bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
                 bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
-                bjview.setPlayerChips(bjmodel.getCurrentTurn().getBet());
+                bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
+                bjview.setPlayerBet(bjmodel.getCurrentTurn().getBet());
+                bjview.setPlayerChips(bjmodel.getCurrentTurn().getPlayer().getChips());
 
                 bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()));
 

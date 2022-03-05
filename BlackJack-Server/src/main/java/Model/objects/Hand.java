@@ -63,6 +63,14 @@ public class Hand {
         bet = amount;
     }
 
+    public boolean canBet(int amount){
+        if(association.getChips() - amount < 0 || amount <= 0){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
     public int getBet(){ return bet; }
 
     public void toggleActive(){

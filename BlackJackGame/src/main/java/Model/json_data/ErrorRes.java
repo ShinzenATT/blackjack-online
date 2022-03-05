@@ -16,4 +16,8 @@ public class ErrorRes {
                 ", message='" + message + '\'' +
                 '}';
     }
+
+    public String getError() {
+        return message;
+    }
 }
