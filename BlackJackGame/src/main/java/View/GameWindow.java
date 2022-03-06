@@ -2,6 +2,8 @@ package View;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import Model.ButtonDisplayModel;
 import Model.ImageDisplayModel;
 import Model.objects.Card;
@@ -304,7 +306,6 @@ public class GameWindow extends JFrame {
         playerCardsPanel.add(playerNamePanel);
 
         cardGrid = new JPanel(new GridLayout());
-        cardGrid.add(new JLabel("test"));
         cardGrid.setBackground(new java.awt.Color(24, 139, 24));
         mainPanel.add(cardGrid, BorderLayout.CENTER);
 
@@ -643,17 +644,26 @@ public class GameWindow extends JFrame {
         }
     }
 
-    public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings){
+    public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings, int currentTurn){
         if(players.size() != handStrings.size()){
             throw new IllegalArgumentException();
         }
         cardGrid.removeAll();
 
-        for(int i = 0; i < players.size(); i++){
+        int mod = 0;
+        if(players.contains("Dealer")){
+            mod = 1;
+        }
+
+        for(int i = 0; i < players.size() - mod; i++){
             JPanel panel = new JPanel(new BorderLayout());
             panel.setBackground(new java.awt.Color(24, 139, 24));
 
-            JPanel cpanel = new JPanel(new FlowLayout());
+            if(i == currentTurn){
+                panel.setBorder(new LineBorder(Color.YELLOW));
+            }
+
+            JPanel cpanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             cpanel.setBackground(new java.awt.Color(24, 139, 24));
             panel.add(cpanel, BorderLayout.CENTER);
 
@@ -661,7 +671,7 @@ public class GameWindow extends JFrame {
 
             for (String c: handStrings.get(i)){
                 JLabel l = new JLabel();
-                ImageIcon ic = new ImageIcon(allImages.getScaledImageInstanceFromName(c, 20, 29));
+                ImageIcon ic = new ImageIcon(allImages.getScaledImageInstanceFromName(c, 40, 58));
                 l.setIcon(ic);
                 //l.setBounds(offset, 0, 20, 29);
                 //offset += 2;
@@ -671,12 +681,14 @@ public class GameWindow extends JFrame {
 
             JLabel pname = new JLabel(players.get(i));
             pname.setForeground(Color.WHITE);
-            pname.setFont(new Font("", Font.BOLD, 20));
+            pname.setFont(new Font("", Font.BOLD, 10));
             //pname.setBounds(0, 30, offset + 20, 20);
             panel.add(pname, BorderLayout.NORTH);
 
             cardGrid.add(panel);
         }
+        cardGrid.repaint();
+        cardGrid.revalidate();
     }
 
     public void switchPanel(){

@@ -245,7 +245,7 @@ public class Controller {
                     handStrings.add(getHandImageStrings(h));
                 }
 
-                bjview.setupTurnOrderGrid(players, handStrings);
+                bjview.setupTurnOrderGrid(players, handStrings, bjmodel.getTurnIndex());
             }
         }
     }
