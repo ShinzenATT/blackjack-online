@@ -48,6 +48,8 @@ public class GameTracker {
         return turnOrder.get(turnOrder.size()-1);
     }
 
+    public int getTurnIndex(){ return turnTracker; }
+
     // hit logic for dealer?
     /*
     public boolean canHit() {
