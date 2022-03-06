@@ -186,6 +186,7 @@ public class GameWindow extends JFrame {
         hitButton.setOpaque(false);
         hitButton.setContentAreaFilled(false);
         hitButton.setBorderPainted(false);
+        hitButton.setFocusPainted(false);
         interactionPanel.add(hitButton);
 
         //Stand button setup
@@ -195,6 +196,7 @@ public class GameWindow extends JFrame {
         stayButton.setOpaque(false);
         stayButton.setContentAreaFilled(false);
         stayButton.setBorderPainted(false);
+        stayButton.setFocusPainted(false);
         interactionPanel.add(stayButton);
 
         //DoubleDown button setup
@@ -204,6 +206,7 @@ public class GameWindow extends JFrame {
         doubleDownButton.setOpaque(false);
         doubleDownButton.setContentAreaFilled(false);
         doubleDownButton.setBorderPainted(false);
+        doubleDownButton.setFocusPainted(false);
         interactionPanel.add(doubleDownButton);
 
         //Start button setup
@@ -214,6 +217,7 @@ public class GameWindow extends JFrame {
         splitButton.setOpaque(false);
         splitButton.setContentAreaFilled(false);
         splitButton.setBorderPainted(false);
+        splitButton.setFocusPainted(false);
         interactionPanel.add(splitButton);
 
         //Bet field setup
@@ -238,6 +242,7 @@ public class GameWindow extends JFrame {
         startButton.setOpaque(false);
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false);
+        startButton.setFocusPainted(false);
         interactionPanel.add(startButton);
 
         //drawnLabel = new JLabel("Hello");

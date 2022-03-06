@@ -18,12 +18,7 @@ public class Player {
         return chips;
     }
 
-    public int transactChips(int delta){
-        chips += delta;
-        return chips;
-    }
-
-    public void updatePlayerChips(int delta){
+    public void transactChips(int delta){
         chips += delta;
     }
 }
