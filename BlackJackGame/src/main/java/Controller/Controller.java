@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import Model.GameTracker;
@@ -15,7 +16,6 @@ import Model.json_data.ErrorRes;
 import Model.json_data.GameModel;
 import Model.json_data.RecievingCmd;
 import Model.objects.Card;
-import Model.objects.Dealer;
 import Model.objects.Hand;
 import View.GameWindow;
 import com.google.gson.Gson;
@@ -29,10 +29,11 @@ public class Controller {
     private Hand dealerHand = null;
     private String serverUrl = "localhost";
     private int serverPort = 8080;
-    Socket conn;
-    BufferedReader input;
-    PrintWriter output;
-    Gson gson = new Gson();
+    private Socket conn;
+    private BufferedReader input;
+    private PrintWriter output;
+    private final Gson gson = new Gson();
+    private CompletableFuture<Void> serverListener;
 
     public Controller(GameTracker bjmodel, GameWindow bjview) throws IOException {
         this.bjmodel = bjmodel;
@@ -42,7 +43,7 @@ public class Controller {
         input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         output = new PrintWriter(conn.getOutputStream(), true);
 
-        CompletableFuture.runAsync(() -> {
+        serverListener = CompletableFuture.runAsync(() -> {
             try {
                 listenForUpdate();
             } catch (IOException e) {
@@ -59,19 +60,19 @@ public class Controller {
 
         //currentTurn = bjmodel.next();
 
-        bjview.addRoomFieldListener(e -> {
+        bjview.addJoinRoomBtnListener(e -> {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), bjview.getRoomCode()));
             output.println(s);
             System.out.println(s);
             bjview.switchPanel();
         });
 
-        bjview.addCreateRoomListener(e -> {
+        /*bjview.addJoinRoomBtnListener(e -> {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), null));
             output.println(s);
             System.out.println(s);
             bjview.switchPanel();
-        });
+        });*/
 
         bjview.addStartButtonListener(e -> output.println(gson.toJson(new RecievingCmd("start", 0))));
 
@@ -141,32 +142,52 @@ public class Controller {
     });
 
     // Controls for join room button in main menu
-    bjview.addJoinRoomButtonListener(e -> {
-        bjview.switchToJoinRoom();
-    });
+    bjview.addJoinRoomButtonListener(e -> bjview.switchToJoinRoom());
 
     // Controls for close game button in main menu
-    bjview.addCloseButtonListener(e -> {
-        System.exit(0);
-    });
+    bjview.addCloseButtonListener(e -> System.exit(0));
 
     // Controls for back button in join room panel
-    bjview.addJoinBackButtonListener(e -> {
-        bjview.switchToMenu();
-    });
+    bjview.addJoinBackButtonListener(e -> bjview.switchToMenu());
 
     // Controls rules button in menu
-    bjview.addRulesButtonListener(e -> {
-        bjview.switchToRules();
-    });
+    bjview.addRulesButtonListener(e -> bjview.switchToRules());
 
     // Controls for back button in join room panel
-    bjview.addRulesBackButtonListener(e -> {
-        bjview.switchToMenu();
+    bjview.addRulesBackButtonListener(e -> bjview.switchToMenu());
+
+    bjview.addCreateRoomMenuBtnListener(e -> bjview.switchToCreateRoom());
+
+    bjview.addCreateRoomBtnListener(e -> {
+        output.println(gson.toJson(new ConnectionSetup(bjview.getPlayer2ndFieldText(), null)));
+        bjview.switchPanel();
     });
+
+    bjview.addCreateRoomBackBtnListener(e -> bjview.switchToMenu());
+
+
 
     bjview.addRoomBackButtonListener(e -> {
         if(bjview.confirmExit()){
+            try {
+                serverListener.cancel(true);
+                conn.close();
+                conn = new Socket(serverUrl, serverPort);
+                input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                output = new PrintWriter(conn.getOutputStream(), true);
+
+                serverListener = CompletableFuture.runAsync(() -> {
+                    try {
+                        listenForUpdate();
+                    } catch (IOException err) {
+                        err.printStackTrace();
+                    }
+                });
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.exit(1);
+            }
             bjview.switchToMenu();
         }
         
@@ -208,14 +229,28 @@ public class Controller {
                 //bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
                 
                 bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
-                bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
                 bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
                 bjview.setPlayerBet(bjmodel.getCurrentTurn().getBet());
                 bjview.setPlayerChips(bjmodel.getCurrentTurn().getPlayer().getChips());
 
                 bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()));
-
                 bjview.setupDealerCard(getHandImageStrings(dealerHand), bjmodel.hasNext()); // true, hide first card
+
+                if(!bjmodel.hasNext()){
+                    bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
+                } else {
+                    bjview.setDealerHandPoints(-1);
+                }
+
+                List<String> players = new ArrayList<>();
+                List<List<String>> handStrings = new ArrayList<>();
+
+                for (Hand h: bjmodel.getTurnOrder()){
+                    players.add(h.getPlayer().getUsername());
+                    handStrings.add(getHandImageStrings(h));
+                }
+
+                bjview.setupTurnOrderGrid(players, handStrings, bjmodel.getTurnIndex());
             }
         }
     }
