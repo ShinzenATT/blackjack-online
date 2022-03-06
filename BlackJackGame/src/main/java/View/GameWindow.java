@@ -245,10 +245,6 @@ public class GameWindow extends JFrame {
         startButton.setFocusPainted(false);
         interactionPanel.add(startButton);
 
-        //drawnLabel = new JLabel("Hello");
-        //mainPanel.add(drawnLabel);
-        //drawnLabel.setBounds(50, 200, 800, 50);
-
         //roomCode.setBounds(30, 470, 800, 50);
         roomCode.setFont(new Font("", Font.BOLD, 12));
         roomCode.setForeground(Color.WHITE);
@@ -275,9 +271,10 @@ public class GameWindow extends JFrame {
 
         //Error message for game screen
         errorMessageLabel.setText("");
-        errorMessageLabel.setBounds(450, 450, 800, 50);
+        //errorMessageLabel.setBounds(450, 450, 800, 50);
         errorMessageLabel.setFont(new Font("", Font.BOLD, 12));
         errorMessageLabel.setForeground(Color.RED);
+        errorMessageLabel.setBorder(new EmptyBorder(0, 30, 0, 0));
         interactionPanel.add(errorMessageLabel);
 
         holder.setBounds(30, 545, 200, 50);
@@ -559,18 +556,10 @@ public class GameWindow extends JFrame {
         mainFrame.setVisible(true);
     }
 
-    /*
-    public JLabel getDrawnCardLabel() {
-        return drawnLabel;
-    }
-    */
-
     public void setPlayerName(String name){ playerName.setText("Current turn: " + name); }
     public void setPlayerBet(int bet){ playerBet.setText("Current bet: " + bet); }
     public void setPlayerChips(int chips) { chipText.setText("Current chips: " + chips); }
     public void setRoomCode(String code) { roomCode.setText("Room code: " + code); }
-
-    //public void setHandPoints(int points){ handPoints.setText(Integer.toString(points)); }
 
     public void setDealerHandPoints(int points){
         if(points > 0) {
