@@ -58,7 +58,7 @@ public class Room extends Observable implements Closeable {
             gc.sendError("Bet already placed", "The bet has already been placed, consider using double down instead");
             return;
         } else if (!currentTurn.canBet(chips)){
-            gc.sendError("Not enought chips to bet", "Not enought chips to bet, consider lowering the bet");
+            gc.sendError("Not enough chips to bet", "Not enough chips to bet, consider lowering the bet");
             return;
         }
         currentTurn.betChips(chips);
@@ -72,6 +72,9 @@ public class Room extends Observable implements Closeable {
             return;
         }else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
+            return;
+        } else if (currentTurn.getBet() <= 0){
+            gc.sendError("No bet", "You must bet before you can do any action");
             return;
         }
 
@@ -115,8 +118,14 @@ public class Room extends Observable implements Closeable {
         } else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
             return;
-        } else if (!currentTurn.canBet(currentTurn.getBet())){
-            gc.sendError("Not enought chips to double down", "Not enought chips to double down");
+        }else if (currentTurn.getBet() <= 0){
+            gc.sendError("No bet", "You must best before you can do any action");
+            return;
+        }  else if (!currentTurn.canBet(currentTurn.getBet())){
+            gc.sendError("Not enough chips to double down", "Not enough chips to double down");
+            return;
+        } else if(currentTurn.numCards() > 2){
+            gc.sendError("Hit already done", "Double down is unavailable when a hit has been done");
             return;
         }
 
@@ -131,6 +140,9 @@ public class Room extends Observable implements Closeable {
             return;
         } else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
             gc.sendError("Not your turn", "Please wait until it is your turn");
+            return;
+        } else if (currentTurn.getBet() <= 0){
+            gc.sendError("No bet", "You must best before you can do any action");
             return;
         } else if(currentTurn.getHand().size() != 2 || currentTurn.getHand().get(0).getRank() != currentTurn.getHand().get(1).getRank()){
             gc.sendError("hand not viable", "The cards must match in rank to split");
