@@ -6,14 +6,21 @@ import java.util.Map;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import Model.objects.*;
 import Model.objects.Card.Rank;
 
+/**
+ * Class that tries to read custom images, linking images to
+ * set names in a hashmap making it easier to use them later.
+ */
 public class ButtonDisplayModel {
     static private Map<String, Image> BIMGS = new HashMap<String, Image>();
 
+    /**
+     * Creates a ButtonDisplayModel object where all custom images are
+     * read and linked to a specific given name in a hashmap. 
+     */    
     public ButtonDisplayModel() {
         HashMap<String, Image> imgs = new HashMap<String, Image>();
 
@@ -56,10 +63,26 @@ public class ButtonDisplayModel {
         BIMGS = Collections.unmodifiableMap(imgs);
     }
 
+    /** 
+     * Given the name linked with an read image, return the image from the hashmap.
+     * 
+     * @param name The specificly given name that associate with a read image.
+     * @return The image that was linked with given name.
+     */
     public Image getButtonImageFromName(String name){
         return BIMGS.get(name);
     }
 
+    /** 
+     * 
+     * Given the name linked with an read image, scale it according
+     * to given width and height before returning the image.
+     * 
+     * @param name The specificly given name that associate with a read image.
+     * @param labelWidth The wanted width of the image.
+     * @param labelHeight The wanted height of the image.
+     * @return The scaled image that was linked with given name.
+     */
     public Image getScaledButtonImageInstanceFromName(String name, int labelWidth, int labelHeight){
         return getButtonImageFromName(name).getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
     }
