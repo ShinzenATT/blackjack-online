@@ -95,6 +95,15 @@ public class Room extends Observable implements Closeable {
         currentTurn = gt.next();
         if(!gt.hasNext()){
             runDealerAI();
+            for (Hand h : gt.getTurnOrder()) {
+                if(currentTurn.getPoints() > 21){ // dealer went bust
+                    h.getPlayer().updatePlayerChips(h.getBet() + (h.getBet()/2));
+                } else if(h.getPoints() > currentTurn.getPoints() && !(h.getPoints() > 21)){ // player won, more points
+                    h.getPlayer().updatePlayerChips(h.getBet() + (h.getBet()/2)); 
+                } else if(currentTurn.getPoints() == h.getPoints()){ // draw between dealer and player
+                    h.getPlayer().updatePlayerChips(h.getBet());
+                }
+            }
         }
         notifyObservers();
     }

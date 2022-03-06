@@ -22,4 +22,8 @@ public class Player {
         chips += delta;
         return chips;
     }
+
+    public void updatePlayerChips(int delta){
+        chips += delta;
+    }
 }
