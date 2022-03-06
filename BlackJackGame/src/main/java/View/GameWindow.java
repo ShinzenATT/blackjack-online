@@ -567,7 +567,13 @@ public class GameWindow extends JFrame {
 
     //public void setHandPoints(int points){ handPoints.setText(Integer.toString(points)); }
 
-    public void setDealerHandPoints(int points){ dealerHandValue.setText("Hand Value: " + Integer.toString(points)); }
+    public void setDealerHandPoints(int points){
+        if(points > 0) {
+            dealerHandValue.setText("Hand Value: " + Integer.toString(points));
+        } else {
+            dealerHandValue.setText("Hand Value: ?");
+        }
+    }
 
     public void setPlayerHandPoints(int points){ playerHandValue.setText("Hand Value: " + Integer.toString(points)); }
 

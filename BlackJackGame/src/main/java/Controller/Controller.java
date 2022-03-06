@@ -229,13 +229,18 @@ public class Controller {
                 //bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
                 
                 bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
-                bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
                 bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
                 bjview.setPlayerBet(bjmodel.getCurrentTurn().getBet());
                 bjview.setPlayerChips(bjmodel.getCurrentTurn().getPlayer().getChips());
 
                 bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()));
                 bjview.setupDealerCard(getHandImageStrings(dealerHand), bjmodel.hasNext()); // true, hide first card
+
+                if(!bjmodel.hasNext()){
+                    bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
+                } else {
+                    bjview.setDealerHandPoints(-1);
+                }
 
                 List<String> players = new ArrayList<>();
                 List<List<String>> handStrings = new ArrayList<>();
