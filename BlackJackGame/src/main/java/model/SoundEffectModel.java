@@ -3,6 +3,7 @@ package model;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,7 +26,7 @@ public class SoundEffectModel {
       try {
         Clip clip = AudioSystem.getClip();
         AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-          SoundEffectModel.class.getResourceAsStream(url)
+          new BufferedInputStream(SoundEffectModel.class.getResourceAsStream(url))
         );
         clip.open(inputStream);
         clip.start();
@@ -46,7 +47,7 @@ public class SoundEffectModel {
         try {
           bgClip = AudioSystem.getClip();
           AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-            SoundEffectModel.class.getResourceAsStream(url)
+            new BufferedInputStream(SoundEffectModel.class.getResourceAsStream(url))
           );
           bgClip.open(inputStream);
           bgClip.start();
