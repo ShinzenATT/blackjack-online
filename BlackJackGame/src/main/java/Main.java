@@ -1,7 +1,6 @@
-import Controller.Controller;
-import Model.GameTracker;
-import Model.objects.Player;
-import View.*;
+import controller.Controller;
+import model.GameTracker;
+import view.*;
 
 import java.io.IOException;
 

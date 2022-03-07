@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import Model.objects.*;
-import Model.objects.Card.Rank;
+
+import model.objects.Card.Rank;
 
 public class ImageDisplayModel {
     static private Map<String, Image> IMGS = new HashMap<String, Image>();

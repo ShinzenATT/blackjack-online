@@ -1,4 +1,4 @@
-package Model.json_data;
+package model.json_data;
 
 public class ConnectionSetup {
     public final String player_name;

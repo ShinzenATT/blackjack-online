@@ -1,7 +1,7 @@
-package Model;
+package model;
 
-import Model.json_data.GameModel;
-import Model.objects.*;
+import model.json_data.GameModel;
+import model.objects.*;
 
 import java.util.*;
 

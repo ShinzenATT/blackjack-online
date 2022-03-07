@@ -1,9 +1,7 @@
-package Model.json_data;
+package model.json_data;
 
-import Model.GameTracker;
-import Model.objects.Hand;
+import model.objects.Hand;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel {
