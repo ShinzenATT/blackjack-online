@@ -2,11 +2,19 @@ package model;
 
 import model.objects.*;
 
+/**
+ * Class that keeps track of the current game of blackjack.
+ * @author Alen
+ * @version 2022-03-07
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *
+ */
 public class GameTracker implements Iterator<Hand> {
     private final List<Hand> turnOrder;
     private int turnTracker = 0;
@@ -34,12 +42,21 @@ public class GameTracker implements Iterator<Hand> {
 
     }
 
+    /**
+     * Checks if the game has more rounds.
+     *
+     * @return Check result if game has more rounds.
+     */
     @Override
     public boolean hasNext() {
         return turnTracker < turnOrder.size();
     }
 
-    // this would probably be stand
+    /**
+     * Gets the hand that is next in turnOrder
+     *
+     * @return next hand in turnOrder
+     */
     @Override
     public Hand next() {
         if(turnTracker > 0) {
@@ -50,14 +67,29 @@ public class GameTracker implements Iterator<Hand> {
 
     }
 
+    /**
+     * Gets the next card from the deck
+     *
+     * @return the next card from deck
+     */
     public Card nextCard(){
         return deck.next();
     }
 
+    /**
+     * Gets the turnorder of the game.
+     *
+     * @return The turn order of the game.
+     */
     public List<Hand> getTurnOrder(){
         return Collections.unmodifiableList(turnOrder);
     }
 
+    /**
+     * Gets the turntracker.
+     *
+     * @return The turntracker of the game.
+     */
     public int getTurnTracker(){ return turnTracker; }
 
     public void insertNext(Hand hand){
