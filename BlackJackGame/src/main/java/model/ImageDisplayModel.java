@@ -1,6 +1,5 @@
 package model;
 
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +11,7 @@ import javax.imageio.ImageIO;
 import model.objects.Card.Rank;
 
 /**
- * Class that tries to read custom images for all the playing cards, 
+ * Class that tries to read custom images for all the playing cards,
  * linking images to set names in a hashmap making it easier to use them later.
  * @author Joel
  * @version 2022-03-07
@@ -22,12 +21,12 @@ public class ImageDisplayModel {
 
     /**
      * Creates a ImageDisplayModel object where all custom images for
-     * the playing cards are read and linked to a specific given name in a hashmap. 
-     */ 
+     * the playing cards are read and linked to a specific given name in a hashmap.
+     */
     public ImageDisplayModel() {
         HashMap<String, Image> imgs = new HashMap<String, Image>();
         String png = ".png";
-    
+
         for (String suit = "diamonds", name; ;) {
             for (Rank rank : Rank.values()) {
                 name = (rank + "_of_" + suit).toLowerCase();
@@ -67,9 +66,9 @@ public class ImageDisplayModel {
         IMGS = Collections.unmodifiableMap(imgs);
     }
 
-    /** 
+    /**
      * Given the name linked with an read image, return the image from the hashmap.
-     * 
+     *
      * @param name The specificly given name that associate with a read image.
      * @return The image that was linked with given name.
      */
@@ -77,11 +76,11 @@ public class ImageDisplayModel {
         return IMGS.get(name.toLowerCase());
     }
 
-    /** 
-     * 
+    /**
+     *
      * Given the name linked with an read image, scale it according
      * to given width and height before returning the image.
-     * 
+     *
      * @param name The specificly given name that associate with a read image.
      * @param labelWidth The wanted width of the image.
      * @param labelHeight The wanted height of the image.
