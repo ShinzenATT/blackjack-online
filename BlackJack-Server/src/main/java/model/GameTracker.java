@@ -12,9 +12,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- */
+
 public class GameTracker implements Iterator<Hand> {
     private final List<Hand> turnOrder;
     private int turnTracker = 0;
