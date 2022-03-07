@@ -28,7 +28,6 @@ public class DeckTest {
      */
 
     @Test
-    //Testing that the deck is shuffled in different ways
     public void shuffledDeck(){
         //Lätt shuffle testing
         Deck firstShuffled = new Deck(1, true);
@@ -43,7 +42,6 @@ public class DeckTest {
      */
 
     @Test
-    //Test made to look through that a deck only creates one type of each card
     public void noDuplicates(){
         Deck deck = new Deck(1, false);
         List deckList = deck.getDeck();
@@ -56,7 +54,6 @@ public class DeckTest {
      */
 
     @Test
-    //Test to check the deck size before compared to after removing a card from the deck
     public void sizeOfDeck(){
         Deck deck = new Deck(1, false);
         int size = deck.getNumCards();

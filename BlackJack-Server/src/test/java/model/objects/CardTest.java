@@ -17,7 +17,6 @@ public class CardTest {
      * running through them one by one.
      */
     @Test
-    //Test for Card method and that the requested card is created.
     public void createCard(){
         for(Card.Rank rank: Card.Rank.values() ){
             for(Card.Suit suit: Card.Suit.values()){

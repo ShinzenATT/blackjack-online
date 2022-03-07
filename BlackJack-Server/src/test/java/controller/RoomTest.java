@@ -17,27 +17,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class RoomTest {
 
-
     /**
      * Creates a room with the room code "1111"
      * then it checks that the created room is of the room class
      */
     @Test
-    //Creating a room
     public void roomTest(){
         Room testRoom = new Room("1111");
         assertThat(testRoom, instanceOf(Room.class));
-    }
-
-
-    @Test
-    //Testing the stand function
-    public void startGameTest() {
-        try{
-            SocketManager.Start();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
     }
 }
