@@ -12,11 +12,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main window of the game.
+ */
 public class GameWindow extends JFrame {
 
     private JFrame mainFrame;
     private final JPanel mainPanel;
-    private final JButton playButton;
     private final JButton hitButton;
     private final JButton stayButton;
     private final JButton doubleDownButton;
@@ -24,7 +26,6 @@ public class GameWindow extends JFrame {
     private final JTextField betField;
     private final JLabel holder;
     private final JLabel playerName;
-    private final JLabel fill;
     private final JLabel playerBet;
     private final JLabel chipText;
     private final JLabel handPoints;
@@ -42,7 +43,6 @@ public class GameWindow extends JFrame {
     private final JPanel playerNamePanel;
     private final JPanel rulesPanel;
     private final JTextArea rulesText;
-    private final JLabel playerCardImageLabel;
     private final JButton closeButton;
     private final JButton rulesButton;
     private final JButton createServerButton;
@@ -75,19 +75,20 @@ public class GameWindow extends JFrame {
     private final JPanel createRoomBackPanel;
     private final JButton createRoomBackBtn;
     private final JPanel cardGrid;
-
 	private ArrayList<JLabel> dealerLabels;
 	private ArrayList<JLabel> userLabels;
     ImageDisplayModel allImages = new ImageDisplayModel();
     ButtonDisplayModel allButtonImages = new ButtonDisplayModel();
 
 
+    /**
+     * Creates the main window for the game.
+     */
     public GameWindow() {
 
 
         mainFrame = new JFrame();
         mainPanel = new JPanel();
-        playButton = new JButton();
         hitButton = new JButton();
         stayButton = new JButton();
         doubleDownButton = new JButton();
@@ -123,55 +124,57 @@ public class GameWindow extends JFrame {
         errorMessageLabel = new JLabel();
         roomCode = new JLabel();
         holder = new JLabel();
-
-        playerCardImageLabel = new JLabel();
         dealerLabels = new ArrayList<>();
         userLabels = new ArrayList<>();
 
+        //The panel that holds player info and cards
         dealerCardsPanel = new JPanel();
         dealerCardsPanel.setSize(new java.awt.Dimension(700,200));
         dealerCardsPanel.setBackground(new java.awt.Color(24, 90, 24));
 
+        //The panel that holds back button top left corner and dealer info and cards panel
         roomTopPanel.setSize(new java.awt.Dimension(700,200));
         roomTopPanel.setBackground(new java.awt.Color(24, 90, 24));
         roomTopPanel.setLayout(new BorderLayout());
 
+        //The panel that holds dealer info and cards
         playerCardsPanel = new JPanel();
         playerCardsPanel.setSize(new java.awt.Dimension(700,200));
         playerCardsPanel.setBackground(new java.awt.Color(24, 90, 24));
 
+        //The panel that holds the dealers name and total hand value
         dealerNamePanel = new JPanel();
-        //dealerNamePanel.setSize(new java.awt.Dimension(700,100));
         dealerNamePanel.setBackground(new java.awt.Color(24, 90, 24));
         dealerNamePanel.setLayout(new BorderLayout());
 
+        //The panel that holds the players name and total hand value
         playerNamePanel = new JPanel();
-        //playerNamePanel.setSize(new java.awt.Dimension(700,100));
         playerNamePanel.setBackground(new java.awt.Color(24, 90, 24));
         playerNamePanel.setLayout(new BorderLayout());
         
-        //main frame setup
+        //Main frame setup
         JFrame mainFrame = new JFrame("BlackJack");
         mainFrame.setSize(1200, 800);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(false);
 
-        //main panel setup
+        //Main panel setup
         mainPanel.setBackground(new java.awt.Color(24, 139, 24));
         mainPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         mainPanel.setSize(new java.awt.Dimension(700, 500));
         mainPanel.setLayout(new BorderLayout());
 
-        //menu panel setup
+        //Menu panel setup
         menuPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         menuPanel.setSize(new java.awt.Dimension(700, 500));
         menuPanel.setBackground(new java.awt.Color(24, 139, 24));
         menuPanel.setLayout(new BorderLayout());
 
-        // panel for buttons in menu
+        //Panel for buttons in menu
         menuButtonsPanel.setLayout(new BoxLayout(menuButtonsPanel, BoxLayout.Y_AXIS));
         menuButtonsPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        //Panel that holds information about the current game
         JPanel interactionPanel = new JPanel();
         interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
         interactionPanel.setBackground(new java.awt.Color(24, 139, 24));
@@ -180,7 +183,6 @@ public class GameWindow extends JFrame {
         //Hit button setup
         hitButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("hitButton")));
         hitButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("hitButtonRollover")));
-        //hitButton.setBounds(10, 100, 190, 50);
         hitButton.setOpaque(false);
         hitButton.setContentAreaFilled(false);
         hitButton.setBorderPainted(false);
@@ -190,7 +192,6 @@ public class GameWindow extends JFrame {
         //Stand button setup
         stayButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("standButton")));
         stayButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("standButtonRollover")));
-        //stayButton.setBounds(10, 160, 190, 50);
         stayButton.setOpaque(false);
         stayButton.setContentAreaFilled(false);
         stayButton.setBorderPainted(false);
@@ -200,7 +201,6 @@ public class GameWindow extends JFrame {
         //DoubleDown button setup
         doubleDownButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("doubleDownButton")));
         doubleDownButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("doubleDownButtonRollover")));
-        //doubleDownButton.setBounds(10, 220, 190, 50);
         doubleDownButton.setOpaque(false);
         doubleDownButton.setContentAreaFilled(false);
         doubleDownButton.setBorderPainted(false);
@@ -211,7 +211,6 @@ public class GameWindow extends JFrame {
         splitButton = new JButton();
         splitButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("splitButton")));
         splitButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("splitButtonRollover")));
-        //splitButton.setBounds(10, 280, 190, 50);
         splitButton.setOpaque(false);
         splitButton.setContentAreaFilled(false);
         splitButton.setBorderPainted(false);
@@ -228,7 +227,6 @@ public class GameWindow extends JFrame {
         betFieldBackground.setLayout(new BorderLayout());
         betFieldBackground.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("betEmpty")));
         betFieldBackground.add(betField);
-        //betFieldBackground.setBounds(10, 340, 190, 50);
         betFieldBackground.setBorder(new EmptyBorder(0, 15, 0, 0));
         interactionPanel.add(betFieldBackground);
 
@@ -236,32 +234,31 @@ public class GameWindow extends JFrame {
         startButton = new JButton();
         startButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("startButton")));
         startButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("startButtonRollover")));
-        //startButton.setBounds(10, 400, 190, 50);
         startButton.setOpaque(false);
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false);
         startButton.setFocusPainted(false);
         interactionPanel.add(startButton);
 
-        //roomCode.setBounds(30, 470, 800, 50);
+        //The roomcode of the current game
         roomCode.setFont(new Font("", Font.BOLD, 12));
         roomCode.setForeground(Color.WHITE);
         roomCode.setBorder(new EmptyBorder(0, 30, 0, 0));
         interactionPanel.add(roomCode);
 
-        //playerName.setBounds(30, 500, 200, 50);
+        //The name of the player
         playerName.setFont(new Font("", Font.BOLD, 12));
         playerName.setForeground(Color.WHITE);
         playerName.setBorder(new EmptyBorder(0, 30, 0, 0));
         interactionPanel.add(playerName);
 
-        //chipText.setBounds(30, 530, 200, 50);
+        //The current total chips of the player
         chipText.setFont(new Font("", Font.BOLD, 12));
         chipText.setForeground(Color.WHITE);
         chipText.setBorder(new EmptyBorder(0, 30, 0, 0));
         interactionPanel.add(chipText);
 
-        //playerBet.setBounds(30, 515, 800, 50);
+        //The current bet of the player
         playerBet.setFont(new Font("", Font.BOLD, 12));
         playerBet.setForeground(Color.WHITE);
         playerBet.setBorder(new EmptyBorder(0, 30, 0, 0));
@@ -269,7 +266,6 @@ public class GameWindow extends JFrame {
 
         //Error message for game screen
         errorMessageLabel.setText("");
-        //errorMessageLabel.setBounds(450, 450, 800, 50);
         errorMessageLabel.setFont(new Font("", Font.BOLD, 12));
         errorMessageLabel.setForeground(Color.RED);
         errorMessageLabel.setBorder(new EmptyBorder(0, 30, 0, 0));
@@ -326,9 +322,11 @@ public class GameWindow extends JFrame {
         rulesInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         rulesInfoPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        // Panel that holds back button in join room top left corner
         backPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         backPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        // Panel that holds back button in rule room top left corner
         rulesBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         rulesBackPanel.setBackground(new java.awt.Color(24, 139, 24));
 
@@ -336,14 +334,17 @@ public class GameWindow extends JFrame {
         roomBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         roomBackPanel.setBackground(new java.awt.Color(24, 90, 24));
 
+        // Panel that holds buttons and input fields in tje join room
         joinServerMenuPanel.setLayout(new BoxLayout(joinServerMenuPanel, BoxLayout.Y_AXIS));
         joinServerMenuPanel.setBackground(new java.awt.Color(24, 139, 24));
 
+        // Panel that holds information text about the rules of the games
         rulesPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         rulesPanel.setSize(new java.awt.Dimension(700, 500));
         rulesPanel.setBackground(new java.awt.Color(24, 139, 24));
         rulesPanel.setLayout(new BorderLayout());
 
+        // Music button setup righ bottom corner
         musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
         musicButton.setOpaque(false);
         musicButton.setContentAreaFilled(false);
@@ -351,6 +352,7 @@ public class GameWindow extends JFrame {
         musicButton.setFocusPainted(false);
         menuMusicPanel.add(musicButton);
 
+        //Back button in the join room setup
         joinBackButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
         joinBackButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
         joinBackButton.setOpaque(false);
@@ -378,6 +380,7 @@ public class GameWindow extends JFrame {
         roomBackButton.setBounds(10, 10, 75, 75);
         roomBackPanel.add(roomBackButton);
 
+        // The panel for join room
         joinServerPanel.setPreferredSize(new java.awt.Dimension(700, 500));
         joinServerPanel.setSize(new java.awt.Dimension(700, 500));
         joinServerPanel.setBackground(new java.awt.Color(24, 139, 24));
@@ -409,6 +412,7 @@ public class GameWindow extends JFrame {
         roomFieldBackground.add(joinRoom);
         roomFieldBackground.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Join room button setup
         joinRoomButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
         joinRoomButton.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
         joinRoomButton.setOpaque(false);
@@ -435,16 +439,19 @@ public class GameWindow extends JFrame {
         rulesButton.setFocusPainted(false);
         rulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         
+        // Logo on the main panel
         blackJackLogo.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("blackJackLogo")));
         blackJackLogo.setOpaque(false);
         blackJackLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Panel that holds the buttons in the main panel
         menuButtonsPanel.add(blackJackLogo);
         menuButtonsPanel.add(joinRoomButton);
         menuButtonsPanel.add(createServerButton);
         menuButtonsPanel.add(rulesButton);
         menuButtonsPanel.add(closeButton);
 
+        // Join room button setup
         joinRoomBtn = new JButton();
         joinRoomBtn.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButton")));
         joinRoomBtn.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("joinServerButtonRollover")));
@@ -454,6 +461,7 @@ public class GameWindow extends JFrame {
         joinRoomBtn.setFocusPainted(false);
         joinRoomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Blackjack rules infotext
         JTextArea rulesText = new JTextArea(
             "Basic BlackJack rules: \n" +
             "\u2022 The goal of blackjack is to beat the dealer's hand without going over 21. \n" +
@@ -479,6 +487,7 @@ public class GameWindow extends JFrame {
         rulesText.setOpaque(false);
         rulesText.setEditable(false);
 
+        //Panel that holds button and input field in the join room panel
         joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 150))); // adds spacing before first item
         joinServerMenuPanel.add(roomFieldBackground);
         joinServerMenuPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -487,6 +496,7 @@ public class GameWindow extends JFrame {
         joinServerMenuPanel.add(joinRoomBtn);
         joinServerPanel.add(joinServerMenuPanel, BorderLayout.CENTER);
 
+        //Panel that holds dealer cards and panel with back button
         roomTopPanel.add(dealerCardsPanel, BorderLayout.CENTER);
         roomTopPanel.add(roomBackPanel, BorderLayout.WEST);
 
@@ -499,17 +509,19 @@ public class GameWindow extends JFrame {
         mainPanel.add(roomTopPanel, BorderLayout.NORTH);
         mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
 
+        //Panel for creating room
         createRoomPanel = new JPanel();
         createRoomPanel.setLayout(new BoxLayout(createRoomPanel, BoxLayout.Y_AXIS));
         createRoomPanel.setBorder(new EmptyBorder(0, 0, 250, 0));
         createRoomPanel.setBackground(new java.awt.Color(24, 139, 24));
-        //createRoomPanel.add(backPanel);
 
+        //Panel that holds back button in the create room panel
         createRoomBackPanel = new JPanel();
         createRoomBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         createRoomBackPanel.setBackground(new java.awt.Color(24, 139, 24));
         createRoomPanel.add(createRoomBackPanel);
 
+        //Back button in create room panel setup
         createRoomBackBtn = new JButton();
         createRoomBackBtn.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButton")));
         createRoomBackBtn.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("backButtonRollover")));
@@ -534,6 +546,7 @@ public class GameWindow extends JFrame {
         playerFieldBackground2.setAlignmentX(Component.CENTER_ALIGNMENT);
         createRoomPanel.add(playerFieldBackground2);
 
+        // Create room button setup
         createRoomBtn = new JButton();
         createRoomBtn.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("createServerButton")));
         createRoomBtn.setRolloverIcon(new ImageIcon(allButtonImages.getButtonImageFromName("createServerButtonRollover")));
@@ -544,6 +557,8 @@ public class GameWindow extends JFrame {
         createRoomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         createRoomPanel.add(createRoomBtn);
 
+        //Add room panels to the root panel with 
+        //cardlayout to switch between panels easy
         root = new JPanel(new CardLayout());
         root.add(menuPanel, "menu");
         root.add(mainPanel, "game");
@@ -554,11 +569,14 @@ public class GameWindow extends JFrame {
         mainFrame.setVisible(true);
     }
 
+    // Update values for the room data labels
     public void setPlayerName(String name){ playerName.setText("Current turn: " + name); }
     public void setPlayerBet(int bet){ playerBet.setText("Current bet: " + bet); }
     public void setPlayerChips(int chips) { chipText.setText("Current chips: " + chips); }
     public void setRoomCode(String code) { roomCode.setText("Room code: " + code); }
 
+    // Dealers displayed total hand points is hidden while
+    // its first card is face down
     public void setDealerHandPoints(int points){
         if(points > 0) {
             dealerHandValue.setText("Hand Value: " + Integer.toString(points));
@@ -567,8 +585,10 @@ public class GameWindow extends JFrame {
         }
     }
 
+    // Updates the players hand total points that is displayed next to players hand
     public void setPlayerHandPoints(int points){ playerHandValue.setText("Hand Value: " + Integer.toString(points)); }
 
+    // Setups all the images to the cards in the players hand to be displayed
     public void setupUserCard(ArrayList<String> cardNames) {
         playerCardsPanel.removeAll();
         playerCardsPanel.add(playerNamePanel);
@@ -585,6 +605,7 @@ public class GameWindow extends JFrame {
         playerCardsPanel.repaint();
     }
 
+    //Add card to users hand that is dislpayed
     public void addUserCard(String cardName) {
         JLabel label = new JLabel();
         ImageIcon imageIcon = new ImageIcon(allImages.getScaledImageInstanceFromName(cardName, 100, 145));
@@ -593,15 +614,15 @@ public class GameWindow extends JFrame {
         updateUserLabelsPanel();
     }
 
+    // Updates the label that holds all the player cards to be displayed
     public void updateUserLabelsPanel(){
         for (JLabel label: userLabels){
             playerCardsPanel.add(label);
         }
     }
 
-    // kan nog kombineras med setupUserCard, det ända som skiljer är dealerLabels..
+    // Setups all the images to the cards in the dealers hand to be displayed
     public void setupDealerCard(ArrayList<String> cardNames, Boolean faceDownFirst) {
-        //System.out.println("dealer labels:" + dealerLabels);
         dealerCardsPanel.removeAll();
         dealerCardsPanel.add(dealerNamePanel);
         dealerLabels.removeAll(dealerLabels);
@@ -621,6 +642,7 @@ public class GameWindow extends JFrame {
         dealerCardsPanel.repaint();
     }
 
+    //Add card to dealers hand that is displayed
     public void addDealerCard(String cardName) {
         JLabel label = new JLabel();
         ImageIcon imageIcon = new ImageIcon(allImages.getScaledImageInstanceFromName(cardName, 100, 145));
@@ -629,6 +651,7 @@ public class GameWindow extends JFrame {
         updateDealerLabelsPanel();
     }
 
+    //Clears dealers hand
     public void clearDealerLabels(){
         for (JLabel label: dealerLabels){
             dealerCardsPanel.remove(label);
@@ -636,12 +659,14 @@ public class GameWindow extends JFrame {
         dealerLabels.clear();
     }
 
+    //Adds dealers cards to the panel that displays them
     public void updateDealerLabelsPanel(){
         for (JLabel label: dealerLabels){
             dealerCardsPanel.add(label);
         }
     }
 
+    //Turnorder grid setup, displays all players hands
     public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings, int currentTurn){
         if(players.size() != handStrings.size()){
             throw new IllegalArgumentException();
@@ -665,14 +690,10 @@ public class GameWindow extends JFrame {
             cpanel.setBackground(new java.awt.Color(24, 139, 24));
             panel.add(cpanel, BorderLayout.CENTER);
 
-            //int offset  = 0;
-
             for (String c: handStrings.get(i)){
                 JLabel l = new JLabel();
                 ImageIcon ic = new ImageIcon(allImages.getScaledImageInstanceFromName(c, 40, 58));
                 l.setIcon(ic);
-                //l.setBounds(offset, 0, 20, 29);
-                //offset += 2;
                 cpanel.add(l);
                 System.out.println(players.get(i) + ' ' + c);
             }
@@ -680,7 +701,6 @@ public class GameWindow extends JFrame {
             JLabel pname = new JLabel(players.get(i));
             pname.setForeground(Color.WHITE);
             pname.setFont(new Font("", Font.BOLD, 10));
-            //pname.setBounds(0, 30, offset + 20, 20);
             panel.add(pname, BorderLayout.NORTH);
 
             cardGrid.add(panel);
@@ -689,6 +709,7 @@ public class GameWindow extends JFrame {
         cardGrid.revalidate();
     }
 
+    //Switches between different panels by using cardlayout on root
     public void switchPanel(){
         CardLayout cl = (CardLayout) root.getLayout();
         cl.show(root, "game");
@@ -718,6 +739,8 @@ public class GameWindow extends JFrame {
         hitButton.addActionListener(hl);
     }
 
+    // Changes image on the music button bottom right corner
+    // depending if the background music is on or off
     public void toggleMusicOnButton(boolean on){
         if(on){
             musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
@@ -726,10 +749,12 @@ public class GameWindow extends JFrame {
         }
     }
 
+    // Update error message label
     public void updateErrorMessage(String message){
         errorMessageLabel.setText(message);
     }
 
+    // Actionlisteners setup for buttons used in the application
     public void addStandButtonListener(ActionListener al){ stayButton.addActionListener(al); }
 
     public void addPlayerFieldListener(ActionListener al){ playerField.addActionListener(al); }
@@ -766,6 +791,7 @@ public class GameWindow extends JFrame {
 
     public void addCreateRoomBackBtnListener(ActionListener al) { createRoomBackBtn.addActionListener(al); }
 
+    //Getters for player input field values
     public String getBetText(){ return betField.getText(); }
 
     public String getPlayerFieldText(){ return playerField.getText(); }
@@ -774,6 +800,7 @@ public class GameWindow extends JFrame {
 
     public String getRoomCode(){ return joinRoom.getText(); }
 
+    //Confirm dialog when the players leaves a game room that is currently running
     public boolean confirmExit(){
         int a = JOptionPane.showConfirmDialog(mainPanel, "Do you really want to exit the current game?",
                 "Quit the game?", JOptionPane.YES_NO_OPTION);
