@@ -95,7 +95,6 @@ public class GameWindow extends JFrame {
         stayButton = new JButton();
         doubleDownButton = new JButton();
         playerName = new JLabel();
-        fill = new JLabel();
         playerBet = new JLabel();
         chipText = new JLabel();
         handPoints = new JLabel();
