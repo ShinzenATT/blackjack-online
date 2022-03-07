@@ -14,6 +14,8 @@ import java.util.List;
 
 /**
  * The main window of the game.
+ * @author Joel and Alen
+ * @version 2022-03-07
  */
 public class GameWindow extends JFrame {
 

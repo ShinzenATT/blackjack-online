@@ -40,6 +40,7 @@ public class Deck implements Iterator<Card>{
     /**
      * Returns a card from a deck.
      * @return The next card in a deck.
+     * @version 2022-03-07
      */
     @Override
     public Card next(){

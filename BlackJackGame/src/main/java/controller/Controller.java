@@ -23,6 +23,8 @@ import com.google.gson.Gson;
 /**
  * The controller class controls the communication
  * between model and view classes.
+ * @author Alen and Joel
+ * @version 2022-03-07
  */
 public class Controller {
 

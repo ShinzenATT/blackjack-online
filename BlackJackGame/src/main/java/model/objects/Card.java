@@ -3,6 +3,8 @@ package model.objects;
 /**
  * Class to create standard playing card objects.
  * @author Joel
+ * @version 2022-03-07
+ * 
  */
 public class Card {
 

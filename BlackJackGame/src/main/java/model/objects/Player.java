@@ -4,6 +4,7 @@ package model.objects;
  * Class for creating players.
  * 
  * @author Andin
+ * @version 2022-03-07
  */
 public class Player {
 

@@ -4,6 +4,7 @@ package model.objects;
  * Class for creating dealers.
  * 
  * @author Andin
+ * @version 2022-03-07
  */
 public class Dealer extends Player {
 
