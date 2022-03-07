@@ -1,13 +1,11 @@
-package View;
+package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import Model.ButtonDisplayModel;
-import Model.ImageDisplayModel;
-import Model.objects.Card;
-import Model.objects.Hand;
+import model.ButtonDisplayModel;
+import model.ImageDisplayModel;
 
 import java.awt.*;
 import java.awt.event.*;

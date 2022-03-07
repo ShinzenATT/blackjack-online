@@ -1,4 +1,4 @@
-package Model.objects;
+package model.objects;
 
 /**
  * Class for creating players.
