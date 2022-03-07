@@ -1,9 +1,8 @@
 package json_data;
 
 import Controller.GameConnection;
-import Model.GameTracker;
-import Model.objects.Hand;
-import Model.objects.Player;
+import model.GameTracker;
+import model.objects.Hand;
 
 import java.util.ArrayList;
 import java.util.List;

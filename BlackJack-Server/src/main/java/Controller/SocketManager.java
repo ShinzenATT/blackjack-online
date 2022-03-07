@@ -1,7 +1,6 @@
 package Controller;
 
-import Controller.GameConnection;
-import Model.RoomTracker;
+import model.RoomTracker;
 
 import java.io.IOException;
 import java.net.ServerSocket;
