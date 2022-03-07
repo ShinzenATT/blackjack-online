@@ -12,7 +12,6 @@ repositories {
 
 dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'org.jetbrains:annotations:22.0.0'
     testImplementation 'junit:junit:4.13.2'
 }
 
@@ -24,5 +23,9 @@ application {
 jar{
     manifest {
         attributes 'Main-Class':'Main'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
