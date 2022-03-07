@@ -3,9 +3,17 @@ import model.GameTracker;
 import view.*;
 
 import java.io.IOException;
-
+/**
+ * The main class. Runs the application.
+ */
 public class Main {
 
+/**
+ * Our main method. Start the application by adding
+ * a new gametracker, gamewindow and controller.
+ * 
+ * @param args The command line arguments.
+ */
 public static void main(String[] args) {
 
   try {
@@ -14,7 +22,7 @@ public static void main(String[] args) {
     Controller bjControl = new Controller(bjModel, gameWindow);
   } catch (IOException e){
     e.printStackTrace();
-    System.out.println("consider configuring a different server url");
+    System.out.println("Consider configuring a different server url");
   }
   }
 }

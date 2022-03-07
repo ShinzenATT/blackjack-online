@@ -20,11 +20,14 @@ import model.objects.Hand;
 import view.GameWindow;
 import com.google.gson.Gson;
 
+/**
+ * The controller class controls the communication
+ * between model and view classes.
+ */
 public class Controller {
 
     private final GameWindow bjview;
     private final GameTracker bjmodel;
-    //private Hand currentTurn = null;
     private boolean musicOn = true;
     private Hand dealerHand = null;
     private String serverUrl = "localhost";
@@ -35,7 +38,16 @@ public class Controller {
     private final Gson gson = new Gson();
     private CompletableFuture<Void> serverListener;
 
+    /**
+     * Creates a controller that handles communication
+     * between given model and view.
+     * 
+     * @param bjmodel The model object to link with the controller.
+     * @param bjview The view object to link with the controller.
+     * @throws IOException Errors that might occur within the communication.
+     */
     public Controller(GameTracker bjmodel, GameWindow bjview) throws IOException {
+
         this.bjmodel = bjmodel;
         this.bjview = bjview;
 
@@ -51,14 +63,10 @@ public class Controller {
             }
         });
 
-        // setup menu background music
+        //Setup menu background music
         SoundEffectModel bgplayer = new SoundEffectModel();
         bgplayer.playBackgroundSound("background.wav");
         musicOn = true;
-
-        //dealerHand = bjmodel.getDealerHand();
-
-        //currentTurn = bjmodel.next();
 
         bjview.addJoinRoomBtnListener(e -> {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), bjview.getRoomCode()));
@@ -66,13 +74,6 @@ public class Controller {
             System.out.println(s);
             bjview.switchPanel();
         });
-
-        /*bjview.addJoinRoomBtnListener(e -> {
-            String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), null));
-            output.println(s);
-            System.out.println(s);
-            bjview.switchPanel();
-        });*/
 
         bjview.addStartButtonListener(e -> output.println(gson.toJson(new RecievingCmd("start", 0))));
 
@@ -91,118 +92,102 @@ public class Controller {
         //Controls for hit button
         bjview.addHitButtonListener(e -> {
             output.println(gson.toJson(new RecievingCmd("hit", 0)));
-            //bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
-            //bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
             SoundEffectModel.playSound("dealCard.wav");
         });
 
-    // Controls for stand button
-    bjview.addStandButtonListener(e -> {
-            output.println(gson.toJson(new RecievingCmd("stand", 0)));
-            SoundEffectModel.playSound("stand.wav");
-            //currentTurn = bjmodel.next();
-            /*bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
-            bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
-            bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
-            bjview.setPlayerChips(bjmodel.getCurrentTurn().getBet());*/
-            /*if(!bjmodel.hasNext()){
-                /*while(currentTurn.getPoints() <= 16){
-                    currentTurn.addCard(bjmodel.nextCard());
-                }
-                bjview.clearDealerLabels();
-                bjview.setupDealerCard(getHandImageStrings(dealerHand), false);
-                bjview.setDealerHandPoints(bjmodel.getCurrentTurn().getPoints());
-            }*/
-    });
+        // Controls for stand button
+        bjview.addStandButtonListener(e -> {
+                output.println(gson.toJson(new RecievingCmd("stand", 0)));
+                SoundEffectModel.playSound("stand.wav");
+        });
 
-    // Controls for double down button
-    bjview.addDoubleDownButtonListener(e -> {
-        output.println(gson.toJson(new RecievingCmd("double down", 0)));
-        SoundEffectModel.playSound("dealCard.wav");
-    });
+        // Controls for double down button
+        bjview.addDoubleDownButtonListener(e -> {
+            output.println(gson.toJson(new RecievingCmd("double down", 0)));
+            SoundEffectModel.playSound("dealCard.wav");
+        });
 
-    // Controls for split button
-    bjview.addSplitButtonListener(e -> {
-        output.println(gson.toJson(new RecievingCmd("split", 0)));
-        SoundEffectModel.playSound("dealCard.wav");
-    });
+        // Controls for split button
+        bjview.addSplitButtonListener(e -> {
+            output.println(gson.toJson(new RecievingCmd("split", 0)));
+            SoundEffectModel.playSound("dealCard.wav");
+        });
 
-    // Controls for music managing button in main menu
-    bjview.addMusicButtonListener(e -> {
-        if(musicOn){
-            bgplayer.stopBackgroundSound();
-            musicOn = false;
-            bjview.toggleMusicOnButton(false);
-        } else {
-            bgplayer.playBackgroundSound("background.wav");
-            musicOn = true;
-            bjview.toggleMusicOnButton(true);
-        }
-        
-    });
-
-    // Controls for join room button in main menu
-    bjview.addJoinRoomButtonListener(e -> bjview.switchToJoinRoom());
-
-    // Controls for close game button in main menu
-    bjview.addCloseButtonListener(e -> System.exit(0));
-
-    // Controls for back button in join room panel
-    bjview.addJoinBackButtonListener(e -> bjview.switchToMenu());
-
-    // Controls rules button in menu
-    bjview.addRulesButtonListener(e -> bjview.switchToRules());
-
-    // Controls for back button in join room panel
-    bjview.addRulesBackButtonListener(e -> bjview.switchToMenu());
-
-    bjview.addCreateRoomMenuBtnListener(e -> bjview.switchToCreateRoom());
-
-    bjview.addCreateRoomBtnListener(e -> {
-        output.println(gson.toJson(new ConnectionSetup(bjview.getPlayer2ndFieldText(), null)));
-        bjview.switchPanel();
-    });
-
-    bjview.addCreateRoomBackBtnListener(e -> bjview.switchToMenu());
-
-
-
-    bjview.addRoomBackButtonListener(e -> {
-        if(bjview.confirmExit()){
-            try {
-                serverListener.cancel(true);
-                conn.close();
-                conn = new Socket(serverUrl, serverPort);
-                input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                output = new PrintWriter(conn.getOutputStream(), true);
-
-                serverListener = CompletableFuture.runAsync(() -> {
-                    try {
-                        listenForUpdate();
-                    } catch (IOException err) {
-                        err.printStackTrace();
-                    }
-                });
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                System.exit(1);
+        // Controls for music managing button in main menu
+        bjview.addMusicButtonListener(e -> {
+            if(musicOn){
+                bgplayer.stopBackgroundSound();
+                musicOn = false;
+                bjview.toggleMusicOnButton(false);
+            } else {
+                bgplayer.playBackgroundSound("background.wav");
+                musicOn = true;
+                bjview.toggleMusicOnButton(true);
             }
-            bjview.switchToMenu();
-        }
-        
-        
-    });
+            
+        });
 
+        // Controls for join room button in main menu
+        bjview.addJoinRoomButtonListener(e -> bjview.switchToJoinRoom());
 
+        // Controls for close game button in main menu
+        bjview.addCloseButtonListener(e -> System.exit(0));
 
+        // Controls for back button in join room panel
+        bjview.addJoinBackButtonListener(e -> bjview.switchToMenu());
 
+        // Controls rules button in menu
+        bjview.addRulesButtonListener(e -> bjview.switchToRules());
 
+        // Controls for back button in join room panel
+        bjview.addRulesBackButtonListener(e -> bjview.switchToMenu());
 
+        // Controls for create room button in main room
+        bjview.addCreateRoomMenuBtnListener(e -> bjview.switchToCreateRoom());
 
+        // Controls for create room button in create room
+        bjview.addCreateRoomBtnListener(e -> {
+            output.println(gson.toJson(new ConnectionSetup(bjview.getPlayer2ndFieldText(), null)));
+            bjview.switchPanel();
+        });
 
+        // Controls for back button in create room panel
+        bjview.addCreateRoomBackBtnListener(e -> bjview.switchToMenu());
+
+        // Controls for back button in game room
+        bjview.addRoomBackButtonListener(e -> {
+            if(bjview.confirmExit()){
+                try {
+                    serverListener.cancel(true);
+                    conn.close();
+                    conn = new Socket(serverUrl, serverPort);
+                    input = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    output = new PrintWriter(conn.getOutputStream(), true);
+
+                    serverListener = CompletableFuture.runAsync(() -> {
+                        try {
+                            listenForUpdate();
+                        } catch (IOException err) {
+                            err.printStackTrace();
+                        }
+                    });
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    System.exit(1);
+                }
+                bjview.switchToMenu();
+            } 
+            
+        });
     }
     
+    /**
+     * Gets the name of all the cards in a hand
+     * 
+     * @param h The hand to get all the name of cards from
+     * @return ArrayList of all the names of cards in a hand
+     */
     private ArrayList<String> getHandImageStrings(Hand h){
         ArrayList<String> imageList = new ArrayList<>();
         for(Card c : h.getHand()){
@@ -211,6 +196,12 @@ public class Controller {
         return imageList;
     }
 
+    /**
+     * Constatly listen for sporadic updates from the server
+     * and updates data and the view
+     * 
+     * @throws IOException Error message that might occur in the communication
+     */
     private void listenForUpdate() throws IOException {
         while (!conn.isClosed()){
             String res = ReadFile();
@@ -255,6 +246,13 @@ public class Controller {
         }
     }
 
+    /**
+     * Parses the connections input stream. 
+     * Returns value when the entire file has been read.
+     * 
+     * @return Parsed text from file.
+     * @throws IOException Error message that might occur if file was read wrong
+     */
     private String ReadFile() throws IOException {
         StringBuilder str = new StringBuilder();
         String line;
