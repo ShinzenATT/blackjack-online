@@ -1,4 +1,4 @@
-package Model.objects;
+package model.objects;
 
 public class DeckTest {
 }

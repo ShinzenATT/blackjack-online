@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import Model.objects.*;
-import Model.objects.Card.Rank;
+
+import model.objects.Card.Rank;
 
 /**
  * Class that tries to read custom images for all the playing cards, 

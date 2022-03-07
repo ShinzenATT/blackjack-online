@@ -1,4 +1,4 @@
-package Model.objects;
+package model.objects;
 
 /**
  * Class to create standard playing card objects.

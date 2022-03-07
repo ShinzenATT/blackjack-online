@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import Model.GameTracker;
-import Model.SoundEffectModel;
-import Model.json_data.ConnectionSetup;
-import Model.json_data.ErrorRes;
-import Model.json_data.GameModel;
-import Model.json_data.RecievingCmd;
-import Model.objects.Card;
-import Model.objects.Hand;
-import View.GameWindow;
+import model.GameTracker;
+import model.SoundEffectModel;
+import model.json_data.ConnectionSetup;
+import model.json_data.ErrorRes;
+import model.json_data.GameModel;
+import model.json_data.RecievingCmd;
+import model.objects.Card;
+import model.objects.Hand;
+import view.GameWindow;
 import com.google.gson.Gson;
 
 public class Controller {
