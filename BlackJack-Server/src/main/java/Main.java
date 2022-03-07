@@ -3,15 +3,10 @@ import Controller.SocketManager;
 import java.io.IOException;
 
 /**
- * The main class. Runs the application.
- * @author Alen
- * @version 2022-03-07
- */
-public class Main {
-
-/**
  * Our main method. Start the application by adding
- * a new gametracker, gamewindow and controller.
+ * a new gametracker, gamewindow and controller
+ * @author Alen
+ * @version 2022-03-07.
  * 
  * @param args The command line arguments.
  */
