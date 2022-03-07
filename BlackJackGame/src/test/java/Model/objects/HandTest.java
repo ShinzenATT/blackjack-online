@@ -5,10 +5,22 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * Test class made to look through the Hand class for errors
+ *
+ * @author Andin
+ */
+
 public class HandTest {
 
+    /**
+     * Testing the points of cards inside a hand by adding cards
+     * to a hand and using the getPoints function and comparing
+     * it to the expected value.
+     * Also testing the points depending on how many aces and
+     * how they behave depending on what kind of hand you have.
+     */
     @Test
-    //Test the point counter for cards in hand
     public void pointTest(){
         //Creating a tester user with 10 chips and adding cards to his hand with increasing value
         Player tester = new Player("Tester", 10);
@@ -30,16 +42,24 @@ public class HandTest {
         assertNotEquals(26, hand.getPoints());
     }
 
+    /**
+     * Testing that the getPlayer returns the owner of the
+     * requested hand by creating a test player and a hand
+     * then comparing the returned results to the preset
+     */
     @Test
-    //Test that the Player added to the hand is the user that owns the hand
     public void handOwnerTest(){
         Player tester = new Player("Tester", 10);
         Hand hand = new Hand(tester);
         assertEquals(tester, hand.getPlayer());
     }
 
+    /**
+     * Testing that the method for getting current handSize
+     * is accurate. This by first getting and empty hand and
+     * then adding cards as you go.
+     */
     @Test
-    //Test hand size depending on when adding and removing a card
     public void handSizeTest(){
         Player tester = new Player("Tester", 10);
         Hand hand = new Hand(tester);
@@ -59,8 +79,11 @@ public class HandTest {
         assertEquals(5, hand.getHand().size());
     }
 
+    /**
+     * Testing that the method returning amount of chips bet
+     * returns the correct amount.
+     */
     @Test
-    //Test chips amount depending on adding or removing chips
     public void chipValueTest(){
         Player tester = new Player("Tester", 199);
         Hand hand = new Hand(tester);
