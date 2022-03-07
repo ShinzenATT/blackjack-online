@@ -23,7 +23,8 @@ public class ImageDisplayModel {
      */ 
     public ImageDisplayModel() {
         HashMap<String, Image> imgs = new HashMap<String, Image>();
-        String dir = "BlackJackGame/src/main/resources/";
+        // should probably be empty when compiling to jar
+        String dir = "src/main/resources/";
         String png = ".png";
     
         for (String suit = "diamonds", name; ;) {
@@ -39,6 +40,7 @@ public class ImageDisplayModel {
                     System.out.println(
                         "Exception <" + e.toString() + "> for " + name
                     );
+                    System.out.println("Working Directory = " + System.getProperty("user.dir"));
                 }
             }
     
@@ -53,11 +55,12 @@ public class ImageDisplayModel {
             }
         }
         try {
-            imgs.put("back", ImageIO.read(new File("BlackJackGame/src/main/resources/back.png")));
+            imgs.put("back", ImageIO.read(new File(dir + "back.png")));
         } catch (IOException e) {
             System.out.println(
                 "Can't find image of back card."
             );
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
         }
         IMGS = Collections.unmodifiableMap(imgs);
     }
