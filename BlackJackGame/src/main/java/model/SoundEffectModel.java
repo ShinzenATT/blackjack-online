@@ -13,8 +13,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class SoundEffectModel {
   private Clip bgClip;
-  // Should be empty when compiling to jar
-  private static final String path = "src/main/resources/";
 
   /** 
    * Plays a supported sound file from the resources
@@ -27,7 +25,7 @@ public class SoundEffectModel {
       try {
         Clip clip = AudioSystem.getClip();
         AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-          new File(path + url).getAbsoluteFile()
+          SoundEffectModel.class.getResourceAsStream(url)
         );
         clip.open(inputStream);
         clip.start();
@@ -48,7 +46,7 @@ public class SoundEffectModel {
         try {
           bgClip = AudioSystem.getClip();
           AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-            new File(path + url).getAbsoluteFile()
+            SoundEffectModel.class.getResourceAsStream(url)
           );
           bgClip.open(inputStream);
           bgClip.start();

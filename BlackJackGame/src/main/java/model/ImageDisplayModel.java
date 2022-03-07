@@ -1,5 +1,6 @@
 package model;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +26,6 @@ public class ImageDisplayModel {
      */ 
     public ImageDisplayModel() {
         HashMap<String, Image> imgs = new HashMap<String, Image>();
-        // should probably be empty when compiling to jar
-        String dir = "src/main/resources/";
         String png = ".png";
     
         for (String suit = "diamonds", name; ;) {
@@ -34,9 +33,10 @@ public class ImageDisplayModel {
                 name = (rank + "_of_" + suit).toLowerCase();
 
                 try {
+                    System.out.println(getClass().getResource(name + png).getFile());
                     imgs.put(
                         name,
-                        ImageIO.read(new File(dir + name + png))
+                        ImageIO.read((getClass().getResourceAsStream(name + png)))
                     );
                 } catch (IOException e) {
                     System.out.println(
@@ -57,7 +57,7 @@ public class ImageDisplayModel {
             }
         }
         try {
-            imgs.put("back", ImageIO.read(new File(dir + "back.png")));
+            imgs.put("back", ImageIO.read(getClass().getResourceAsStream("back.png")));
         } catch (IOException e) {
             System.out.println(
                 "Can't find image of back card."
