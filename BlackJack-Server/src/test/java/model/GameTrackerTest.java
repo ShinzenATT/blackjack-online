@@ -1,5 +1,6 @@
 package model;
 
+import model.objects.Card;
 import model.objects.Hand;
 import model.objects.Player;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class GameTrackerTest {
         Player player1 = new Player("Player1", 100);
         Player player2 = new Player("Player2", 100);
         GameTracker testGame = new GameTracker(player1, player2);
-        assertThat(testGame.nextCard(), instanceOf(Hand.class));
+        assertThat(testGame.nextCard(), instanceOf(Card.class));
     }
     /*
     @Test
