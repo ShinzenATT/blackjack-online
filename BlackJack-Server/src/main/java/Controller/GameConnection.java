@@ -13,6 +13,11 @@ import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * A class that manages the connection to the client and the player data associated with it
+ * @see Socket
+ * @see Player
+ */
 public class GameConnection implements Runnable, Observer, Closeable {
     private final Socket conn;
     private final BufferedReader input;
@@ -21,6 +26,12 @@ public class GameConnection implements Runnable, Observer, Closeable {
     private Player player;
     private Room room;
 
+    /**
+     * Sets up the connection and it's streams while recieving the player name and the room code from client.
+     * Afterwards the connection associates itself with a room.
+     * @param s the connection established
+     * @throws IOException when the connection disconnects
+     */
     public GameConnection(Socket s) throws IOException {
         conn = s;
         input = new BufferedReader( new InputStreamReader(conn.getInputStream()));
@@ -63,6 +74,10 @@ public class GameConnection implements Runnable, Observer, Closeable {
         }while (cs == null);
     }
 
+    /**
+     * The algorithm run in its own thread. It listens for a command and calls the appropriate method.
+     * @see GameConnection#handleCmd(RecievingCmd)
+     */
     @Override
     public void run() {
         try (conn) {
@@ -81,6 +96,11 @@ public class GameConnection implements Runnable, Observer, Closeable {
         //System.out.println("Closed connection at " + Thread.currentThread().getName());
     }
 
+    /**
+     * Reads a json string that is closed.
+     * @return A json string from the client
+     * @throws IOException when the connection closes
+     */
     private String ReadFile() throws IOException {
         StringBuilder str = new StringBuilder();
         String line;
@@ -105,12 +125,20 @@ public class GameConnection implements Runnable, Observer, Closeable {
         return str.toString();
     }
 
+    /**
+     * Whenever the game updates send a json string to the client
+     * @param o the room
+     * @param arg the json string
+     */
     @Override
     public void update(Observable o, Object arg) {
         //System.out.println(arg);
         output.println(arg.toString());
     }
 
+    /**
+     * @return get the associated player data
+     */
     public Player getPlayer(){ return player; }
 
     @Override
@@ -118,6 +146,10 @@ public class GameConnection implements Runnable, Observer, Closeable {
         conn.close();
     }
 
+    /**
+     * Calls the appropriated method at the room according to the parsed json
+     * @param cmd the parsed command
+     */
     private void handleCmd(RecievingCmd cmd){
         if(cmd == null){
             try {
@@ -139,9 +171,17 @@ public class GameConnection implements Runnable, Observer, Closeable {
         }
     }
 
+    /**
+     * sends an error to the client
+     * @param type the error type
+     * @param msg the eeror message
+     */
     public void sendError(String type, String msg){
             output.println(gson.toJson(new ErrorRes(type, msg)));
     }
 
+    /**
+     * @return a boolean if the connection is closed
+     */
     public boolean isClosed() { return conn.isClosed(); }
 }
