@@ -43,8 +43,6 @@ public class Player {
 
     /**
      * Removes given amount of chips from players amount of chips.
-     *
-     * @return The updated amount of chips that player has.
      */
     public void transactChips(int delta){
         chips += delta;
