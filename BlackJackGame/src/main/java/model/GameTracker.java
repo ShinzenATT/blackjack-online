@@ -7,6 +7,8 @@ import java.util.*;
 
 /**
  * Class that keeps track of the current game of blackjack.
+ * @author Alen
+ * @version 2022-03-07
  */
 public class GameTracker {
     private List<Hand> turnOrder;

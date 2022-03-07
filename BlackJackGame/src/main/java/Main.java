@@ -5,6 +5,8 @@ import view.*;
 import java.io.IOException;
 /**
  * The main class. Runs the application.
+ * @author Alen
+ * @version 2022-03-07
  */
 public class Main {
 

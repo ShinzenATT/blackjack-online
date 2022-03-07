@@ -13,6 +13,8 @@ import model.objects.Card.Rank;
 /**
  * Class that tries to read custom images for all the playing cards, 
  * linking images to set names in a hashmap making it easier to use them later.
+ * @author Joel
+ * @version 2022-03-07
  */
 public class ImageDisplayModel {
     static private Map<String, Image> IMGS = new HashMap<String, Image>();

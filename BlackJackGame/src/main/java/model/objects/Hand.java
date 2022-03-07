@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Class to create a hand of standard playing cards.
  * 
  * @author Joel and Andin
+ * @version 2022-03-07
  */
 public class Hand {
     

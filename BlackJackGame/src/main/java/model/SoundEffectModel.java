@@ -8,6 +8,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Class that tries to play sound files.
+ * @author Joel
+ * @version 2022-03-07
  */
 public class SoundEffectModel {
   private Clip bgClip;

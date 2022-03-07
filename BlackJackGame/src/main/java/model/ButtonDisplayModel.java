@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 /**
  * Class that tries to read custom images, linking images to
  * set names in a hashmap making it easier to use them later.
+ * @author Joel
+ * @version 2022-03-07
  */
 public class ButtonDisplayModel {
     static private Map<String, Image> BIMGS = new HashMap<String, Image>();
