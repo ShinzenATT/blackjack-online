@@ -44,7 +44,7 @@ public class DeckTest {
     @Test
     public void noDuplicates(){
         Deck deck = new Deck(1, false);
-        List deckList = deck.getDeck();
+        List<Card> deckList = deck.getDeck();
         assertEquals(0, deckList.stream().filter(c -> Collections.frequency(deckList, c) > 1).toList().size());
     }
 
