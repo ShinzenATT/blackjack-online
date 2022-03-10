@@ -215,6 +215,8 @@ public class Room extends Observable implements Closeable {
         Card c = currentTurn.getAndRemoveLastCard();
         Hand h = new Hand(currentTurn.getPlayer());
         h.addCard(c);
+        currentTurn.getPlayer().transactChips(currentTurn.getBet());
+        h.betChips(currentTurn.getBet());
         gt.insertNext(h);
 
         notifyObservers();
