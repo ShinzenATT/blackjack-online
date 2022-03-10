@@ -717,6 +717,7 @@ public class GameWindow extends JFrame {
     /**
      *  Setups all the images to the cards in the players hand to be displayed
      * @param cardNames A list of string where each string represents a card and the list represents the hand
+     * @param hidden The card will be shown as hidden (card backs) if true
       */
     public void setupUserCard(ArrayList<String> cardNames, boolean hidden) {
         playerCardsPanel.removeAll();
@@ -822,7 +823,9 @@ public class GameWindow extends JFrame {
      * @param players A list of the player names that should be synchronized with the handStrings argument
      * @param handStrings A List of a String list where the initial list is each hand and the sublist is
      *                    all the card names in that hand
+     * @param handBets A list of ints that represent the ets of each hand, the list must be synchronized with players
      * @param currentTurn An index that show the current turn relative to the list
+     * @throws IllegalArgumentException when the players, handString and handBet lists don't have the same size
      */
     public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings, List<Integer> handBets, int currentTurn){
         if(players.size() != handStrings.size() || players.size() != handBets.size()){
