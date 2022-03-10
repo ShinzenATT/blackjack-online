@@ -9,10 +9,7 @@ import json_data.GameModel;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * This class acts as an instance game of blackjack and handles all the actions requested while updating a {@link GameTracker} object accordingly.
@@ -82,17 +79,25 @@ public class Room extends Observable implements Closeable {
         if(gt == null){
             gc.sendError("Not started", "Please start the game by sending the 'start' command");
             return;
-        }else if (!currentTurn.getPlayer().getUsername().equals(gc.getPlayer().getUsername())) {
-            gc.sendError("Not your turn", "Please wait until it is your turn");
-            return;
-        } else if (currentTurn.getBet() > 0) {
-            gc.sendError("Bet already placed", "The bet has already been placed, consider using double down instead");
-            return;
-        } else if (!currentTurn.canBet(chips)){
-            gc.sendError("Not enough chips to bet", "Not enough chips to bet, consider lowering the bet");
+        }
+
+        Optional<Hand> h = gt.getTurnOrder().stream()
+                .filter(it -> it.getPlayer().getUsername().equals(gc.getPlayer().getUsername())).findFirst();
+
+        if(h.isPresent()){
+            if (h.get().getBet() > 0) {
+                gc.sendError("Bet already placed", "The bet has already been placed, consider using double down instead");
+                return;
+            } else if (!h.get().canBet(chips)){
+                gc.sendError("Not enough chips to bet", "Not enough chips to bet, consider lowering the bet");
+                return;
+            }
+
+            h.get().betChips(chips);
+        } else {
+            gc.sendError("spectator error", "you're a spectator, please wait until a new game has started");
             return;
         }
-        currentTurn.betChips(chips);
 
         notifyObservers();
     }

@@ -173,6 +173,11 @@ public class GameWindow extends JFrame {
      */
     private final ButtonDisplayModel allButtonImages = new ButtonDisplayModel();
 
+    /**
+     * An enum for commanding the visibility of the dealer's cards
+     */
+    public enum CardVisibility { HIDDEN, FIRST_HIDDEN, VISIBLE}
+
 
     /**
      * Creates the main window for the game and all it's panels.
@@ -701,20 +706,32 @@ public class GameWindow extends JFrame {
      * Updates the players hand total points that is displayed next to players hand
      * @param points the point total for the current hand
      */
-    public void setPlayerHandPoints(int points){ playerHandValue.setText("Hand Value: " + Integer.toString(points)); }
+    public void setPlayerHandPoints(int points){
+        if(points > 0) {
+            playerHandValue.setText("Hand Value: " + Integer.toString(points));
+        } else{
+            playerHandValue.setText("Hand Value: ?");
+        }
+    }
 
     /**
      *  Setups all the images to the cards in the players hand to be displayed
      * @param cardNames A list of string where each string represents a card and the list represents the hand
       */
-    public void setupUserCard(ArrayList<String> cardNames) {
+    public void setupUserCard(ArrayList<String> cardNames, boolean hidden) {
         playerCardsPanel.removeAll();
         playerCardsPanel.add(playerNamePanel);
         userLabels.removeAll(userLabels);
 
-        for(int i = 0; i < cardNames.size(); i++){
+        for (String cardName : cardNames) {
             JLabel label = new JLabel();
-            label.setIcon(new ImageIcon(allImages.getScaledImageInstanceFromName(cardNames.get(i), 100, 145)));
+            String c = cardName;
+
+            if (hidden) {
+                c = "back";
+            }
+
+            label.setIcon(new ImageIcon(allImages.getScaledImageInstanceFromName(c, 100, 145)));
             userLabels.add(label);
         }
 
@@ -747,16 +764,16 @@ public class GameWindow extends JFrame {
     /**
      * Setups all the images to the cards in the dealers hand to be displayed
      * @param cardNames A list of string where each string represents a card and the list represents the dealer's hand
-     * @param faceDownFirst a boolean that when true the first card in the dealer's will be hidden when rendered
+     * @param visibility a boolean that when true the first card in the dealer's will be hidden when rendered
      */
-    public void setupDealerCard(ArrayList<String> cardNames, Boolean faceDownFirst) {
+    public void setupDealerCard(ArrayList<String> cardNames, CardVisibility visibility) {
         dealerCardsPanel.removeAll();
         dealerCardsPanel.add(dealerNamePanel);
         dealerLabels.removeAll(dealerLabels);
 
         for(int i = 0; i < cardNames.size(); i++){
             JLabel label = new JLabel();
-            if(faceDownFirst && i == 0){
+            if(visibility == CardVisibility.HIDDEN || (visibility == CardVisibility.FIRST_HIDDEN && i == 0)){
                 label.setIcon(new ImageIcon(allImages.getScaledImageInstanceFromName("back", 100, 145)));
             } else{
                 label.setIcon(new ImageIcon(allImages.getScaledImageInstanceFromName(cardNames.get(i), 100, 145)));
@@ -807,8 +824,8 @@ public class GameWindow extends JFrame {
      *                    all the card names in that hand
      * @param currentTurn An index that show the current turn relative to the list
      */
-    public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings, int currentTurn){
-        if(players.size() != handStrings.size()){
+    public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings, List<Integer> handBets, int currentTurn){
+        if(players.size() != handStrings.size() || players.size() != handBets.size()){
             throw new IllegalArgumentException();
         }
         cardGrid.removeAll();
@@ -832,7 +849,13 @@ public class GameWindow extends JFrame {
 
             for (String c: handStrings.get(i)){
                 JLabel l = new JLabel();
-                ImageIcon ic = new ImageIcon(allImages.getScaledImageInstanceFromName(c, 40, 58));
+                String cs = c;
+
+                if(handBets.get(i) <= 0){
+                    cs = "back";
+                }
+
+                ImageIcon ic = new ImageIcon(allImages.getScaledImageInstanceFromName(cs, 40, 58));
                 l.setIcon(ic);
                 cpanel.add(l);
                 System.out.println(players.get(i) + ' ' + c);

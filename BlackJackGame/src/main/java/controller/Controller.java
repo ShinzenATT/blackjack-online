@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import model.GameTracker;
@@ -17,6 +18,7 @@ import model.json_data.GameModel;
 import model.json_data.RecievingCmd;
 import model.objects.Card;
 import model.objects.Hand;
+import model.objects.Player;
 import view.GameWindow;
 import com.google.gson.Gson;
 
@@ -39,6 +41,7 @@ public class Controller {
     private PrintWriter output;
     private final Gson gson = new Gson();
     private CompletableFuture<Void> serverListener;
+    private String playerName = "";
 
     /**
      * Creates a controller that handles communication
@@ -74,6 +77,7 @@ public class Controller {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), bjview.getRoomCode()));
             output.println(s);
             System.out.println(s);
+            playerName = bjview.getPlayerFieldText();
             bjview.switchToGame();
         });
 
@@ -150,6 +154,7 @@ public class Controller {
         // Controls for create room button in create room
         bjview.addCreateRoomBtnListener(e -> {
             output.println(gson.toJson(new ConnectionSetup(bjview.getPlayer2ndFieldText(), null)));
+            playerName = bjview.getPlayer2ndFieldText();
             bjview.switchToGame();
         });
 
@@ -221,13 +226,24 @@ public class Controller {
                 dealerHand = bjmodel.getDealerHand();
                 //bjview.getDrawnCardLabel().setText(bjmodel.getCurrentTurn().toString());
                 
-                bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getPoints());
+                bjview.setPlayerHandPoints(bjmodel.getCurrentTurn().getBet() > 0 ? bjmodel.getCurrentTurn().getPoints() : 0);
                 bjview.setPlayerName(bjmodel.getCurrentTurn().getPlayer().getUsername());
                 bjview.setPlayerBet(bjmodel.getCurrentTurn().getBet());
                 bjview.setPlayerChips(bjmodel.getCurrentTurn().getPlayer().getChips());
 
-                bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()));
-                bjview.setupDealerCard(getHandImageStrings(dealerHand), bjmodel.hasNext()); // true, hide first card
+                bjview.setupUserCard(getHandImageStrings(bjmodel.getCurrentTurn()), bjmodel.getCurrentTurn().getBet() <= 0);
+
+                GameWindow.CardVisibility v = GameWindow.CardVisibility.VISIBLE;
+                Optional<Hand> oh = bjmodel.getTurnOrder().stream()
+                        .filter(it -> it.getPlayer().getUsername().equals(playerName)).findFirst();
+
+                if(oh.isPresent() && oh.get().getBet() <= 0 && bjmodel.hasNext()){
+                    v = GameWindow.CardVisibility.HIDDEN;
+                } else if (bjmodel.hasNext()){
+                    v = GameWindow.CardVisibility.FIRST_HIDDEN;
+                }
+
+                bjview.setupDealerCard(getHandImageStrings(dealerHand), v); // true, hide first card
 
                 if(!bjmodel.hasNext()){
                     bjview.setDealerHandPoints(dealerHand.getPoints()); //sätts i slutet ist
@@ -237,13 +253,15 @@ public class Controller {
 
                 List<String> players = new ArrayList<>();
                 List<List<String>> handStrings = new ArrayList<>();
+                List<Integer> handBets = new ArrayList<>();
 
                 for (Hand h: bjmodel.getTurnOrder()){
                     players.add(h.getPlayer().getUsername());
                     handStrings.add(getHandImageStrings(h));
+                    handBets.add(h.getBet());
                 }
 
-                bjview.setupTurnOrderGrid(players, handStrings, bjmodel.getTurnIndex());
+                bjview.setupTurnOrderGrid(players, handStrings, handBets, bjmodel.getTurnIndex());
             }
         }
     }
