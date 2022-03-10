@@ -1,5 +1,6 @@
 package model;
 
+import controller.GameConnection;
 import model.objects.*;
 
 /**
@@ -12,12 +13,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-
+/**
+ * Class that keeps track of the current game of blackjack.
+ * @author Alen
+ * @version 2022-03-07
+ */
 public class GameTracker implements Iterator<Hand> {
     private final List<Hand> turnOrder;
     private int turnTracker = 0;
     private Deck deck;
 
+    /**
+     * Creates a new instance of blackjack and sets up by creating a {@link Hand} for each {@link Player} and {@link Dealer}
+     * @param players an array of players that are participating in this round of blackjack
+     */
     public GameTracker(Player... players){
         turnOrder = new ArrayList<>();
         for (Player p: players){
@@ -90,6 +99,11 @@ public class GameTracker implements Iterator<Hand> {
      */
     public int getTurnTracker(){ return turnTracker; }
 
+    /**
+     * Insert a {@link Hand} in the turn order and have its turn take place right after the current turn
+     * @param hand the hand to be inserted into the turn order
+     * @see controller.Room#split(GameConnection) 
+     */
     public void insertNext(Hand hand){
         turnOrder.add(turnTracker, hand);
     }

@@ -1,6 +1,6 @@
 package json_data;
 
-import Controller.GameConnection;
+import controller.GameConnection;
 import model.GameTracker;
 import model.objects.Hand;
 

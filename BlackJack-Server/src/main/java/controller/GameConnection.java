@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.RoomTracker;
 import model.objects.Player;
@@ -17,6 +17,9 @@ import java.util.Observer;
  * A class that manages the connection to the client and the player data associated with it
  * @see Socket
  * @see Player
+ *
+ * @author Alen
+ * @version 2022-03-07
  */
 public class GameConnection implements Runnable, Observer, Closeable {
     private final Socket conn;
@@ -77,6 +80,7 @@ public class GameConnection implements Runnable, Observer, Closeable {
     /**
      * The algorithm run in its own thread. It listens for a command and calls the appropriate method.
      * @see GameConnection#handleCmd(RecievingCmd)
+     * @see Runnable#run()
      */
     @Override
     public void run() {
@@ -137,10 +141,16 @@ public class GameConnection implements Runnable, Observer, Closeable {
     }
 
     /**
+     * Get the {@link Player} that is associated with the connection
      * @return get the associated player data
      */
     public Player getPlayer(){ return player; }
 
+    /**
+     * Closes the socket associated with this connection
+     * @throws IOException when the socket fails to close or is already closed
+     * @see Closeable#close()
+     */
     @Override
     public void close() throws IOException {
         conn.close();
@@ -181,6 +191,7 @@ public class GameConnection implements Runnable, Observer, Closeable {
     }
 
     /**
+     * Returns a boolean based on if the {@link Socket} is closed
      * @return a boolean if the connection is closed
      */
     public boolean isClosed() { return conn.isClosed(); }

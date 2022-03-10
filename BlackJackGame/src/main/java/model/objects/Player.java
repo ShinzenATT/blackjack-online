@@ -43,8 +43,8 @@ public class Player {
     }
 
     /**
-     * Removes given amount of chips from players amount of chips.
-     * 
+     * Adds or subtracts given amount of chips from player's amount of chips.
+     * @param delta the amount to add or subtract to the player's balance
      * @return The updated amount of chips that player has.
      */
     public int transactChips(int delta){

@@ -102,8 +102,8 @@ public class Hand {
     /**
      * Gets if player ends up with negative balance of chips
      *
-     * @param amount
-     * @return true if player balance is larger or equal to zero, false if below
+     * @param amount the amount of chips intended to bet
+     * @return true if the players balance - amount is larger or equal to zero, false if below
      */
 
     public boolean canBet(int amount){

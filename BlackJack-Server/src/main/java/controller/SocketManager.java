@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.RoomTracker;
 
@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * A class for setting up a server socket and starting them in their own threads
+ * @see SocketManager#start()
+ *
+ * @author Alen
+ * @version 2022-03-07
  */
 public class SocketManager {
 
@@ -16,7 +20,7 @@ public class SocketManager {
      * object is created with its properties and is later run in its own thread. Afterwards it starts accepting new connections.
      * @throws IOException when the server socket cannot be connected like the port being unusable or no network interface being available
      */
-    public static void Start() throws IOException {
+    public static void start() throws IOException {
         ServerSocket socket = new ServerSocket(8080);
         Runtime.getRuntime().addShutdownHook(new GracefulShutdown(socket));
         System.out.println("Opened tcp socket at port 8080");

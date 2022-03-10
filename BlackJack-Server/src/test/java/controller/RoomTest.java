@@ -1,10 +1,6 @@
 package controller;
 
-import Controller.Room;
-import Controller.SocketManager;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;

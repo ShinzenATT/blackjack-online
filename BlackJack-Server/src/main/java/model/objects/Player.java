@@ -42,7 +42,8 @@ public class Player {
     }
 
     /**
-     * Removes given amount of chips from players amount of chips.
+     * Adds or removes the given amount of chips from player's chip balance.
+     * @param delta The amount to add or subtract to the player's balance
      */
     public void transactChips(int delta){
         chips += delta;

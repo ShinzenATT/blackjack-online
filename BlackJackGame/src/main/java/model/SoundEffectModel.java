@@ -58,6 +58,9 @@ public class SoundEffectModel {
       });
   }
 
+  /**
+   * Stops the background music that was created by {@link SoundEffectModel#playBackgroundSound(String)}
+   */
   public void stopBackgroundSound(){
     if(bgClip.isRunning()){
       bgClip.stop();

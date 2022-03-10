@@ -1,7 +1,7 @@
 package model;
 
-import Controller.GameConnection;
-import Controller.Room;
+import controller.GameConnection;
+import controller.Room;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class RoomTracker {
     /**
      * Creates a room and generates a room code while adding the connection to it
      * @param gc the connection responsible
-     * @return the new room
+     * @return the created room instance
      */
     public static Room createRoom(GameConnection gc){
         Random random = new Random();
@@ -37,7 +37,7 @@ public class RoomTracker {
      * Adds the connection to the room
      * @param roomCode the room code related to the room
      * @param gc the connection to be added
-     * @return
+     * @return The room that the connection has been associated with or null if the operation failed
      */
     public static Room joinRoom(String roomCode, GameConnection gc){
         Room r = games.get(roomCode);

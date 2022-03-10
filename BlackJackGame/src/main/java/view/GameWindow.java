@@ -19,77 +19,167 @@ import java.util.List;
  */
 public class GameWindow extends JFrame {
 
-    private JFrame mainFrame;
+    /**
+     * The game panel containing ui for playing blackjack
+     */
     private final JPanel mainPanel;
+    /**
+     * A button for performing the blackjack 'hit' action
+     */
     private final JButton hitButton;
+    /**
+     * A button for performing the blackjack 'stand' action
+     */
     private final JButton stayButton;
+    /**
+     * A button for performing the blackjack 'double down' action
+     */
     private final JButton doubleDownButton;
+    /**
+     * A button for informing the server to start a blackjack game
+     */
     private final JButton startButton;
+    /**
+     * A text field for placing a bet to the current hand
+     */
     private final JTextField betField;
-    private final JLabel holder;
+    /**
+     * Displays the name of the player that currently has their turn
+     */
     private final JLabel playerName;
+    /**
+     * Displays the balance of the current player in play
+     */
     private final JLabel playerBet;
+    /**
+     * The amount of chips that was bet to the current hand
+     */
     private final JLabel chipText;
-    private final JLabel handPoints;
-    private final JLabel dealerNameLabel;
-    private final JLabel playerNameLabel;
+    /**
+     * The point total of the current hand
+     */
     private final JLabel playerHandValue;
+    /**
+     * The point total of the dealer's hand
+     */
     private final JLabel dealerHandValue;
-    private final JLabel blackJackLogo;
+    /**
+     * Exit button to main menu from the join room menu
+     */
     private final JButton joinBackButton;
+    /**
+     * Exit button to main menu from the rules screen
+     */
     private final JButton rulesBackButton;
+    /**
+     * Exit button to main menu from the create room menu
+     */
     private final JButton roomBackButton;
+    /**
+     * The panel containing the dealer's hand
+     */
     private final JPanel dealerCardsPanel;
+    /**
+     * The panel containing the current player's hand
+     */
     private final JPanel playerCardsPanel;
+    /**
+     * The panel containing the dealer information
+     */
     private final JPanel dealerNamePanel;
+    /**
+     * The panel containing the current player information
+     */
     private final JPanel playerNamePanel;
-    private final JPanel rulesPanel;
-    private final JTextArea rulesText;
+    /**
+     * The exit button in the main menu
+     */
     private final JButton closeButton;
+    /**
+     * The rules button in the main menu
+     */
     private final JButton rulesButton;
+    /**
+     * Create server button in the main menu
+     */
     private final JButton createServerButton;
+    /**
+     * The background music toggle in the main menu
+     */
     private final JButton musicButton;
-    private final JPanel menuButtonsPanel;
-    private final JPanel menuMusicPanel;
-    private final JPanel joinServerPanel;
-    private final JPanel joinServerMenuPanel;
-    private final JPanel menuPanel;
+    /**
+     * the join room button the main menu
+     */
     private final JTextField joinRoom;
+    /**
+     * the player name text field in the join room menu
+     */
     private final JTextField playerField;
+    /**
+     * the conformation button in the join room menu
+     */
     private final JButton joinRoomBtn;
+    /**
+     * The join room button in the main menu
+     */
     private final JButton joinRoomButton;
-    private final JPanel backPanel;
-    private final JPanel rulesBackPanel;
-    private final JPanel roomBackPanel;
-    private final JPanel rulesInfoPanel;
+    /**
+     * The main panel that contains all the menu that are to be switched between
+     * @see CardLayout
+     */
     private final JPanel root;
-    private final JPanel roomTopPanel;
-    private final JLabel playerFieldBackground;
-    private final JLabel roomFieldBackground;
+    /**
+     * The split button in the game panel
+     */
     private final JButton splitButton;
-    private final JLabel betFieldBackground;
+    /**
+     * The error message in the game panel
+     */
     private final JLabel errorMessageLabel;
+    /**
+     * The room code text in the game panel
+     */
     private final JLabel roomCode;
-    private final JPanel createRoomPanel;
+    /**
+     * the conformation button in the create room menu
+     */
     private final JButton createRoomBtn;
-    private final JLabel playerFieldBackground2;
+    /**
+     * the player name text feild in the create room menu
+     */
     private final JTextField playerField2;
-    private final JPanel createRoomBackPanel;
+    /**
+     * the exit to main menu button in the create room menu
+     */
     private final JButton createRoomBackBtn;
+    /**
+     * The panel that contains all the players hands in the game panel
+     */
     private final JPanel cardGrid;
-	private ArrayList<JLabel> dealerLabels;
-	private ArrayList<JLabel> userLabels;
-    ImageDisplayModel allImages = new ImageDisplayModel();
-    ButtonDisplayModel allButtonImages = new ButtonDisplayModel();
+    /**
+     * The dealer card image objects
+     */
+	private final ArrayList<JLabel> dealerLabels;
+    /**
+     * the current player card image objects
+     */
+	private final ArrayList<JLabel> userLabels;
+    /**
+     * an instance of {@link ImageDisplayModel}
+     */
+    private final ImageDisplayModel allImages = new ImageDisplayModel();
+    /**
+     * an instance of {@link ButtonDisplayModel}
+     */
+    private final ButtonDisplayModel allButtonImages = new ButtonDisplayModel();
 
 
     /**
-     * Creates the main window for the game.
+     * Creates the main window for the game and all it's panels.
      */
     public GameWindow() {
 
 
-        mainFrame = new JFrame();
         mainPanel = new JPanel();
         hitButton = new JButton();
         stayButton = new JButton();
@@ -97,34 +187,33 @@ public class GameWindow extends JFrame {
         playerName = new JLabel();
         playerBet = new JLabel();
         chipText = new JLabel();
-        handPoints = new JLabel();
         closeButton = new JButton();
         joinRoomButton = new JButton();
         createServerButton = new JButton();
         rulesButton = new JButton();
         musicButton = new JButton();
-        menuButtonsPanel = new JPanel();
-        menuMusicPanel = new JPanel();
-        joinServerPanel = new JPanel();
-        menuPanel = new JPanel();
-        blackJackLogo = new JLabel();
+        JPanel menuButtonsPanel = new JPanel();
+        JPanel menuMusicPanel = new JPanel();
+        JPanel joinServerPanel = new JPanel();
+        JPanel menuPanel = new JPanel();
+        JLabel blackJackLogo = new JLabel();
         joinBackButton = new JButton();
-        backPanel = new JPanel();
-        joinServerMenuPanel = new JPanel();
-        rulesPanel = new JPanel();
-        rulesText = new JTextArea();
-        rulesBackPanel = new JPanel();
+        JPanel backPanel = new JPanel();
+        JPanel joinServerMenuPanel = new JPanel();
+        JPanel rulesPanel = new JPanel();
+        JTextArea rulesText1 = new JTextArea();
+        JPanel rulesBackPanel = new JPanel();
         rulesBackButton = new JButton();
-        rulesInfoPanel = new JPanel();
+        JPanel rulesInfoPanel = new JPanel();
         roomBackButton = new JButton();
-        roomBackPanel = new JPanel();
-        roomTopPanel = new JPanel();
-        playerFieldBackground = new JLabel();
-        roomFieldBackground = new JLabel();
-        betFieldBackground = new JLabel();
+        JPanel roomBackPanel = new JPanel();
+        JPanel roomTopPanel = new JPanel();
+        JLabel playerFieldBackground = new JLabel();
+        JLabel roomFieldBackground = new JLabel();
+        JLabel betFieldBackground = new JLabel();
         errorMessageLabel = new JLabel();
         roomCode = new JLabel();
-        holder = new JLabel();
+        JLabel holder = new JLabel();
         dealerLabels = new ArrayList<>();
         userLabels = new ArrayList<>();
 
@@ -277,11 +366,11 @@ public class GameWindow extends JFrame {
         holder.setForeground(new java.awt.Color(24, 139, 24));
         interactionPanel.add(holder);
 
-        dealerNameLabel = new JLabel("Dealers Hand", SwingConstants.CENTER);
+        JLabel dealerNameLabel = new JLabel("Dealers Hand", SwingConstants.CENTER);
         dealerNameLabel.setFont(new java.awt.Font("", 1, 18));
         dealerNameLabel.setForeground(Color.WHITE);
 
-        playerNameLabel = new JLabel("Players Hand", SwingConstants.CENTER);
+        JLabel playerNameLabel = new JLabel("Players Hand", SwingConstants.CENTER);
         playerNameLabel.setFont(new java.awt.Font("", 1, 18));
         playerNameLabel.setForeground(Color.WHITE);
 
@@ -511,13 +600,13 @@ public class GameWindow extends JFrame {
         mainPanel.add(playerCardsPanel, BorderLayout.SOUTH);
 
         //Panel for creating room
-        createRoomPanel = new JPanel();
+        JPanel createRoomPanel = new JPanel();
         createRoomPanel.setLayout(new BoxLayout(createRoomPanel, BoxLayout.Y_AXIS));
         createRoomPanel.setBorder(new EmptyBorder(0, 0, 250, 0));
         createRoomPanel.setBackground(new java.awt.Color(24, 139, 24));
 
         //Panel that holds back button in the create room panel
-        createRoomBackPanel = new JPanel();
+        JPanel createRoomBackPanel = new JPanel();
         createRoomBackPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         createRoomBackPanel.setBackground(new java.awt.Color(24, 139, 24));
         createRoomPanel.add(createRoomBackPanel);
@@ -540,7 +629,7 @@ public class GameWindow extends JFrame {
         playerField2.setFont(new Font("Arial", Font.BOLD, 25));
         playerField2.setForeground(Color.WHITE);
         playerField2.setHorizontalAlignment(JTextField.CENTER);
-        playerFieldBackground2 = new JLabel();
+        JLabel playerFieldBackground2 = new JLabel();
         playerFieldBackground2.setLayout(new BorderLayout());
         playerFieldBackground2.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("emptyButton")));
         playerFieldBackground2.add(playerField2);
@@ -571,13 +660,35 @@ public class GameWindow extends JFrame {
     }
 
     // Update values for the room data labels
+
+    /**
+     * Set the current turn player name shown in-game
+     * @param name the name of the player
+     */
     public void setPlayerName(String name){ playerName.setText("Current turn: " + name); }
+
+    /**
+     * show the amount the the current hand has bet in-game
+     * @param bet the amount of the bet
+     */
     public void setPlayerBet(int bet){ playerBet.setText("Current bet: " + bet); }
+
+    /**
+     * sets the current player's chip balance that is shown in-game
+     * @param chips the player's chip balance
+     */
     public void setPlayerChips(int chips) { chipText.setText("Current chips: " + chips); }
+
+    /**
+     * sets to display the curren room's join code associated with the game
+     * @param code the room code string
+     */
     public void setRoomCode(String code) { roomCode.setText("Room code: " + code); }
 
-    // Dealers displayed total hand points is hidden while
-    // its first card is face down
+    /**
+     * Displays the dealers displayed total hand point, it is hidden when the set value is 0 or below
+     *  @param points the dealer's hand point value, if it's 0 or below the text will show '?'
+     */
     public void setDealerHandPoints(int points){
         if(points > 0) {
             dealerHandValue.setText("Hand Value: " + Integer.toString(points));
@@ -586,10 +697,16 @@ public class GameWindow extends JFrame {
         }
     }
 
-    // Updates the players hand total points that is displayed next to players hand
+    /**
+     * Updates the players hand total points that is displayed next to players hand
+     * @param points the point total for the current hand
+     */
     public void setPlayerHandPoints(int points){ playerHandValue.setText("Hand Value: " + Integer.toString(points)); }
 
-    // Setups all the images to the cards in the players hand to be displayed
+    /**
+     *  Setups all the images to the cards in the players hand to be displayed
+     * @param cardNames A list of string where each string represents a card and the list represents the hand
+      */
     public void setupUserCard(ArrayList<String> cardNames) {
         playerCardsPanel.removeAll();
         playerCardsPanel.add(playerNamePanel);
@@ -606,7 +723,10 @@ public class GameWindow extends JFrame {
         playerCardsPanel.repaint();
     }
 
-    //Add card to users hand that is dislpayed
+    /**
+     * Add card to users hand that is displayed
+     * @param cardName A string that represents a card that is to be added to the player's hand
+     */
     public void addUserCard(String cardName) {
         JLabel label = new JLabel();
         ImageIcon imageIcon = new ImageIcon(allImages.getScaledImageInstanceFromName(cardName, 100, 145));
@@ -615,14 +735,20 @@ public class GameWindow extends JFrame {
         updateUserLabelsPanel();
     }
 
-    // Updates the label that holds all the player cards to be displayed
+    /**
+     * Updates the label that holds all the player cards to be displayed
+     */
     public void updateUserLabelsPanel(){
         for (JLabel label: userLabels){
             playerCardsPanel.add(label);
         }
     }
 
-    // Setups all the images to the cards in the dealers hand to be displayed
+    /**
+     * Setups all the images to the cards in the dealers hand to be displayed
+     * @param cardNames A list of string where each string represents a card and the list represents the dealer's hand
+     * @param faceDownFirst a boolean that when true the first card in the dealer's will be hidden when rendered
+     */
     public void setupDealerCard(ArrayList<String> cardNames, Boolean faceDownFirst) {
         dealerCardsPanel.removeAll();
         dealerCardsPanel.add(dealerNamePanel);
@@ -630,7 +756,7 @@ public class GameWindow extends JFrame {
 
         for(int i = 0; i < cardNames.size(); i++){
             JLabel label = new JLabel();
-            if(faceDownFirst == true && i == 0){
+            if(faceDownFirst && i == 0){
                 label.setIcon(new ImageIcon(allImages.getScaledImageInstanceFromName("back", 100, 145)));
             } else{
                 label.setIcon(new ImageIcon(allImages.getScaledImageInstanceFromName(cardNames.get(i), 100, 145)));
@@ -643,7 +769,10 @@ public class GameWindow extends JFrame {
         dealerCardsPanel.repaint();
     }
 
-    //Add card to dealers hand that is displayed
+    /**
+     * Add card to dealers hand that is displayed
+     * @param cardName a string representing a card that is to be added
+     */
     public void addDealerCard(String cardName) {
         JLabel label = new JLabel();
         ImageIcon imageIcon = new ImageIcon(allImages.getScaledImageInstanceFromName(cardName, 100, 145));
@@ -652,7 +781,9 @@ public class GameWindow extends JFrame {
         updateDealerLabelsPanel();
     }
 
-    //Clears dealers hand
+    /**
+     * Clears the dealer's hand
+     */
     public void clearDealerLabels(){
         for (JLabel label: dealerLabels){
             dealerCardsPanel.remove(label);
@@ -660,14 +791,22 @@ public class GameWindow extends JFrame {
         dealerLabels.clear();
     }
 
-    //Adds dealers cards to the panel that displays them
+    /**
+     * Adds dealers cards to the panel that displays them
+     */
     public void updateDealerLabelsPanel(){
         for (JLabel label: dealerLabels){
             dealerCardsPanel.add(label);
         }
     }
 
-    //Turnorder grid setup, displays all players hands
+    /**
+     * Renders every players' hand(s) in the card grid when in-game
+     * @param players A list of the player names that should be synchronized with the handStrings argument
+     * @param handStrings A List of a String list where the initial list is each hand and the sublist is
+     *                    all the card names in that hand
+     * @param currentTurn An index that show the current turn relative to the list
+     */
     public void setupTurnOrderGrid(List<String> players, List<List<String>> handStrings, int currentTurn){
         if(players.size() != handStrings.size()){
             throw new IllegalArgumentException();
@@ -710,38 +849,58 @@ public class GameWindow extends JFrame {
         cardGrid.revalidate();
     }
 
-    //Switches between different panels by using cardlayout on root
-    public void switchPanel(){
+    /**
+     * Switches the panel to the blackjack layout
+     */
+    public void switchToGame(){
         CardLayout cl = (CardLayout) root.getLayout();
         cl.show(root, "game");
     }
 
+    /**
+     * switches the menu to the join room menu
+     */
     public void switchToJoinRoom(){
         CardLayout cl = (CardLayout) root.getLayout();
         cl.show(root, "joinroom");
     }
 
+    /**
+     * switches the menu to the main menu
+     */
     public void switchToMenu(){
         CardLayout cl = (CardLayout) root.getLayout();
         cl.show(root, "menu");
     }
 
+    /**
+     * switch the menu to the rules panel
+     */
     public void switchToRules(){
         CardLayout cl = (CardLayout) root.getLayout();
         cl.show(root, "rules");
     }
 
+    /**
+     * switch the menu to the create room menu
+     */
     public void switchToCreateRoom(){
         CardLayout cl = (CardLayout) root.getLayout();
         cl.show(root, "createroom");
     }
 
+    /**
+     * Adds an on click {@link ActionListener} to the hit button in the game panel
+     * @param hl the event handler
+     */
     public void addHitButtonListener(ActionListener hl) {
         hitButton.addActionListener(hl);
     }
 
-    // Changes image on the music button bottom right corner
-    // depending if the background music is on or off
+    /**
+     * Toggles the background music icon in the main menu to reflect the status of the music
+     * @param on if true then the music icon is green otherwise it's red
+     */
     public void toggleMusicOnButton(boolean on){
         if(on){
             musicButton.setIcon(new ImageIcon(allButtonImages.getButtonImageFromName("musicOnButton")));
@@ -750,58 +909,154 @@ public class GameWindow extends JFrame {
         }
     }
 
-    // Update error message label
+    /**
+     * Update error message label in the game panel
+     * @param message the text to be displayed as an error message
+     */
     public void updateErrorMessage(String message){
         errorMessageLabel.setText(message);
     }
 
     // Actionlisteners setup for buttons used in the application
+
+    /**
+     * Add an on click {@link ActionListener} to the stand button in game panel
+     * @param al the event handler
+     */
     public void addStandButtonListener(ActionListener al){ stayButton.addActionListener(al); }
 
+    /**
+     * Add an on enter press {@link ActionListener } to the player name field in join room menu
+     * @param al the event handler
+     */
     public void addPlayerFieldListener(ActionListener al){ playerField.addActionListener(al); }
 
+    /**
+     * Add an on enter press {@link ActionListener} to the room code field in the join room menu
+     * @param al the event handler
+     */
     public void addRoomFieldListener(ActionListener al){ joinRoom.addActionListener(al); }
 
+    /**
+     * Add an on click {@link ActionListener} to the confirmation button in the join room menu
+     * @param al the event handler
+     */
     public void addJoinRoomBtnListener(ActionListener al){ joinRoomBtn.addActionListener(al); }
 
+    /**
+     * Add an on click {@link ActionListener} to the start game button in the game panel
+     * @param al the event handler
+     */
     public void addStartButtonListener(ActionListener al){ startButton.addActionListener(al); }
 
+    /**
+     * Add an on enter press {@link ActionListener} to the bet field in the game panel
+     * @param al the event handler
+     */
     public void addBetFieldListener(ActionListener al){ betField.addActionListener(al); }
 
+    /**
+     * Add an on click {@link ActionListener} to the background music button in the main menu
+     * @param ml the event handler
+     */
     public void addMusicButtonListener(ActionListener ml){ musicButton.addActionListener(ml); }
 
+    /**
+     * Add an on click {@link ActionListener} to the exit button in the main menu
+     * @param cl the event handler
+     */
     public void addCloseButtonListener(ActionListener cl){ closeButton.addActionListener(cl); }
 
+    /**
+     * Add an on click {@link ActionListener} to join room button in the main menu
+     * @param cl the event handler
+     */
     public void addJoinRoomButtonListener(ActionListener cl){ joinRoomButton.addActionListener(cl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the back button in the join room menu
+     * @param bl the event handler
+     */
     public void addJoinBackButtonListener(ActionListener bl){ joinBackButton.addActionListener(bl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the rules button in the main menu
+     * @param bl the event handler
+     */
     public void addRulesButtonListener(ActionListener bl){ rulesButton.addActionListener(bl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the exit button in the rules panel
+     * @param bl the event handler
+     */
     public void addRulesBackButtonListener(ActionListener bl){ rulesBackButton.addActionListener(bl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the double down button in the game panel
+     * @param dl the event handler
+     */
     public void addDoubleDownButtonListener(ActionListener dl){ doubleDownButton.addActionListener(dl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the exit button in the in-game panel
+     * @param rl the event handler
+     */
     public void addRoomBackButtonListener(ActionListener rl){ roomBackButton.addActionListener(rl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the split button in the game panel
+     * @param rl the event handler
+     */
     public void addSplitButtonListener(ActionListener rl){ splitButton.addActionListener(rl); }
 
+    /**
+     * Add an on click {@link ActionListener} to the create room button in the main menu
+     * @param al the event handler
+     */
     public void addCreateRoomMenuBtnListener(ActionListener al){ createServerButton.addActionListener(al); }
 
+    /**
+     * Add an on click {@link ActionListener} to the confirmation button in the create room menu
+     * @param al the event handler
+     */
     public void addCreateRoomBtnListener(ActionListener al) { createRoomBtn.addActionListener(al); }
 
+    /**
+     * Add an on click {@link ActionListener} to the exit button in the create room menu
+     * @param al the event handler
+     */
     public void addCreateRoomBackBtnListener(ActionListener al) { createRoomBackBtn.addActionListener(al); }
 
     //Getters for player input field values
+
+    /**
+     * Get the inputted bet text value
+     * @return the inputted bet value String
+     */
     public String getBetText(){ return betField.getText(); }
 
+    /**
+     * get the player name text from the player text field in join room menu
+     * @return the player name string
+     */
     public String getPlayerFieldText(){ return playerField.getText(); }
 
+    /**
+     * get the player name input form the player text field in create room menu
+     * @return the player name string
+     */
     public String getPlayer2ndFieldText() { return playerField2.getText(); }
 
+    /**
+     * get the inputted room code from the room code text field in the join room menu
+     * @return the room code string
+     */
     public String getRoomCode(){ return joinRoom.getText(); }
 
-    //Confirm dialog when the players leaves a game room that is currently running
+    /**
+     * Confirm dialog when the players leaves a game room that is currently running
+     * @return true when the user clicks the yes option in the confirm dialog
+     */
     public boolean confirmExit(){
         int a = JOptionPane.showConfirmDialog(mainPanel, "Do you really want to exit the current game?",
                 "Quit the game?", JOptionPane.YES_NO_OPTION);

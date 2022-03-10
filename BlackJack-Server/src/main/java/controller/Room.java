@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.GameTracker;
 import model.objects.Card;
@@ -21,6 +21,9 @@ import java.util.Observer;
  * @see GameTracker
  * @see GameConnection
  * @see model.RoomTracker
+ *
+ * @author Alen
+ * @version 2022-03-07
  */
 public class Room extends Observable implements Closeable {
     private GameTracker gt = null;
@@ -229,6 +232,12 @@ public class Room extends Observable implements Closeable {
         }
     }
 
+    /**
+     * Sends a JSON  string in the format of {@link GameModel} to all {@link Observer Observers}
+     * @see GameConnection#update(Observable, Object)
+     * @see GameModel#GameModel(GameTracker, String)
+     * @see Observable#notifyObservers(Object)
+     */
     @Override
     public void notifyObservers() {
         setChanged();
@@ -250,6 +259,10 @@ public class Room extends Observable implements Closeable {
         notifyObservers();
     }
 
+    /**
+     * Closes the  {@link java.net.Socket Sockets} inside the {@link GameConnection connections} associated with the room
+     * @see Closeable#close()
+     */
     @Override
     public void close() throws IOException {
         for (GameConnection c : players) {
@@ -257,13 +270,6 @@ public class Room extends Observable implements Closeable {
         }
 
         System.out.println("Closed room " + this);
-    }
-
-    /**
-     * @return The room code associated with the current instance
-     */
-    public String getRoomCode() {
-        return roomCode;
     }
 
     /**

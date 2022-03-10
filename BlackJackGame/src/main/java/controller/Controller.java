@@ -74,7 +74,7 @@ public class Controller {
             String s = gson.toJson(new ConnectionSetup(bjview.getPlayerFieldText(), bjview.getRoomCode()));
             output.println(s);
             System.out.println(s);
-            bjview.switchPanel();
+            bjview.switchToGame();
         });
 
         bjview.addStartButtonListener(e -> output.println(gson.toJson(new RecievingCmd("start", 0))));
@@ -150,7 +150,7 @@ public class Controller {
         // Controls for create room button in create room
         bjview.addCreateRoomBtnListener(e -> {
             output.println(gson.toJson(new ConnectionSetup(bjview.getPlayer2ndFieldText(), null)));
-            bjview.switchPanel();
+            bjview.switchToGame();
         });
 
         // Controls for back button in create room panel
